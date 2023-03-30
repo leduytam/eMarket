@@ -15,4 +15,42 @@
 
     <color name="danger">#FFEC004F</color>
     <color name="danger_dark">#FFDE2060</color>
+    <color name="gray">#FF808080</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="BACKGROUND_DEFAULT">#ffffff</color>
+    <color name="GRAY_100">#F3F3F3</color>
+    <color name="GRAY_200">#FCFCFC</color>
+    <color name="GRAY_300">#F5F5F5</color>
+    <color name="PRIMARY_CONTRAST">#fffffe</color>
+    <color name="LIGHT_GRAY">#E9E9E9</color>
+    <color name="SECONDARY_LIGHT">#E9F6FF</color>
+    <color name="GRAY_400">#D2D2D2</color>
+    <color name="GRAY_600">#C4C4C4</color>
+    <color name="GRAY_500">#ABABAB</color>
+    <color name="GRAY_800">#7B7B7B</color>
+    <color name="TEXT_GRAY">#767676</color>
+    <color name="GRAY_700">#545454</color>
+    <color name="WARNING">#FCD400</color>
+    <color name="YELLOW_DARK">#FBBC05</color>
+    <color name="INFO_DARK">#2464A4</color>
+    <color name="PRIMARY_DARK">#37BED6</color>
+    <color name="PRIMARY">#8D4ED5</color>
+    <color name="ERROR">#EC1C24</color>
+    <color name="ERROR_DARK">#DE2060</color>
+    <color name="LOSS">#DE2060</color>
+    <color name="INFO_LIGHT">#F0E2FF</color>
+    <color name="INFO_CONTRAST">#B473FE</color>
+    <color name="INFO_EXTRA_LIGHT">#C4DFFF</color>
+    <color name="INFO26">#0D7EFF</color>
+    <color name="INFO_EXTRA_LIGHT026">#D2E7FF</color>
+    <color name="COMPLIMENTARY">#F0E2FF</color>
+    <color name="COMPLIMENTARY_LIGHT">#FAF4FF</color>
+    <color name="DESCRIPTION">#424242</color>
+    <color name="DISABLED">#EBD9FF</color>
+    <color name="BIOMETRIC_GRAY_BACKGROUND">#E3E3E3</color>
+    <color name="WHITE">#FFFFFF</color>
+    <color name="BLACK">#000000</color>
+
+
 </resources>

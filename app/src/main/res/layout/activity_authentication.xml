@@ -1,51 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/PRIMARY"
+    android:orientation="vertical">
 
-    <!-- Login Logo -->
-<!--    <ImageView-->
-<!--        android:id="@+id/login_logo"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/login_logo"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginTop="50dp"/>-->
-
-    <!-- Login Form -->
+    <!-- App Logo -->
     <LinearLayout
-        android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="634px"
         android:orientation="vertical"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="50dp">
+        android:layout_weight="1"
+        >
 
-        <!-- Email Address -->
-        <EditText
-            android:id="@+id/email_address"
+        <ImageView
+            android:id="@+id/app_logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"/>
+            android:src="@drawable/ic_logo_foreground" />
+    </LinearLayout>
 
-        <!-- Password -->
-        <EditText
-            android:id="@+id/password"
+    <!-- Sign Up Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@color/WHITE"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/signup_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"/>
+            android:layout_below="@id/app_logo"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="30dp"
+            android:text="Sign Up" />
 
         <!-- Login Button -->
         <Button
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log In"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:text="Log In" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
