@@ -28,8 +28,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(_context);
-        View heroView = inflater.inflate(R.layout.recycler_item_category, parent, false);
-        return new ViewHolder(heroView);
+        View view = inflater.inflate(R.layout.recycler_item_category, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override

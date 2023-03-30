@@ -5,4 +5,9 @@
     <string name="menu_home_cart_item">Cart</string>
     <string name="cart_action_item_iv_description">Cart</string>
     <string name="notification_action_item_iv_description">Notification</string>
+    <string name="activity_home_tv_see_all">See All</string>
+    <string name="activity_home_tv_categories">Categories</string>
+    <string name="activity_home_tv_popular_products">Popular Products</string>
+    <string name="activity_home_tv_newest_products">Newest Products</string>
+    <string name="activity_home_tv_discount_products">Discount Products</string>
 </resources>
