@@ -41,8 +41,8 @@ public class AuthenticationActivity extends AppCompatActivity {
                 // TODO: Implement login functionality
 
                 // For now, just start the LoginActivity
-//                Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
