@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">eMarket</string>
     <string name="activity_splash_iv_logo_description">Logo</string>
+    <string name="menu_home_notification_item">Notification</string>
+    <string name="menu_home_cart_item">Cart</string>
+    <string name="cart_action_item_iv_description">Cart</string>
+    <string name="notification_action_item_iv_description">Notification</string>
 </resources>

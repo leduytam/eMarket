@@ -1,8 +1,10 @@
-package com.group05.emarket;
+package com.group05.emarket.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.group05.emarket.R;
 
 public class HomeActivity extends AppCompatActivity {
 
