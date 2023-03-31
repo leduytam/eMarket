@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.group05.emarket.R;
 import com.group05.emarket.adapters.CategoryAdapter;
 import com.group05.emarket.adapters.ProductAdapter;
@@ -20,6 +22,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView _rvPopularProducts;
     private RecyclerView _rvNewestProducts;
     private RecyclerView _rvDiscountProducts;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,33 @@ public class HomeActivity extends AppCompatActivity {
         _rvDiscountProducts = findViewById(R.id.rv_discount_products);
         _rvDiscountProducts.setAdapter(new ProductAdapter(this, _getProducts()));
         _rvDiscountProducts.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnItemSelectedListener( item -> {
+            switch (item.getItemId()) {
+                //TODO: Change to the correct activity
+                case R.id.home:
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+
+                case R.id.explore:
+                    startActivity(new Intent(getApplicationContext(),ExploreActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+
+                case R.id.order:
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+                case R.id.login:
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    overridePendingTransition(0,0);
+                    return true;
+            }
+            return true;
+        });
     }
 
     private static ArrayList<Category> _getAllCategories() {
