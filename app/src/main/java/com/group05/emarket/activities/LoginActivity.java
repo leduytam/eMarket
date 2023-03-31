@@ -1,17 +1,19 @@
-package com.group05.emarket;
+package com.group05.emarket.activities;
 
 import static com.group05.emarket.Utils.isValidEmail;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.group05.emarket.R;
 
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText email, password;
@@ -42,5 +44,36 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static class AuthenticationActivity extends AppCompatActivity {
+
+        private Button mSignupButton;
+        private Button mLoginButton;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_authentication);
+
+            mSignupButton = findViewById(R.id.signup_button);
+            mLoginButton = findViewById(R.id.login_button);
+
+            mSignupButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            mLoginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

@@ -1,8 +1,7 @@
-package com.group05.emarket;
+package com.group05.emarket.activities;
 
 import static com.group05.emarket.Utils.isValidEmail;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.group05.emarket.R;
 
 import java.util.ArrayList;
 
