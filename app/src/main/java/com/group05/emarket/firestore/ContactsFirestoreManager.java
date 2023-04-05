@@ -1,5 +1,9 @@
 package com.group05.emarket.firestore;
 
+import static com.group05.emarket.firestore.ContactsFirestoreDbContract.COLLECTION_NAME;
+
+import android.util.Log;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,11 +25,19 @@ public class ContactsFirestoreManager {
 
     private ContactsFirestoreManager() {
         firebaseFirestore = FirebaseFirestore.getInstance();
-        contactsCollectionReference = firebaseFirestore.collection("contacts");
+        contactsCollectionReference = firebaseFirestore.collection(COLLECTION_NAME);
     }
 
-    public void createDocument(Contact contact) {
-        contactsCollectionReference.add(contact);
+    public boolean createDocument(Contact contact) {
+        try {
+            contactsCollectionReference.add(contact).addOnSuccessListener(documentReference -> {
+                Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+            });
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void getAllContacts(OnCompleteListener<QuerySnapshot> onCompleteListener)

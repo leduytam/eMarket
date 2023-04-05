@@ -10,12 +10,16 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.group05.emarket.R;
+import com.group05.emarket.firestore.ContactsFirestoreManager;
+import com.group05.emarket.models.Contact;
 
 import java.util.ArrayList;
 
@@ -25,6 +29,9 @@ public class SignUpActivity extends AppCompatActivity {
     TextView step1, step2, step3;
     TextInputEditText email, password;
     TextInputLayout emailLayout, passwordLayout;
+    Button signUpButton;
+
+    private ContactsFirestoreManager contactsFirestoreManager;
 
     int ERROR_DARK = R.color.ERROR_DARK;
     int GRAY_400 = R.color.GRAY_400;
@@ -75,6 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        contactsFirestoreManager = ContactsFirestoreManager.newInstance();
         setContentView(R.layout.activity_sign_up);
 
         email = findViewById(R.id.email_edit_text);
@@ -171,7 +179,6 @@ public class SignUpActivity extends AppCompatActivity {
                     step2Indicator.setCardBackgroundColor(getResources().getColor(R.color.GRAY_400));
                     step3Indicator.setCardBackgroundColor(getResources().getColor(R.color.GRAY_400));
                 }
-
             }
 
             @Override
@@ -179,5 +186,20 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
         });
+
+        signUpButton = findViewById(R.id.signup_button);
+        signUpButton.setOnClickListener(v -> {
+            var emailValue = email.getText().toString();
+            var passwordValue = password.getText().toString();
+            onSubmit(emailValue, passwordValue);
+        });
+    }
+
+    private void onSubmit(String email, String password) {
+        Contact contact = new Contact(email, password);
+        var res = contactsFirestoreManager.createDocument(contact);
+        if (res) {
+            Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
+        }
     }
 }

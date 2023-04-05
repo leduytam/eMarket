@@ -5,38 +5,41 @@ import com.google.firebase.firestore.DocumentId;
 public class Contact {
     @DocumentId
     private String documentId;
-    private String firstNameString;
-    private String lastNameString;
-    private String emailString;
+    private String email;
+    private String password;
 
-    public Contact() {}
-    public Contact(String firstNameString, String lastNameString, String emailString) {
-        this.firstNameString = firstNameString;
-        this.lastNameString = lastNameString;
-        this.emailString = emailString;
+    public Contact() {
+        this.email = "";
+        this.password = "";
     }
+
+
+    public Contact(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getDocumentId() {
         return documentId;
     }
+
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
     }
-    public String getFirstNameString() {
-        return firstNameString;
+
+    public String getEmail() {
+        return email;
     }
-    public void setFirstNameString(String firstNameString) {
-        this.firstNameString = firstNameString;
+
+    public void setEmail(String email) {
+        this.email = email;
     }
-    public String getLastNameString() {
-        return lastNameString;
+
+    public String getPassword() {
+        return password;
     }
-    public void setLastNameString(String lastNameString) {
-        this.lastNameString = lastNameString;
-    }
-    public String getEmailString() {
-        return emailString;
-    }
-    public void setEmailString(String emailString) {
-        this.emailString = emailString;
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
