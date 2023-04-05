@@ -1,6 +1,6 @@
 package com.group05.emarket.activities;
 
-import static com.group05.emarket.Utils.isValidEmail;
+import static com.group05.emarket.utilities.Validator.isValidEmail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;

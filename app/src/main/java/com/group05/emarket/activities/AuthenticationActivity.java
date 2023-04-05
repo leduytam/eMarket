@@ -11,31 +11,22 @@ import com.group05.emarket.R;
 
 public class AuthenticationActivity extends AppCompatActivity {
 
-    private Button mSignupButton;
-    private Button mLoginButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        mSignupButton = findViewById(R.id.signup_button);
-        mLoginButton = findViewById(R.id.login_button);
+        Button buttonSignUp = findViewById(R.id.signup_button);
+        Button buttonLogin = findViewById(R.id.login_button);
 
-        mSignupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
+        buttonSignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(AuthenticationActivity.this, SignUpActivity.class);
+            startActivity(intent);
         });
 
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        buttonLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
     }
 }
