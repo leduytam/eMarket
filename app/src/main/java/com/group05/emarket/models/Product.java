@@ -1,15 +1,18 @@
 package com.group05.emarket.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Product {
-    private UUID _id;
-    private String _name;
-    private int _image;
-    private float _rating;
-    private float _price;
-    private int _ratingCount;
-    private int discount;
+    protected UUID _id;
+    protected String _name;
+    protected int _image;
+    protected float _price;
+    protected float _avgRating;
+    protected int _ratingCount;
+    protected int _discount;
+    protected String _description;
 
     public UUID getId() { return _id; }
 
@@ -21,8 +24,8 @@ public class Product {
         return _image;
     }
 
-    public float getRating() {
-        return _rating;
+    public float getAvgRating() {
+        return _avgRating;
     }
 
     public float getPrice() {
@@ -33,7 +36,11 @@ public class Product {
         return _ratingCount;
     }
 
-    public int getDiscount() { return discount; }
+    public int getDiscount() { return _discount; }
+
+    public String getDescription() {
+        return _description;
+    }
 
     private Product() {
     }
@@ -45,7 +52,8 @@ public class Product {
         private float _rating;
         private float _price;
         private int _ratingCount;
-        private int discount;
+        private int _discount;
+        private String _description;
 
         public Builder setId(UUID id) {
             _id = id;
@@ -78,7 +86,12 @@ public class Product {
         }
 
         public Builder setDiscount(int discount) {
-            this.discount = discount;
+            this._discount = discount;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            _description = description;
             return this;
         }
 
@@ -88,10 +101,11 @@ public class Product {
             product._id = _id;
             product._name = _name;
             product._image = _image;
-            product._rating = _rating;
+            product._avgRating = _rating;
             product._price = _price;
             product._ratingCount = _ratingCount;
-            product.discount = discount;
+            product._discount = _discount;
+            product._description = _description;
 
             return product;
         }

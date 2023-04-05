@@ -42,7 +42,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder._tvName.setText(product.getName());
         holder._ivImage.setImageResource(product.getImage());
         holder._tvRatingCount.setText(String.format("%s Reviews", product.getRatingCount()));
-        holder._tvRating.setText(String.valueOf(product.getRating()));
+        holder._tvRating.setText(String.valueOf(product.getAvgRating()));
 
         if (product.getDiscount() > 0) {
             holder._tvDiscount.setText(String.format("%s%%", product.getDiscount()));

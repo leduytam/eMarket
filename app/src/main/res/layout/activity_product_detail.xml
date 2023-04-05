@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".activities.ProductDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -16,17 +18,220 @@
             android:layout_height="48dp"
             android:background="@color/white"
             android:elevation="4dp"
+            app:menu="@menu/menu_top_product_detail"
             app:navigationIcon="@drawable/ic_arrow_left"
             app:title="@string/activity_product_detail_top_bar_title"
             app:titleCentered="true"
             app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
+        android:overScrollMode="never"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:src="@drawable/image_snack_1" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="Snack mì hương gà Enaak gói 30g"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="$ 10.00"
+                android:textColor="@color/danger"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_star" />
+
+                <TextView
+                    android:id="@+id/tv_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="4.3"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_rating_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="42 Reviews"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:dividerColor="@color/gray_300" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:text="Snack có hình dáng của những sợi mì cùng hương gà, snack Enaak Gemez còn mang đến ăn cay cay hấp dẫn, kích thích vị giác và tạo một cảm giác rất lạ miệng. Snack mì hương gà Enaak gói 30g tiện lợi, ăn vặt vui và tiện lợi, an toàn.\n\nĐôi nét về thương hiệu\n\nSnack Enaak là thương hiệu bánh snack nổi tiếng đến từ Indonesia với thành phần từ 100% khoai tây thật và sợi mì được nướng không qua chiên dầu mỡ. Bánh snack Enaak mang đến cho người tiêu dùng món ăn vặt thú vị hấp dẫn thích hợp sử dụng khi đi du lịch, xem phim hoặc trong các buổi gặp mặt trò chuyện cùng bạn bè.\n\nThành phần dinh dưỡng của sản phẩm\n\nThành phần chính của sản phẩm gồm: Bột mì, dầu cọ, tinh bột sắn, bột hành, bột tỏi, sốt đậu nành, bột gia vị gà (đường, chất điều vị (E621), hương gà giống tự nhiên), chất điều vị (E621), đường, chất tạo xốp, muối, chất tạo ngọt. Ngoài ra, sản phẩm cung cấp cho cơ thể khoảng 120kcal trong 30g mì.\n\nTác dụng của sản phẩm với sức khỏe\n\nSnack mì hương gà Enaak gói 30g sẽ là một món ăn độc đáo và thơm ngon cho những ai yêu thích hương vị của sợi mì kết hợp với mùi hương thịt gà. Với hương vị thơm ngon được tạo thành từ việc phối trộn gia vị thích hợp và cách chế biến kết hợp với các sợi mì tươi ngon được thấm đều gia vị và sấy khô giòn rụm, sản phẩm mang đến cho người ăn một cảm giác giòn rụm, thơm ngon vị gà và có thể nhâm nhi cả ngày không biết chán.\n\nLưu ý khi sử dụng sản phẩm\n\nLưu ý, Snack mì hương gà Enaak gói 30g không phù hợp dùng cho trẻ dưới 1 tuổi. Để bảo quản mì, bạn cần để sản phẩm ở nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp."
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:dividerColor="@color/gray_300" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="Reviews (42)"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="4.3"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:overScrollMode="never"
+                android:id="@+id/rv_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_load_more_reviews"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Load More Reviews" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:dividerColor="@color/gray_300" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Related Products"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="See All"
+                    android:textColor="@color/primary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_related_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp">
+
+        <Button
+            style="@style/Widget.Material3.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/danger"
+            android:layoutDirection="rtl"
+            android:text="Add to wishlist"
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_heart" />
+
+        <Button
+            style="@style/Widget.Material3.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:layoutDirection="rtl"
+            android:text="Add to cart"
+            app:icon="@drawable/ic_cart_add" />
+    </LinearLayout>
+</LinearLayout>

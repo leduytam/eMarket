@@ -54,7 +54,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="@string/activity_product_list_btn_filter_sorting"
-        android:textColor="@color/black"
-        app:rippleColor="?attr/colorControlHighlight" />
+        android:text="@string/activity_product_list_btn_filter_sorting" />
 </LinearLayout>

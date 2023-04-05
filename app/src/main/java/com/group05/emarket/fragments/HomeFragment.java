@@ -15,17 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.R;
+import com.group05.emarket.adapters.ProductAdapter;
 import com.group05.emarket.activities.AllCategoriesActivity;
 import com.group05.emarket.activities.CartActivity;
 import com.group05.emarket.activities.NotificationActivity;
 import com.group05.emarket.adapters.CategoryAdapter;
-import com.group05.emarket.adapters.ProductAdapter;
 import com.group05.emarket.models.Category;
 import com.group05.emarket.models.Product;
 
