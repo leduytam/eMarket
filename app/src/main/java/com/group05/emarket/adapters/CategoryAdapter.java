@@ -1,6 +1,7 @@
 package com.group05.emarket.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.R;
+import com.group05.emarket.activities.ProductListActivity;
 import com.group05.emarket.models.Category;
 
 import java.util.List;
@@ -37,6 +39,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Category category = _categories.get(position);
         holder._ivCategory.setImageResource(category.getImage());
         holder._tvName.setText(category.getName());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intentToCategory = new Intent(_context, ProductListActivity.class);
+            intentToCategory.putExtra("title", "Category");
+            _context.startActivity(intentToCategory);
+        });
     }
 
     @Override

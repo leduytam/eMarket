@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="rippleColor">?attr/colorControlHighlight</item>
     </style>
 
     <style name="Theme.SplashTheme" parent="Theme.AppCompat.NoActionBar">
@@ -19,13 +20,16 @@
         <item name="colorPrimaryDark">@color/purple_500</item>
     </style>
 
-    <style name="Toolbar.TitleText" parent="TextAppearance.Material3.TitleMedium">
-        <item name="android:textSize">18sp</item>
+    <style name="Toolbar.SmallTitleText" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">16sp</item>
     </style>
-    <style name="Theme.EMarket.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+    <style name="ImageViewCircular" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
-    <style name="Theme.EMarket.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.EMarket.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SearchView.SmallText" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

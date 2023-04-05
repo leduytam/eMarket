@@ -1,8 +1,8 @@
-package com.group05.emarket;
+package com.group05.emarket.utilities;
 
 import android.text.TextUtils;
 
-public class Utils {
+public class Validator {
     public static boolean isValidEmail(CharSequence email) {
         if (TextUtils.isEmpty(email)) {
             return false;

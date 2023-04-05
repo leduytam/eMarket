@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_100"
     android:orientation="vertical"
-    tools:context=".activities.HomeActivity">
+    tools:context=".fragments.HomeFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:elevation="4dp"
-        app:menu="@menu/menu_home"
-        app:title="eMarket"
-        app:titleCentered="true"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:titleTextColor="@color/primary" />
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:elevation="4dp"
+            app:menu="@menu/menu_top_home"
+            app:title="eMarket"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/Toolbar.SmallTitleText"
+            app:titleTextColor="@color/primary" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -52,6 +58,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_see_all_categories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
@@ -160,7 +167,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
 
                     <TextView
                         android:layout_width="0dp"
@@ -190,18 +198,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:backgroundTint="@color/WHITE"
-        app:itemIconTint="@color/PRIMARY"
-        app:itemTextColor="@color/PRIMARY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_alignParentBottom="true"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"/>
-
-</RelativeLayout>
+</LinearLayout>
