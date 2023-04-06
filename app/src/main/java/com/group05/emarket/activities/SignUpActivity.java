@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,8 +19,8 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.group05.emarket.R;
-import com.group05.emarket.firestore.ContactsFirestoreManager;
-import com.group05.emarket.models.Contact;
+import com.group05.emarket.firestore.UsersFirestoreManager;
+import com.group05.emarket.models.User;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputLayout emailLayout, passwordLayout;
     Button signUpButton;
 
-    private ContactsFirestoreManager contactsFirestoreManager;
+    private UsersFirestoreManager usersFirestoreManager;
 
     int ERROR_DARK = R.color.ERROR_DARK;
     int GRAY_400 = R.color.GRAY_400;
@@ -82,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        contactsFirestoreManager = ContactsFirestoreManager.newInstance();
+        usersFirestoreManager = UsersFirestoreManager.newInstance();
         setContentView(R.layout.activity_sign_up);
 
         email = findViewById(R.id.email_edit_text);
@@ -191,15 +192,19 @@ public class SignUpActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(v -> {
             var emailValue = email.getText().toString();
             var passwordValue = password.getText().toString();
-            onSubmit(emailValue, passwordValue);
+            if (isValidEmail(emailValue) && validatePassword(passwordValue)) {
+                onSubmit(emailValue, passwordValue);
+            }
         });
     }
 
     private void onSubmit(String email, String password) {
-        Contact contact = new Contact(email, password);
-        var res = contactsFirestoreManager.createDocument(contact);
+        User user = new User(email, password);
+        var res = usersFirestoreManager.createUser(user);
         if (res) {
             Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 }

@@ -2,19 +2,19 @@ package com.group05.emarket.models;
 
 import com.google.firebase.firestore.DocumentId;
 
-public class Contact {
+public class User {
     @DocumentId
     private String documentId;
     private String email;
     private String password;
 
-    public Contact() {
+    public User() {
         this.email = "";
         this.password = "";
     }
 
 
-    public Contact(String email, String password) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
