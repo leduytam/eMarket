@@ -44,8 +44,7 @@
                 <ImageView
                     android:id="@+id/iv_image"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    android:src="@drawable/image_snack_1" />
+                    android:layout_height="240dp" />
 
                 <RelativeLayout
                     android:id="@+id/rl_discount"

@@ -1,6 +1,7 @@
 package com.group05.emarket.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
+import com.group05.emarket.adapters.ProductAdapter;
 import com.group05.emarket.adapters.ReviewAdapter;
 import com.group05.emarket.utilities.Formatter;
 
@@ -54,6 +56,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         RecyclerView rvReviews = findViewById(R.id.rv_reviews);
         rvReviews.setAdapter(new ReviewAdapter(this, MockData.getReviews()));
         rvReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        RecyclerView rvRelatedProducts = findViewById(R.id.rv_related_products);
+        rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
+        rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
 
         TextView tvName = findViewById(R.id.tv_name);
         TextView tvDiscount = findViewById(R.id.tv_discount);
