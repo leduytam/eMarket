@@ -1,7 +1,10 @@
 package com.group05.emarket.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -22,16 +25,10 @@ import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.adapters.ProductAdapter;
-import com.group05.emarket.activities.AllCategoriesActivity;
 import com.group05.emarket.activities.CartActivity;
 import com.group05.emarket.activities.NotificationActivity;
 import com.group05.emarket.adapters.CategoryAdapter;
-import com.group05.emarket.models.Category;
-import com.group05.emarket.models.Product;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.UUID;
+import com.group05.emarket.dialogs.AllCategoriesDialog;
 
 @ExperimentalBadgeUtils
 public class HomeFragment extends Fragment {
@@ -82,8 +79,8 @@ public class HomeFragment extends Fragment {
 
         TextView tvSeeAllCategories = layout.findViewById(R.id.tv_see_all_categories);
         tvSeeAllCategories.setOnClickListener(v -> {
-            Intent intent = new Intent(_context, AllCategoriesActivity.class);
-            startActivity(intent);
+            AllCategoriesDialog dialog = new AllCategoriesDialog();
+            dialog.show(getActivity().getSupportFragmentManager(), "all_categories_dialog");
         });
 
         _topBar = layout.findViewById(R.id.top_bar);
