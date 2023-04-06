@@ -61,7 +61,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             super(itemView);
             _tvContent = itemView.findViewById(R.id.tv_content);
             _rbRating = itemView.findViewById(R.id.rb_rating);
-            _tvCreatedAt = itemView.findViewById(R.id.tv_date);
+            _tvCreatedAt = itemView.findViewById(R.id.tv_created_at);
             _tvReviewerName = itemView.findViewById(R.id.tv_name);
             _ivReviewerAvatar = itemView.findViewById(R.id.iv_avatar);
         }

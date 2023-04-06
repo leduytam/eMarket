@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:orientation="horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_avatar"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        app:shapeAppearanceOverlay="@style/ImageViewCircular"
         android:layout_marginEnd="6dp"
+        app:shapeAppearanceOverlay="@style/ImageViewCircular"
         tools:srcCompat="@tools:sample/avatars" />
 
     <RelativeLayout
@@ -25,31 +26,31 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:text="Andi" />
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_created_at"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:textColor="@color/gray_700"
-            android:text="2 Minggu yang lalu" />
+            android:textSize="11sp" />
 
         <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/rb_rating"
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
             android:layout_below="@+id/tv_name"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-            android:theme="@style/RatingBar"
-            android:stepSize="0.1" />
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:theme="@style/RatingBar" />
 
         <TextView
             android:id="@+id/tv_content"
@@ -57,8 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rb_rating"
             android:justificationMode="inter_word"
-            android:textSize="14sp"
             android:textColor="@color/black"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+            android:textSize="12sp" />
     </RelativeLayout>
 </LinearLayout>

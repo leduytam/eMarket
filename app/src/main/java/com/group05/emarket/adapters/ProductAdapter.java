@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group05.emarket.R;
 import com.group05.emarket.activities.ProductDetailActivity;
 import com.group05.emarket.models.Product;
-import com.group05.emarket.utilities.CurrencyFormatter;
+import com.group05.emarket.utilities.Formatter;
 
 import java.util.List;
 
@@ -49,15 +49,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder._tvDiscount.setVisibility(View.VISIBLE);
 
             double discountPrice = product.getPrice() * (1 - product.getDiscount() / 100.0);
-            holder._tvPrice.setText(CurrencyFormatter.format(discountPrice));
+            holder._tvPrice.setText(Formatter.formatCurrency(discountPrice));
         } else {
             holder._tvDiscount.setVisibility(View.INVISIBLE);
-            holder._tvPrice.setText(CurrencyFormatter.format(product.getPrice()));
+            holder._tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
         }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(_context, ProductDetailActivity.class);
-            intent.putExtra("name", product.getName());
+            intent.putExtra("id", product.getId());
             _context.startActivity(intent);
         });
     }

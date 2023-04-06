@@ -21,4 +21,10 @@
     <string name="activity_product_list_btn_filter_sorting"><![CDATA[Filter & Sorting]]></string>
     <string name="menu_top_product_detail_action_share">Share</string>
     <string name="menu_top_product_detail_action_cart">Cart</string>
+    <string name="activity_product_detail_btn_add_to_cart">Add to cart</string>
+    <string name="activity_product_detail_btn_add_to_wishlist">Add to wishlist</string>
+    <string name="activity_product_detail_tv_see_all_related_products">See All</string>
+    <string name="activity_product_detail_tv_related_products">Related Products</string>
+    <string name="activity_product_detail_btn_load_more_reviews">Load More Reviews</string>
+    <string name="activity_product_detail_description">Description</string>
 </resources>

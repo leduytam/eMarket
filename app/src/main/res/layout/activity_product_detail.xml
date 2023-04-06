@@ -48,6 +48,7 @@
                     android:src="@drawable/image_snack_1" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -65,7 +66,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="30%"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
@@ -78,7 +78,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
-                android:text="Snack mì hương gà Enaak gói 30g"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -87,7 +86,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="$ 10.00"
                 android:textColor="@color/danger"
                 android:textSize="16sp" />
 
@@ -103,11 +101,10 @@
                     android:src="@drawable/ic_star" />
 
                 <TextView
-                    android:id="@+id/tv_rating"
+                    android:id="@+id/tv_avg_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:text="4.3"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
 
@@ -117,10 +114,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:text="42 Reviews"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -133,15 +129,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="@string/activity_product_detail_description"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:justificationMode="inter_word"
-                android:text="Snack có hình dáng của những sợi mì cùng hương gà, snack Enaak Gemez còn mang đến ăn cay cay hấp dẫn, kích thích vị giác và tạo một cảm giác rất lạ miệng. Snack mì hương gà Enaak gói 30g tiện lợi, ăn vặt vui và tiện lợi, an toàn.\n\nĐôi nét về thương hiệu\n\nSnack Enaak là thương hiệu bánh snack nổi tiếng đến từ Indonesia với thành phần từ 100% khoai tây thật và sợi mì được nướng không qua chiên dầu mỡ. Bánh snack Enaak mang đến cho người tiêu dùng món ăn vặt thú vị hấp dẫn thích hợp sử dụng khi đi du lịch, xem phim hoặc trong các buổi gặp mặt trò chuyện cùng bạn bè.\n\nThành phần dinh dưỡng của sản phẩm\n\nThành phần chính của sản phẩm gồm: Bột mì, dầu cọ, tinh bột sắn, bột hành, bột tỏi, sốt đậu nành, bột gia vị gà (đường, chất điều vị (E621), hương gà giống tự nhiên), chất điều vị (E621), đường, chất tạo xốp, muối, chất tạo ngọt. Ngoài ra, sản phẩm cung cấp cho cơ thể khoảng 120kcal trong 30g mì.\n\nTác dụng của sản phẩm với sức khỏe\n\nSnack mì hương gà Enaak gói 30g sẽ là một món ăn độc đáo và thơm ngon cho những ai yêu thích hương vị của sợi mì kết hợp với mùi hương thịt gà. Với hương vị thơm ngon được tạo thành từ việc phối trộn gia vị thích hợp và cách chế biến kết hợp với các sợi mì tươi ngon được thấm đều gia vị và sấy khô giòn rụm, sản phẩm mang đến cho người ăn một cảm giác giòn rụm, thơm ngon vị gà và có thể nhâm nhi cả ngày không biết chán.\n\nLưu ý khi sử dụng sản phẩm\n\nLưu ý, Snack mì hương gà Enaak gói 30g không phù hợp dùng cho trẻ dưới 1 tuổi. Để bảo quản mì, bạn cần để sản phẩm ở nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp."
                 android:textColor="@color/black"
                 android:textSize="13sp" />
 
@@ -157,10 +153,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/tv_rating_count_detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Reviews (42)"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -172,19 +168,24 @@
                     android:src="@drawable/ic_star" />
 
                 <TextView
+                    android:id="@+id/tv_avg_rating_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:text="4.3"
                     android:textColor="@color/black"
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_reviews"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never" />
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btn_load_more_reviews"
@@ -192,7 +193,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Load More Reviews" />
+                android:text="@string/activity_product_detail_btn_load_more_reviews"
+                android:textSize="13sp" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
@@ -210,7 +212,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Related Products"
+                    android:text="@string/activity_product_detail_tv_related_products"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -223,7 +225,7 @@
                     android:focusable="true"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="See All"
+                    android:text="@string/activity_product_detail_tv_see_all_related_products"
                     android:textColor="@color/primary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -250,7 +252,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/danger"
             android:layoutDirection="rtl"
-            android:text="Add to wishlist"
+            android:text="@string/activity_product_detail_btn_add_to_wishlist"
             android:textColor="@color/white"
             app:icon="@drawable/ic_heart" />
 
@@ -262,7 +264,7 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:layoutDirection="rtl"
-            android:text="Add to cart"
+            android:text="@string/activity_product_detail_btn_add_to_cart"
             app:icon="@drawable/ic_cart_add" />
     </LinearLayout>
 </LinearLayout>
