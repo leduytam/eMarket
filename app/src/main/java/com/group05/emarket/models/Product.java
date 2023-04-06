@@ -1,7 +1,5 @@
 package com.group05.emarket.models;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class Product {
@@ -49,7 +47,7 @@ public class Product {
         private UUID _id;
         private String _name;
         private int _image;
-        private float _rating;
+        private float _avgRating;
         private float _price;
         private int _ratingCount;
         private int _discount;
@@ -70,8 +68,8 @@ public class Product {
             return this;
         }
 
-        public Builder setRating(float rating) {
-            _rating = rating;
+        public Builder setAvgRating(float avgRating) {
+            _avgRating = avgRating;
             return this;
         }
 
@@ -101,7 +99,7 @@ public class Product {
             product._id = _id;
             product._name = _name;
             product._image = _image;
-            product._avgRating = _rating;
+            product._avgRating = _avgRating;
             product._price = _price;
             product._ratingCount = _ratingCount;
             product._discount = _discount;
