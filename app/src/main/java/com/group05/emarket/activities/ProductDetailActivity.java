@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
@@ -65,6 +66,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         TextView tvDiscount = findViewById(R.id.tv_discount);
         ImageView ivImage = findViewById(R.id.iv_image);
         TextView tvPrice = findViewById(R.id.tv_price);
+        TextView tvOldPrice = findViewById(R.id.tv_old_price);
+        tvOldPrice.setPaintFlags(tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         TextView tvAvgRating = findViewById(R.id.tv_avg_rating);
         TextView tvRatingCount = findViewById(R.id.tv_rating_count);
         TextView tvDescription = findViewById(R.id.tv_description);
@@ -74,7 +77,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvName.setText(product.getName());
         tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
         ivImage.setImageResource(product.getImage());
-        tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
         tvAvgRating.setText(String.valueOf(product.getAvgRating()));
         tvRatingCount.setText(String.format(Locale.US, "%d Reviews", product.getRatingCount()));
         tvDescription.setText(product.getDescription());
@@ -84,6 +86,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (product.getDiscount() == 0) {
             RelativeLayout rlDiscount = findViewById(R.id.rl_discount);
             rlDiscount.setVisibility(View.GONE);
+            tvOldPrice.setVisibility(View.GONE);
+            tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
+        } else {
+            float discountPrice = product.getPrice() * (1 - product.getDiscount() / 100f);
+            tvPrice.setText(Formatter.formatCurrency(discountPrice));
+            tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
         }
     }
 }

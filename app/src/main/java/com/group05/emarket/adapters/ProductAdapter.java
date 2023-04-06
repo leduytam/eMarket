@@ -2,11 +2,13 @@ package com.group05.emarket.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,8 +52,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
             double discountPrice = product.getPrice() * (1 - product.getDiscount() / 100.0);
             holder._tvPrice.setText(Formatter.formatCurrency(discountPrice));
+            holder._tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
         } else {
-            holder._tvDiscount.setVisibility(View.INVISIBLE);
+            holder._rlDiscount.setVisibility(View.GONE);
+            holder._tvOldPrice.setVisibility(View.GONE);
             holder._tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
         }
 
@@ -71,9 +75,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         private final ImageView _ivImage;
         private final TextView _tvName;
         private final TextView _tvPrice;
+        private final TextView _tvOldPrice;
         private final TextView _tvRatingCount;
         private final TextView _tvRating;
         private final TextView _tvDiscount;
+        private final RelativeLayout _rlDiscount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,9 +87,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             _ivImage = itemView.findViewById(R.id.iv_image);
             _tvName = itemView.findViewById(R.id.tv_name);
             _tvPrice = itemView.findViewById(R.id.tv_price);
+            _tvOldPrice = itemView.findViewById(R.id.tv_old_price);
+            _tvOldPrice.setPaintFlags(_tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             _tvRatingCount = itemView.findViewById(R.id.tv_rating_count);
             _tvRating = itemView.findViewById(R.id.tv_rating);
             _tvDiscount = itemView.findViewById(R.id.tv_discount);
+            _rlDiscount = itemView.findViewById(R.id.rl_discount);
         }
     }
 
