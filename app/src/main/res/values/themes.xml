@@ -22,6 +22,7 @@
 
     <style name="Toolbar.SmallTitleText" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="ImageViewCircular" parent="">
@@ -31,5 +32,10 @@
 
     <style name="SearchView.SmallText" parent="Widget.AppCompat.SearchView">
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/gray_700</item>
+        <item name="colorControlActivated">@color/dusk_yellow</item>
     </style>
 </resources>

@@ -2,11 +2,13 @@ package com.group05.emarket.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group05.emarket.R;
 import com.group05.emarket.activities.ProductDetailActivity;
 import com.group05.emarket.models.Product;
-import com.group05.emarket.utilities.CurrencyFormatter;
+import com.group05.emarket.utilities.Formatter;
 
 import java.util.List;
 
@@ -42,22 +44,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder._tvName.setText(product.getName());
         holder._ivImage.setImageResource(product.getImage());
         holder._tvRatingCount.setText(String.format("%s Reviews", product.getRatingCount()));
-        holder._tvRating.setText(String.valueOf(product.getRating()));
+        holder._tvRating.setText(String.valueOf(product.getAvgRating()));
 
         if (product.getDiscount() > 0) {
             holder._tvDiscount.setText(String.format("%s%%", product.getDiscount()));
             holder._tvDiscount.setVisibility(View.VISIBLE);
 
             double discountPrice = product.getPrice() * (1 - product.getDiscount() / 100.0);
-            holder._tvPrice.setText(CurrencyFormatter.format(discountPrice));
+            holder._tvPrice.setText(Formatter.formatCurrency(discountPrice));
+            holder._tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
         } else {
-            holder._tvDiscount.setVisibility(View.INVISIBLE);
-            holder._tvPrice.setText(CurrencyFormatter.format(product.getPrice()));
+            holder._rlDiscount.setVisibility(View.GONE);
+            holder._tvOldPrice.setVisibility(View.GONE);
+            holder._tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
         }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(_context, ProductDetailActivity.class);
-            intent.putExtra("name", product.getName());
+            intent.putExtra("id", product.getId());
             _context.startActivity(intent);
         });
     }
@@ -71,9 +75,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         private final ImageView _ivImage;
         private final TextView _tvName;
         private final TextView _tvPrice;
+        private final TextView _tvOldPrice;
         private final TextView _tvRatingCount;
         private final TextView _tvRating;
         private final TextView _tvDiscount;
+        private final RelativeLayout _rlDiscount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,9 +87,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             _ivImage = itemView.findViewById(R.id.iv_image);
             _tvName = itemView.findViewById(R.id.tv_name);
             _tvPrice = itemView.findViewById(R.id.tv_price);
+            _tvOldPrice = itemView.findViewById(R.id.tv_old_price);
+            _tvOldPrice.setPaintFlags(_tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             _tvRatingCount = itemView.findViewById(R.id.tv_rating_count);
             _tvRating = itemView.findViewById(R.id.tv_rating);
             _tvDiscount = itemView.findViewById(R.id.tv_discount);
+            _rlDiscount = itemView.findViewById(R.id.rl_discount);
         }
     }
 

@@ -4,14 +4,14 @@
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="3dp"
     android:background="@color/white"
     android:checkable="true"
     android:clickable="true"
     android:focusable="true"
-    android:layout_margin="3dp"
     app:cardBackgroundColor="@color/white"
     app:cardElevation="3dp"
-    android:layout_gravity="center"
     app:rippleColor="?android:attr/colorControlHighlight">
 
     <LinearLayout
@@ -21,11 +21,39 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/iv_image"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="2dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_discount" />
+
+                <TextView
+                    android:id="@+id/tv_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_name"
@@ -40,38 +68,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="2dp">
 
             <TextView
                 android:id="@+id/tv_price"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/danger"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                app:cardCornerRadius="8dp"
-                android:backgroundTint="@color/white"
-                app:strokeWidth="0dp">
+                android:textColor="@color/danger"
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_discount"
-                    android:layout_width="36dp"
-                    android:layout_height="16dp"
-                    android:background="@color/danger"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:textSize="11sp" />
-            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tv_old_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/gray_800"
+                android:textSize="9dp" />
         </LinearLayout>
 
         <LinearLayout

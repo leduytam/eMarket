@@ -3,7 +3,6 @@ package com.group05.emarket.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Layout;
 
 import androidx.appcompat.app.AppCompatActivity;
 

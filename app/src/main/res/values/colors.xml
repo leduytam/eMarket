@@ -20,6 +20,7 @@
     <color name="gray_700">#FF696969</color>
     <color name="gray_800">#FF424242</color>
 
+    <color name="dusk_yellow">#FFFFC120</color>
     <color name="danger">#FFFE3A30</color>
 
     <color name="BACKGROUND_DEFAULT">#ffffff</color>

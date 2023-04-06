@@ -15,17 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
+import com.group05.emarket.MockData;
 import com.group05.emarket.R;
+import com.group05.emarket.adapters.ProductAdapter;
 import com.group05.emarket.activities.AllCategoriesActivity;
 import com.group05.emarket.activities.CartActivity;
 import com.group05.emarket.activities.NotificationActivity;
 import com.group05.emarket.adapters.CategoryAdapter;
-import com.group05.emarket.adapters.ProductAdapter;
 import com.group05.emarket.models.Category;
 import com.group05.emarket.models.Product;
 
@@ -62,21 +62,21 @@ public class HomeFragment extends Fragment {
         var productItemDecoration = new ProductAdapter.ProductItemDecoration(3, 20, false);
 
         RecyclerView _rvCategories = layout.findViewById(R.id.rv_categories);
-        _rvCategories.setAdapter(new CategoryAdapter(_context, _getAllCategories()));
+        _rvCategories.setAdapter(new CategoryAdapter(_context, MockData.getCategories()));
         _rvCategories.setLayoutManager(new LinearLayoutManager(_context, LinearLayoutManager.HORIZONTAL, false));
 
         RecyclerView rvPopularProducts = layout.findViewById(R.id.rv_popular_products);
-        rvPopularProducts.setAdapter(new ProductAdapter(_context, _getProducts().subList(0, 3)));
+        rvPopularProducts.setAdapter(new ProductAdapter(_context, MockData.getProducts().subList(0, 3)));
         rvPopularProducts.setLayoutManager(new GridLayoutManager(_context, 3));
         rvPopularProducts.addItemDecoration(productItemDecoration);
 
         RecyclerView rvNewestProducts = layout.findViewById(R.id.rv_newest_products);
-        rvNewestProducts.setAdapter(new ProductAdapter(_context, _getProducts().subList(0, 3)));
+        rvNewestProducts.setAdapter(new ProductAdapter(_context, MockData.getProducts().subList(0, 3)));
         rvNewestProducts.setLayoutManager(new GridLayoutManager(_context, 3));
         rvNewestProducts.addItemDecoration(productItemDecoration);
 
         RecyclerView rvDiscountProducts = layout.findViewById(R.id.rv_discount_products);
-        rvDiscountProducts.setAdapter(new ProductAdapter(_context, _getProducts().subList(0, 3)));
+        rvDiscountProducts.setAdapter(new ProductAdapter(_context, MockData.getProducts().subList(0, 3)));
         rvDiscountProducts.setLayoutManager(new GridLayoutManager(_context, 3));
         rvDiscountProducts.addItemDecoration(productItemDecoration);
 
@@ -116,73 +116,5 @@ public class HomeFragment extends Fragment {
         BadgeUtils.attachBadgeDrawable(_badgeCart, _topBar, _topBar.getMenu().findItem(R.id.action_cart).getItemId());
 
         return layout;
-    }
-
-    private static ArrayList<Category> _getAllCategories() {
-        var categories = new ArrayList<Category>();
-
-        categories.add(new Category("Vegetables", R.drawable.ic_button_vegetable));
-        categories.add(new Category("Fruits", R.drawable.ic_button_fruit));
-        categories.add(new Category("Meats", R.drawable.ic_button_meat));
-        categories.add(new Category("Eggs", R.drawable.ic_button_egg));
-        categories.add(new Category("Fishes", R.drawable.ic_button_vegetable));
-        categories.add(new Category("Snacks", R.drawable.ic_button_fruit));
-        categories.add(new Category("Beverages", R.drawable.ic_button_meat));
-        categories.add(new Category("Bakeries", R.drawable.ic_button_egg));
-
-        return categories;
-    }
-
-    private static ArrayList<Product> _getProducts() {
-        var products = new ArrayList<Product>();
-
-        var product1 = new Product.Builder()
-                .setId(UUID.randomUUID())
-                .setName("Bare Baked Crunchy Banana Chips 2.7 oz")
-                .setImage(R.drawable.image_product_1)
-                .setPrice(2)
-                .setRating(4.8f)
-                .setRatingCount(81)
-                .setDiscount(30)
-                .build();
-
-        var product2 = new Product.Builder()
-                .setId(UUID.randomUUID())
-                .setName("Keripik Pisang")
-                .setImage(R.drawable.image_product_2)
-                .setPrice(1.2f)
-                .setRating(4.2f)
-                .setRatingCount(42)
-                .setDiscount(12)
-                .build();
-
-        var product3 = new Product.Builder()
-                .setId(UUID.randomUUID())
-                .setName("Beras Topi Koki Harum 5 Kilo")
-                .setImage(R.drawable.image_product_3)
-                .setPrice(3.5f)
-                .setRating(3.2f)
-                .setRatingCount(12)
-                .setDiscount(5)
-                .build();
-
-        var product4 = new Product.Builder()
-                .setId(UUID.randomUUID())
-                .setName("Beras 5 Kg")
-                .setImage(R.drawable.image_product_4)
-                .setPrice(2.5f)
-                .setRating(4.6f)
-                .setRatingCount(104)
-                .setDiscount(0)
-                .build();
-
-        products.add(product1);
-        products.add(product2);
-        products.add(product3);
-        products.add(product4);
-
-        Collections.shuffle(products);
-
-        return products;
     }
 }
