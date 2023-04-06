@@ -27,4 +27,13 @@
     <string name="activity_product_detail_tv_related_products">Related Products</string>
     <string name="activity_product_detail_btn_load_more_reviews">Load More Reviews</string>
     <string name="activity_product_detail_description">Description</string>
+    <string name="dialog_filter_amp_sorting_title"><![CDATA[Filter & Sorting]]></string>
+    <string name="dialog_all_categories_title">All Categories</string>
+    <string name="dialog_filter_sorting_tab_item_filter">Filter</string>
+    <string name="dialog_filter_sorting_tab_item_sorting">Sorting</string>
+    <string name="fragment_filter_min_price">$0.00</string>
+    <string name="fragment_filter_max_price">$100.00</string>
+    <string name="dialog_filter_sorting_btn_apply">Apply</string>
+    <string name="dialog_filter_sorting_btn_reset">Reset</string>
+    <string name="fragment_filter_price_range">Price range</string>
 </resources>

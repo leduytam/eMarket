@@ -7,10 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="gray">#FF808080</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="primary">#FF6200EE</color>
-    <color name="primary_dark">#FF3700B3</color>
 
+    <color name="black">#000000</color>
+    <color name="primary">#FF8D4ED5</color>
+    <color name="primary_dark">#FF3700B3</color>
     <color name="gray_100">#FFFAFAFA</color>
     <color name="gray_200">#FFF5F5F5</color>
     <color name="gray_300">#FFDCDCDC</color>
@@ -56,6 +56,4 @@
     <color name="BIOMETRIC_GRAY_BACKGROUND">#E3E3E3</color>
     <color name="WHITE">#FFFFFF</color>
     <color name="BLACK">#000000</color>
-
-
 </resources>

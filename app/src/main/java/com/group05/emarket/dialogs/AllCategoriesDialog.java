@@ -20,7 +20,6 @@ import com.group05.emarket.R;
 import com.group05.emarket.adapters.CategoryAdapter;
 
 public class AllCategoriesDialog extends DialogFragment {
-
     public AllCategoriesDialog() {
     }
 

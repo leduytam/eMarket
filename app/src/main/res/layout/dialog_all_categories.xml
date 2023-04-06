@@ -28,7 +28,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="All Categories"
+                    android:text="@string/dialog_all_categories_title"
                     android:textColor="@color/black"
                     android:layout_marginStart="10dp"
                     android:textSize="16sp"
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.Material3.Button.IconButton"
-                    app:iconTint="@color/gray_800"
+                    app:iconTint="@color/black"
                     app:rippleColor="?attr/colorControlHighlight"
                     app:icon="@drawable/ic_close" />
             </LinearLayout>

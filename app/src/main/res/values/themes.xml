@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.EMarket" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/PRIMARY</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -17,12 +17,12 @@
 
     <style name="Theme.SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="colorPrimaryDark">@color/purple_500</item>
+        <item name="colorPrimaryDark">@color/primary</item>
     </style>
 
     <style name="Toolbar.SmallTitleText" parent="TextAppearance.Material3.TitleMedium">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="ImageViewCircular" parent="">
