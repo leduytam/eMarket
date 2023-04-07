@@ -18,38 +18,38 @@ import com.group05.emarket.models.Category;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-    private final Context _context;
-    private final List<Category> _categories;
+    private final Context context;
+    private final List<Category> categories;
 
     public CategoryAdapter(Context context, List<Category> categories) {
-        this._context = context;
-        this._categories = categories;
+        this.context = context;
+        this.categories = categories;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(_context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_item_category, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Category category = _categories.get(position);
+        Category category = categories.get(position);
         holder._ivCategory.setImageResource(category.getImage());
         holder._tvName.setText(category.getName());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intentToCategory = new Intent(_context, ProductListActivity.class);
+            Intent intentToCategory = new Intent(context, ProductListActivity.class);
             intentToCategory.putExtra("title", "Category");
-            _context.startActivity(intentToCategory);
+            context.startActivity(intentToCategory);
         });
     }
 
     @Override
     public int getItemCount() {
-        return _categories.size();
+        return categories.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

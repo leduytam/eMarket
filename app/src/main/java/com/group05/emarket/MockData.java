@@ -1,5 +1,6 @@
 package com.group05.emarket;
 
+import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Category;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.models.Review;
@@ -14,6 +15,7 @@ public class MockData {
     private final static List<Product> _products;
     private final static List<Category> _categories;
     private final static List<Review> _reviews;
+    private final static List<CartItem> _cartItems;
 
     public static List<Product> getProducts() {
         List<Product> products = new ArrayList<>(_products);
@@ -35,10 +37,15 @@ public class MockData {
         return reviews;
     }
 
+    public static List<CartItem> getCartItems() {
+        return _cartItems;
+    }
+
     static {
         _products = new ArrayList<>();
         _categories = new ArrayList<>();
         _reviews = new ArrayList<>();
+        _cartItems = new ArrayList<>();
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("b88f672b-8135-4cf2-9c4b-0050a1304e4c"))
@@ -207,5 +214,10 @@ public class MockData {
                 .setReviewerAvatar(R.drawable.image_avatar_6)
                 .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
                 .build());
+
+        _cartItems.add(new CartItem(_products.get(0), 1));
+        _cartItems.add(new CartItem(_products.get(1), 2));
+        _cartItems.add(new CartItem(_products.get(2), 3));
+        _cartItems.add(new CartItem(_products.get(3), 4));
     }
 }

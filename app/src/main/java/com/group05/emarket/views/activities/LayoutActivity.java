@@ -17,16 +17,15 @@ import com.group05.emarket.views.fragments.OrderFragment;
 import com.group05.emarket.views.fragments.ProfileFragment;
 import com.group05.emarket.views.fragments.SearchFragment;
 
-@ExperimentalBadgeUtils
-public class LayoutActivity extends AppCompatActivity {
-    private HomeFragment _homeFragment;
-    private SearchFragment _searchFragment;
-    private OrderFragment _orderFragment;
-    private ProfileFragment _profileFragment;
+@ExperimentalBadgeUtils public class LayoutActivity extends AppCompatActivity {
+    private HomeFragment homeFragment;
+    private SearchFragment searchFragment;
+    private OrderFragment orderFragment;
+    private ProfileFragment profileFragment;
 
     private static FirebaseAuth mAuth;
 
-    private NavigationBarView _bottomNav;
+    private NavigationBarView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,28 +33,28 @@ public class LayoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_layout);
         mAuth = FirebaseAuth.getInstance();
 
-        _homeFragment = HomeFragment.newInstance();
-        _searchFragment = SearchFragment.newInstance();
-        _orderFragment = OrderFragment.newInstance();
-        _profileFragment = ProfileFragment.newInstance();
+        homeFragment = HomeFragment.newInstance();
+        searchFragment = SearchFragment.newInstance();
+        orderFragment = OrderFragment.newInstance();
+        profileFragment = ProfileFragment.newInstance();
 
         var ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_fragment_container, _homeFragment);
+        ft.replace(R.id.fl_fragment_container, homeFragment);
         ft.commit();
 
-        _bottomNav = findViewById(R.id.bottom_nav);
-        _bottomNav.setOnItemSelectedListener(item -> {
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setOnItemSelectedListener(item -> {
             var id = item.getItemId();
             var ft1 = getSupportFragmentManager().beginTransaction();
 
             if (id == R.id.action_home) {
-                ft1.replace(R.id.fl_fragment_container, _homeFragment);
+                ft1.replace(R.id.fl_fragment_container, homeFragment);
             } else if (id == R.id.action_search) {
-                ft1.replace(R.id.fl_fragment_container, _searchFragment);
+                ft1.replace(R.id.fl_fragment_container, searchFragment);
             } else if (id == R.id.action_order) {
-                ft1.replace(R.id.fl_fragment_container, _orderFragment);
+                ft1.replace(R.id.fl_fragment_container, orderFragment);
             } else if (id == R.id.action_profile) {
-                ft1.replace(R.id.fl_fragment_container, _profileFragment);
+                ft1.replace(R.id.fl_fragment_container, profileFragment);
             }
 
             ft1.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

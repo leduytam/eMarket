@@ -12,8 +12,6 @@ import com.google.android.material.slider.RangeSlider;
 import com.group05.emarket.R;
 
 public class FilterFragment extends Fragment {
-    private RangeSlider _rsPrice;
-
     public FilterFragment() {
     }
 
@@ -27,7 +25,7 @@ public class FilterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_filter, container, false);
 
-        _rsPrice = layout.findViewById(R.id.rs_price);
+        RangeSlider rsPrice = layout.findViewById(R.id.rs_price);
         return layout;
     }
 }

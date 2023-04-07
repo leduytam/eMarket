@@ -3,7 +3,6 @@ package com.group05.emarket.views.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,25 +21,25 @@ import com.group05.emarket.utilities.Formatter;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
-    private final List<Product> _products;
-    private final Context _context;
+    private final List<Product> products;
+    private final Context context;
 
     public ProductAdapter(Context context, List<Product> products) {
-        _context = context;
-        _products = products;
+        this.context = context;
+        this.products = products;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(_context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_item_product, parent, false);
         return new ProductAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product product = _products.get(position);
+        Product product = products.get(position);
         holder._tvName.setText(product.getName());
         holder._ivImage.setImageResource(product.getImage());
         holder._tvRatingCount.setText(String.format("%s Reviews", product.getRatingCount()));
@@ -60,15 +59,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(_context, ProductDetailActivity.class);
+            Intent intent = new Intent(context, ProductDetailActivity.class);
             intent.putExtra("id", product.getId());
-            _context.startActivity(intent);
+            context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return _products.size();
+        return products.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

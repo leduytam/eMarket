@@ -19,25 +19,25 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
-    private final Context _context;
-    private final List<Review> _reviews;
+    private final Context context;
+    private final List<Review> reviews;
 
     public ReviewAdapter(Context context, List<Review> reviews) {
-        this._context = context;
-        this._reviews = reviews;
+        this.context = context;
+        this.reviews = reviews;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(_context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_item_review, parent, false);
         return new ReviewAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Review review = _reviews.get(position);
+        Review review = reviews.get(position);
         holder._tvContent.setText(review.getContent());
         holder._rbRating.setRating(review.getRating());
         holder._tvCreatedAt.setText(TimeAgo.convert(review.getCreatedAt().toEpochSecond(ZoneOffset.UTC)));
@@ -47,7 +47,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return _reviews.size();
+        return reviews.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

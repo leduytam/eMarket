@@ -17,7 +17,7 @@ import com.group05.emarket.views.activities.AuthenticationActivity;
 
 public class ProfileFragment extends Fragment {
     private Button btnLogout;
-    private Context _context;
+    private Context context;
     private static FirebaseAuth mAuth;
     public ProfileFragment() {
     }
@@ -38,8 +38,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        _context = getContext();
-        btnLogout = view.findViewById(R.id.btnLogout);
+        context = getContext();
+        Button btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> onLogout());
         return view;
     }

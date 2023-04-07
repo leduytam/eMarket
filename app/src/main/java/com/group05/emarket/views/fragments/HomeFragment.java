@@ -19,6 +19,7 @@ import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
+import com.group05.emarket.databinding.FragmentHomeBinding;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.views.activities.CartActivity;
 import com.group05.emarket.views.activities.NotificationActivity;
@@ -30,8 +31,10 @@ import com.group05.emarket.views.dialogs.AllCategoriesDialog;
 public class HomeFragment extends Fragment {
     private Context _context;
 
-    private BadgeDrawable _badgeNotification;
-    private BadgeDrawable _badgeCart;
+    private BadgeDrawable badgeNotification;
+    private BadgeDrawable badgeCart;
+
+    private FragmentHomeBinding binding;
 
     public HomeFragment() {
     }
@@ -94,14 +97,14 @@ public class HomeFragment extends Fragment {
             return true;
         });
 
-        _badgeNotification = BadgeDrawable.create(_context);
-        _badgeNotification.clearNumber();
+        badgeNotification = BadgeDrawable.create(_context);
+        badgeNotification.clearNumber();
 
-        _badgeCart = BadgeDrawable.create(_context);
-        _badgeCart.clearNumber();
+        badgeCart = BadgeDrawable.create(_context);
+        badgeCart.clearNumber();
 
-        BadgeUtils.attachBadgeDrawable(_badgeNotification, _topBar, _topBar.getMenu().findItem(R.id.action_notification).getItemId());
-        BadgeUtils.attachBadgeDrawable(_badgeCart, _topBar, _topBar.getMenu().findItem(R.id.action_cart).getItemId());
+        BadgeUtils.attachBadgeDrawable(badgeNotification, _topBar, _topBar.getMenu().findItem(R.id.action_notification).getItemId());
+        BadgeUtils.attachBadgeDrawable(badgeCart, _topBar, _topBar.getMenu().findItem(R.id.action_cart).getItemId());
 
         return layout;
     }

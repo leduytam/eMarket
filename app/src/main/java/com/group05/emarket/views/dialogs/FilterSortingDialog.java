@@ -29,7 +29,7 @@ public class FilterSortingDialog extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_filter_sorting, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog_filter_sorting, null);
 
         Button btnClose = view.findViewById(R.id.btn_close);
         btnClose.setOnClickListener(v -> dismiss());

@@ -15,29 +15,29 @@ import com.group05.emarket.R;
 import java.util.List;
 
 public class SortOptionAdapter extends RecyclerView.Adapter<SortOptionAdapter.ViewHolder> {
-    private int _selectedIndex = -1;
-    private final List<String> _options;
-    private final Context _context;
+    private int selectedIndex = -1;
+    private final List<String> options;
+    private final Context context;
 
     public SortOptionAdapter(Context context, List<String> options) {
-        _options = options;
-        _context = context;
+        this.options = options;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(_context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.list_item_sorting, parent, false);
         return new SortOptionAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String option = _options.get(position);
+        String option = options.get(position);
         holder._tvOption.setText(option);
 
-        if (position == _selectedIndex) {
+        if (position == selectedIndex) {
             holder._ivTick.setVisibility(View.VISIBLE);
         } else {
             holder._ivTick.setVisibility(View.INVISIBLE);
@@ -46,8 +46,8 @@ public class SortOptionAdapter extends RecyclerView.Adapter<SortOptionAdapter.Vi
         holder.itemView.setOnClickListener(v -> {
             int index = holder.getAdapterPosition();
 
-            if (index != _selectedIndex) {
-                _selectedIndex = index;
+            if (index != selectedIndex) {
+                selectedIndex = index;
                 notifyDataSetChanged();
             }
         });
@@ -55,7 +55,7 @@ public class SortOptionAdapter extends RecyclerView.Adapter<SortOptionAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return _options.size();
+        return options.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
