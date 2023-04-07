@@ -21,14 +21,13 @@
             app:menu="@menu/menu_top_home"
             app:title="eMarket"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/Toolbar.SmallTitleText"
-            app:titleTextColor="@color/primary" />
+            app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -73,10 +72,10 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:overScrollMode="never"
                     android:id="@+id/rv_categories"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,10 +113,10 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:overScrollMode="never"
                     android:id="@+id/rv_popular_products"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
             </LinearLayout>
 
             <LinearLayout
@@ -155,10 +154,10 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:overScrollMode="never"
                     android:id="@+id/rv_newest_products"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
             </LinearLayout>
 
             <LinearLayout
@@ -196,10 +195,10 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:overScrollMode="never"
                     android:id="@+id/rv_discount_products"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

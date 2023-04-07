@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_none">0dp</dimen>
+    <dimen name="margin_sm">4dp</dimen>
+    <dimen name="margin_md">8dp</dimen>
+    <dimen name="margin_lg">16dp</dimen>
+    <dimen name="margin_xl">24dp</dimen>
+    <dimen name="margin_xxl">32dp</dimen>
+
+    <dimen name="padding_none">0dp</dimen>
+    <dimen name="padding_sm">4dp</dimen>
+    <dimen name="padding_md">8dp</dimen>
+    <dimen name="padding_lg">16dp</dimen>
+    <dimen name="padding_xl">24dp</dimen>
+    <dimen name="padding_xxl">32dp</dimen>
+
+    <dimen name="corner_radius_none">0dp</dimen>
+    <dimen name="corner_radius_sm">4dp</dimen>
+    <dimen name="corner_radius_md">8dp</dimen>
+    <dimen name="corner_radius_lg">16dp</dimen>
+    <dimen name="corner_radius_xl">24dp</dimen>
+    <dimen name="corner_radius_xxl">32dp</dimen>
+</resources>

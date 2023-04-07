@@ -43,51 +43,50 @@ public class MockData {
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("b88f672b-8135-4cf2-9c4b-0050a1304e4c"))
                 .setName("Vegetables")
-                .setImage(R.drawable.ic_button_vegetable)
+                .setImage(R.drawable.ic_category_vegetables)
                 .build());
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("4dbb88c5-1394-4f33-8e2a-5c5e2d5b5c5a"))
                 .setName("Fruits")
-                .setImage(R.drawable.ic_button_fruit)
+                .setImage(R.drawable.ic_category_fruits)
                 .build());
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("f659857d-39d5-4ba3-8c92-9b170c15b14d"))
                 .setName("Meats")
-                .setImage(R.drawable.ic_button_meat)
+                .setImage(R.drawable.ic_category_meats)
                 .build());
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("b49c50e3-36d2-4467-82d1-04a7eb34e9c7"))
                 .setName("Eggs")
-                .setImage(R.drawable.ic_button_egg)
+                .setImage(R.drawable.ic_category_eggs)
                 .build());
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("6cf10f6a-b271-46f1-98d1-c84095638fb9"))
                 .setName("Fishes")
-                .setImage(R.drawable.ic_button_vegetable)
-                .build());
-
-        _categories.add(new Category.Builder()
-                .setId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
-                .setName("Snacks")
-                .setImage(R.drawable.ic_button_fruit)
+                .setImage(R.drawable.ic_category_fishes)
                 .build());
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("e3f3e2f3-d41e-4940-bd09-f94ef83e674e"))
                 .setName("Beverages")
-                .setImage(R.drawable.ic_button_meat)
+                .setImage(R.drawable.ic_category_beverages)
                 .build());
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("c334a846-1596-4491-9b9a-90968e48f16a"))
                 .setName("Bakeries")
-                .setImage(R.drawable.ic_button_egg)
+                .setImage(R.drawable.ic_category_bakeries)
                 .build());
 
+        _categories.add(new Category.Builder()
+                .setId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
+                .setName("Snacks")
+                .setImage(R.drawable.ic_category_snacks)
+                .build());
 
         _products.add(new Product.Builder()
                 .setId(UUID.fromString("5e12bb3e-14d9-4c1e-853d-4a8a94ecb17c"))

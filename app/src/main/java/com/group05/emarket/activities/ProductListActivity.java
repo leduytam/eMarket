@@ -12,6 +12,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.adapters.ProductAdapter;
+import com.group05.emarket.dialogs.FilterSortingDialog;
 import com.group05.emarket.models.Product;
 
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ public class ProductListActivity extends AppCompatActivity {
 
         Button btnFilterSorting = findViewById(R.id.btn_filter_sorting);
         btnFilterSorting.setOnClickListener(v -> {
+            FilterSortingDialog dialog = new FilterSortingDialog();
+            dialog.show(getSupportFragmentManager(), "FilterSortingDialog");
         });
 
         RecyclerView rvProducts = findViewById(R.id.rv_products);

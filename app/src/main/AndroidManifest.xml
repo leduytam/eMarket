@@ -22,9 +22,6 @@
             android:name=".activities.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AllCategoriesActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.ProductListActivity"
             android:exported="false" />
         <activity
