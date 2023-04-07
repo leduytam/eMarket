@@ -1,4 +1,4 @@
-package com.group05.emarket.dialogs;
+package com.group05.emarket.views.dialogs;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
-import com.group05.emarket.adapters.CategoryAdapter;
+import com.group05.emarket.views.adapters.CategoryAdapter;
 
 public class AllCategoriesDialog extends DialogFragment {
     public AllCategoriesDialog() {

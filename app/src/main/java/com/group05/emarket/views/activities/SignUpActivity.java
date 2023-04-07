@@ -1,4 +1,4 @@
-package com.group05.emarket.activities;
+package com.group05.emarket.views.activities;
 
 import static com.group05.emarket.utilities.Validator.isValidEmail;
 

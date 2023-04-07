@@ -1,4 +1,4 @@
-package com.group05.emarket.activities;
+package com.group05.emarket.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -11,13 +11,8 @@ import android.widget.Button;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
-import com.group05.emarket.adapters.ProductAdapter;
-import com.group05.emarket.dialogs.FilterSortingDialog;
-import com.group05.emarket.models.Product;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.UUID;
+import com.group05.emarket.views.adapters.ProductAdapter;
+import com.group05.emarket.views.dialogs.FilterSortingDialog;
 
 public class ProductListActivity extends AppCompatActivity {
     @Override

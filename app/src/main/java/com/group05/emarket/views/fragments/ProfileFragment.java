@@ -1,4 +1,4 @@
-package com.group05.emarket.fragments;
+package com.group05.emarket.views.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.group05.emarket.R;
-import com.group05.emarket.activities.AuthenticationActivity;
+import com.group05.emarket.views.activities.AuthenticationActivity;
 
 public class ProfileFragment extends Fragment {
     private Button btnLogout;

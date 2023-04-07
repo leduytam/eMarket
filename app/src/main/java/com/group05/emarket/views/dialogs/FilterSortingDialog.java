@@ -1,4 +1,4 @@
-package com.group05.emarket.dialogs;
+package com.group05.emarket.views.dialogs;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -17,7 +17,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.group05.emarket.R;
-import com.group05.emarket.adapters.FilterSortingViewPagerAdapter;
+import com.group05.emarket.views.adapters.FilterSortingViewPagerAdapter;
 
 public class FilterSortingDialog extends DialogFragment {
     public FilterSortingDialog() {

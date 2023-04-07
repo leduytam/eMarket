@@ -1,4 +1,4 @@
-package com.group05.emarket.activities;
+package com.group05.emarket.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,10 +12,10 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.group05.emarket.R;
-import com.group05.emarket.fragments.HomeFragment;
-import com.group05.emarket.fragments.OrderFragment;
-import com.group05.emarket.fragments.ProfileFragment;
-import com.group05.emarket.fragments.SearchFragment;
+import com.group05.emarket.views.fragments.HomeFragment;
+import com.group05.emarket.views.fragments.OrderFragment;
+import com.group05.emarket.views.fragments.ProfileFragment;
+import com.group05.emarket.views.fragments.SearchFragment;
 
 @ExperimentalBadgeUtils
 public class LayoutActivity extends AppCompatActivity {

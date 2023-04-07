@@ -1,4 +1,4 @@
-package com.group05.emarket.fragments;
+package com.group05.emarket.views.fragments;
 
 import android.os.Bundle;
 
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.group05.emarket.R;
 
-public class SearchFragment extends Fragment {
-    public SearchFragment() {
+public class OrderFragment extends Fragment {
+    public OrderFragment() {
     }
 
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
+    public static OrderFragment newInstance() {
+        return new OrderFragment();
     }
 
     @Override
@@ -26,6 +26,6 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        return inflater.inflate(R.layout.fragment_order, container, false);
     }
 }

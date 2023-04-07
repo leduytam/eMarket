@@ -1,4 +1,4 @@
-package com.group05.emarket.activities;
+package com.group05.emarket.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Paint;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,8 +16,8 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
-import com.group05.emarket.adapters.ProductAdapter;
-import com.group05.emarket.adapters.ReviewAdapter;
+import com.group05.emarket.views.adapters.ProductAdapter;
+import com.group05.emarket.views.adapters.ReviewAdapter;
 import com.group05.emarket.utilities.Formatter;
 
 import java.util.Locale;

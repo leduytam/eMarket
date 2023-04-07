@@ -1,4 +1,4 @@
-package com.group05.emarket.adapters;
+package com.group05.emarket.views.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

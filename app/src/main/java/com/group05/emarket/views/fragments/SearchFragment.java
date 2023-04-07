@@ -1,4 +1,4 @@
-package com.group05.emarket.fragments;
+package com.group05.emarket.views.fragments;
 
 import android.os.Bundle;
 
@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.slider.RangeSlider;
 import com.group05.emarket.R;
 
-public class FilterFragment extends Fragment {
-    private RangeSlider _rsPrice;
+public class SearchFragment extends Fragment {
+    public SearchFragment() {
+    }
 
-    public FilterFragment() {
+    public static SearchFragment newInstance() {
+        return new SearchFragment();
     }
 
     @Override
@@ -25,9 +26,6 @@ public class FilterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_filter, container, false);
-
-        _rsPrice = layout.findViewById(R.id.rs_price);
-        return layout;
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 }

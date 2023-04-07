@@ -1,4 +1,4 @@
-package com.group05.emarket.adapters;
+package com.group05.emarket.views.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.R;
-import com.group05.emarket.activities.ProductDetailActivity;
+import com.group05.emarket.views.activities.ProductDetailActivity;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.utilities.Formatter;
 

@@ -1,10 +1,7 @@
-package com.group05.emarket.fragments;
+package com.group05.emarket.views.fragments;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -24,11 +21,11 @@ import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
-import com.group05.emarket.adapters.ProductAdapter;
-import com.group05.emarket.activities.CartActivity;
-import com.group05.emarket.activities.NotificationActivity;
-import com.group05.emarket.adapters.CategoryAdapter;
-import com.group05.emarket.dialogs.AllCategoriesDialog;
+import com.group05.emarket.views.adapters.ProductAdapter;
+import com.group05.emarket.views.activities.CartActivity;
+import com.group05.emarket.views.activities.NotificationActivity;
+import com.group05.emarket.views.adapters.CategoryAdapter;
+import com.group05.emarket.views.dialogs.AllCategoriesDialog;
 
 @ExperimentalBadgeUtils
 public class HomeFragment extends Fragment {

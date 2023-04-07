@@ -1,12 +1,12 @@
-package com.group05.emarket.adapters;
+package com.group05.emarket.views.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.group05.emarket.fragments.FilterFragment;
-import com.group05.emarket.fragments.SortingFragment;
+import com.group05.emarket.views.fragments.FilterFragment;
+import com.group05.emarket.views.fragments.SortingFragment;
 
 public class FilterSortingViewPagerAdapter extends FragmentStateAdapter {
     public FilterSortingViewPagerAdapter(@NonNull FragmentActivity fa) {

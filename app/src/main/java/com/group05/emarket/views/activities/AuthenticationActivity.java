@@ -1,4 +1,4 @@
-package com.group05.emarket.activities;
+package com.group05.emarket.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
