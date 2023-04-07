@@ -64,8 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, LayoutActivity.class);
                             startActivity(intent);
                             finish();
-                        }
-                        else {
+                        } else {
                             String error = task.getException().getMessage();
                             alertDialogBuilder.setTitle("Login failed").setMessage(error).setPositiveButton("OK", (dialog, which) -> {
                                 dialog.dismiss();
