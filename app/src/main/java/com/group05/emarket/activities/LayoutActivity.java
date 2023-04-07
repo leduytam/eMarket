@@ -3,21 +3,28 @@ package com.group05.emarket.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.group05.emarket.R;
 import com.group05.emarket.fragments.HomeFragment;
 import com.group05.emarket.fragments.OrderFragment;
 import com.group05.emarket.fragments.ProfileFragment;
 import com.group05.emarket.fragments.SearchFragment;
 
-@ExperimentalBadgeUtils public class LayoutActivity extends AppCompatActivity {
+@ExperimentalBadgeUtils
+public class LayoutActivity extends AppCompatActivity {
     private HomeFragment _homeFragment;
     private SearchFragment _searchFragment;
     private OrderFragment _orderFragment;
     private ProfileFragment _profileFragment;
+
+    private static FirebaseAuth mAuth;
 
     private NavigationBarView _bottomNav;
 
@@ -25,6 +32,7 @@ import com.group05.emarket.fragments.SearchFragment;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout);
+        mAuth = FirebaseAuth.getInstance();
 
         _homeFragment = HomeFragment.newInstance();
         _searchFragment = SearchFragment.newInstance();
@@ -55,5 +63,24 @@ import com.group05.emarket.fragments.SearchFragment;
 
             return true;
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        var firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            var isVerified = firebaseUser.isEmailVerified();
+            if (!isVerified) {
+                Intent intent = new Intent(LayoutActivity.this, AuthenticationActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "Please verify your email", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Welcome back " + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Intent intent = new Intent(LayoutActivity.this, AuthenticationActivity.class);
+            startActivity(intent);
+        }
     }
 }

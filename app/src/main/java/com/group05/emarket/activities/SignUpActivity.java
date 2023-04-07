@@ -16,14 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.badge.ExperimentalBadgeUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.group05.emarket.R;
 import com.group05.emarket.firestore.UsersFirestoreManager;
 import com.group05.emarket.models.User;
 
 import java.util.ArrayList;
 
+@ExperimentalBadgeUtils
 public class SignUpActivity extends AppCompatActivity {
     LinearLayout indicators, passwordValidationContainer, step1Container, step2Container, step3Container;
     CardView indicator1, indicator2, indicator3, step1Indicator, step2Indicator, step3Indicator;
@@ -31,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputEditText email, password;
     TextInputLayout emailLayout, passwordLayout;
     Button signUpButton;
+    MaterialAlertDialogBuilder alertDialogBuilder;
 
     private UsersFirestoreManager usersFirestoreManager;
 
@@ -86,6 +93,9 @@ public class SignUpActivity extends AppCompatActivity {
         usersFirestoreManager = UsersFirestoreManager.newInstance();
         setContentView(R.layout.activity_sign_up);
 
+        MaterialToolbar topBar = findViewById(R.id.top_bar);
+        topBar.setNavigationOnClickListener(v -> finish());
+
         email = findViewById(R.id.email_edit_text);
         password = findViewById(R.id.password_edit_text);
         emailLayout = findViewById(R.id.email_text_input_layout);
@@ -102,6 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
         step1Indicator = findViewById(R.id.step1Indicator);
         step2Indicator = findViewById(R.id.step2Indicator);
         step3Indicator = findViewById(R.id.step3Indicator);
+        alertDialogBuilder = new MaterialAlertDialogBuilder(this);
 
         for (int i = 0; i < passwordValidation.size(); i++) {
             switch (i) {
@@ -200,11 +211,35 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void onSubmit(String email, String password) {
         User user = new User(email, password);
-        var res = usersFirestoreManager.createUser(user);
-        if (res) {
-            Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
+        signUpButton.setEnabled(false);
+        var res = usersFirestoreManager.signUp(user).addOnCompleteListener(
+                task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                        firebaseUser.sendEmailVerification().addOnCompleteListener(
+                                taskSendingEmail -> {
+                                    if (taskSendingEmail.isSuccessful()) {
+                                        alertDialogBuilder.setTitle("Sign up successfully").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage("Verification email sent! Please check your inbox (and spam folder) and follow the instructions to complete the process. Contact support if needed. Thanks!").setPositiveButton("OK", (dialog, which) -> {
+                                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                            startActivity(intent);
+                                        }).show();
+                                    } else {
+                                        Toast.makeText(SignUpActivity.this, "Email verification failed", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                        );
+                        signUpButton.setEnabled(true);
+                    } else {
+                        String error = task.getException().getMessage();
+                        alertDialogBuilder.setTitle("Sign up failed").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage(error).setPositiveButton("OK", (dialog, which) -> {
+                            dialog.dismiss();
+                        }).show();
+                        signUpButton.setEnabled(true);
+                    }
+                }
+        );
+
     }
 }

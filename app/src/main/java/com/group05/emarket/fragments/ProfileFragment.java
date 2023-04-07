@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.group05.emarket.R;
 import com.group05.emarket.activities.AuthenticationActivity;
 
 public class ProfileFragment extends Fragment {
     private Button btnLogout;
     private Context _context;
+    private static FirebaseAuth mAuth;
     public ProfileFragment() {
     }
 
@@ -28,6 +30,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
     }
 
 
@@ -43,8 +46,8 @@ public class ProfileFragment extends Fragment {
 
 
     private void onLogout() {
+        mAuth.signOut();
         Intent intent = new Intent(_context, AuthenticationActivity.class);
         startActivity(intent);
-
     }
 }
