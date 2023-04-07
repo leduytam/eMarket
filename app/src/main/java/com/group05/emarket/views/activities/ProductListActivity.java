@@ -12,6 +12,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.views.adapters.ProductAdapter;
+import com.group05.emarket.views.decorations.GridGapItemDecoration;
 import com.group05.emarket.views.dialogs.FilterSortingDialog;
 
 public class ProductListActivity extends AppCompatActivity {
@@ -41,6 +42,6 @@ public class ProductListActivity extends AppCompatActivity {
         RecyclerView rvProducts = findViewById(R.id.rv_products);
         rvProducts.setAdapter(new ProductAdapter(this, MockData.getProducts()));
         rvProducts.setLayoutManager(new GridLayoutManager(this, 3));
-        rvProducts.addItemDecoration(new ProductAdapter.ProductItemDecoration(3, 10, false));
+        rvProducts.addItemDecoration(new GridGapItemDecoration(3, 10, false));
     }
 }

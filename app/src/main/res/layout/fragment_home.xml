@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_100"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".views.fragments.HomeFragment">
 
@@ -75,7 +75,9 @@
                     android:id="@+id/rv_categories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never" />
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,7 +118,9 @@
                     android:id="@+id/rv_popular_products"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3" />
             </LinearLayout>
 
             <LinearLayout
@@ -157,7 +161,9 @@
                     android:id="@+id/rv_newest_products"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3" />
             </LinearLayout>
 
             <LinearLayout
@@ -198,7 +204,9 @@
                     android:id="@+id/rv_discount_products"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never" />
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

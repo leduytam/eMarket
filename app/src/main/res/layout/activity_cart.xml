@@ -16,7 +16,7 @@
             android:layout_height="48dp"
             android:background="@color/white"
             android:elevation="4dp"
-            app:navigationIcon="@drawable/ic_arrow_left"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:title="@string/activity_cart_top_bar_title"
             app:titleCentered="true"
             app:titleTextAppearance="@style/Toolbar.SmallTitleText" />

@@ -26,10 +26,10 @@ public class AllCategoriesDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Dialog dialog = new Dialog(getActivity(), R.style.Dialog);
+        Dialog dialog = new Dialog(getActivity(), getTheme());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_all_categories, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog_all_categories, null);
         dialog.setContentView(view);
 
         Button btnClose = view.findViewById(R.id.btn_close);

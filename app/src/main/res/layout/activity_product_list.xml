@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".views.activities.ProductListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/top_bar"
@@ -17,7 +19,7 @@
             android:layout_height="48dp"
             android:background="@color/white"
             android:elevation="4dp"
-            app:navigationIcon="@drawable/ic_arrow_left"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:titleCentered="true"
             app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
 
@@ -27,6 +29,8 @@
             android:layout_height="48dp"
             android:layout_margin="10dp"
             android:background="@drawable/search_bar_background"
+            android:elevation="4dp"
+            app:queryBackground="@android:color/transparent"
             app:queryHint="Enter Product Name"
             app:theme="@style/SearchView.SmallText" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -36,22 +40,24 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:backgroundTint="@color/gray_100"
+        android:backgroundTint="@color/white"
         app:cardCornerRadius="25dp"
         app:strokeWidth="0dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:overScrollMode="never"
             android:id="@+id/rv_products"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:overScrollMode="never" />
     </com.google.android.material.card.MaterialCardView>
 
     <Button
         android:id="@+id/btn_filter_sorting"
         style="@style/Widget.Material3.Button.OutlinedButton"
+        android:textColor="@color/black"
+        app:rippleColor="?attr/colorControlHighlight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
