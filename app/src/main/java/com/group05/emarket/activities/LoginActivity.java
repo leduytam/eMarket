@@ -1,6 +1,6 @@
 package com.group05.emarket.activities;
 
-import static com.group05.emarket.utilities.Validator.isValidEmail;
+import static com.group05.emarket.utilities.Validator.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -8,12 +8,15 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.group05.emarket.R;
 import com.group05.emarket.firestore.UsersFirestoreManager;
 import com.group05.emarket.models.User;
@@ -27,18 +30,21 @@ public class LoginActivity extends AppCompatActivity {
 
     UsersFirestoreManager usersFirestoreManager;
 
+    FirebaseAuth mAuth;
+
     Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        usersFirestoreManager = UsersFirestoreManager.newInstance();
         setContentView(R.layout.activity_login);
+        usersFirestoreManager = UsersFirestoreManager.newInstance();
         email = findViewById(R.id.email_edit_text);
         password = findViewById(R.id.password_edit_text);
         emailLayout = findViewById(R.id.email_text_input_layout);
         passwordLayout = findViewById(R.id.password_text_input_layout);
         alertDialogBuilder = new MaterialAlertDialogBuilder(this);
+        mAuth = FirebaseAuth.getInstance();
 
         email.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -58,23 +64,33 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             var emailValue = email.getText().toString();
             var passwordValue = password.getText().toString();
-            usersFirestoreManager.login(new User(emailValue, passwordValue)).addOnCompleteListener(
-                    task -> {
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, LayoutActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            String error = task.getException().getMessage();
-                            alertDialogBuilder.setTitle("Login failed").setMessage(error).setPositiveButton("OK", (dialog, which) -> {
-                                dialog.dismiss();
-                            }).setBackground(
-                                    getResources().getDrawable(R.drawable.dialog_alert_background)
-                            ).show();
+            try {
+                usersFirestoreManager.login(new User(emailValue, passwordValue)).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        if (currentUser != null) {
+                            if (currentUser.isEmailVerified()) {
+                                Intent intent = new Intent(LoginActivity.this, LayoutActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                alertDialogBuilder.setTitle("Login failed").setMessage("Please verify your email").setPositiveButton("OK", (dialog, which) -> {
+                                    dialog.dismiss();
+                                }).setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).show();
+                            }
                         }
+                    } else {
+                        String error = task.getException().getMessage();
+                        alertDialogBuilder.setTitle("Login failed").setMessage(error).setPositiveButton("OK", (dialog, which) -> {
+                            dialog.dismiss();
+                        }).setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).show();
                     }
-            );
-
+                });
+            } catch (Exception e) {
+                alertDialogBuilder.setTitle("Login failed").setMessage(e.getMessage()).setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss();
+                }).setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).show();
+            }
         });
     }
 }

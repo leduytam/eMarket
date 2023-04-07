@@ -69,10 +69,18 @@ public class LayoutActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         var firebaseUser = mAuth.getCurrentUser();
-        if (firebaseUser == null) {
+        if (firebaseUser != null) {
+            var isVerified = firebaseUser.isEmailVerified();
+            if (!isVerified) {
+                Intent intent = new Intent(LayoutActivity.this, AuthenticationActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "Please verify your email", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Welcome back " + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Intent intent = new Intent(LayoutActivity.this, AuthenticationActivity.class);
             startActivity(intent);
         }
-        Toast.makeText(this, "Welcome back " + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
     }
 }

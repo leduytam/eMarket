@@ -20,6 +20,8 @@ import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.group05.emarket.R;
 import com.group05.emarket.firestore.UsersFirestoreManager;
 import com.group05.emarket.models.User;
@@ -35,7 +37,6 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputLayout emailLayout, passwordLayout;
     Button signUpButton;
     MaterialAlertDialogBuilder alertDialogBuilder;
-
 
     private UsersFirestoreManager usersFirestoreManager;
 
@@ -206,20 +207,33 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void onSubmit(String email, String password) {
         User user = new User(email, password);
+        signUpButton.setEnabled(false);
         var res = usersFirestoreManager.signUp(user).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
-                        alertDialogBuilder.setTitle("Sign up successfully").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setPositiveButton("OK", (dialog, which) -> {
-                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        }).show();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                        firebaseUser.sendEmailVerification().addOnCompleteListener(
+                                taskSendingEmail -> {
+                                    if (taskSendingEmail.isSuccessful()) {
+                                        alertDialogBuilder.setTitle("Sign up successfully").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage("Verification email sent! Please check your inbox (and spam folder) and follow the instructions to complete the process. Contact support if needed. Thanks!").setPositiveButton("OK", (dialog, which) -> {
+                                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                            startActivity(intent);
+                                        }).show();
+                                    } else {
+                                        Toast.makeText(SignUpActivity.this, "Email verification failed", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                        );
+                        signUpButton.setEnabled(true);
                     } else {
                         String error = task.getException().getMessage();
                         alertDialogBuilder.setTitle("Sign up failed").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage(error).setPositiveButton("OK", (dialog, which) -> {
-                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                            // hide dialog
+                            dialog.dismiss();
                         }).show();
+                        signUpButton.setEnabled(true);
                     }
                 }
         );

@@ -21,9 +21,6 @@ public class Validator {
 
     public static String hashPassword(String password) {
         try {
-            if (!isValidPassword(password)) {
-                return null;
-            }
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(password.getBytes());
             byte[] byteData = md.digest();
