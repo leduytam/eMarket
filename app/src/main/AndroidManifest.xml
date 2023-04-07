@@ -13,15 +13,6 @@
         android:theme="@style/Theme.EMarket"
         tools:targetApi="31">
         <activity
-            android:name=".activities.AuthenticationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.SignUpActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.AllCategoriesActivity"
             android:exported="false" />
         <activity

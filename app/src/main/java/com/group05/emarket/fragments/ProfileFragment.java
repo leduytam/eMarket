@@ -1,7 +1,6 @@
 package com.group05.emarket.fragments;
 
-import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.group05.emarket.R;
-import com.group05.emarket.activities.AuthenticationActivity;
 
 public class ProfileFragment extends Fragment {
-    private Button btnLogout;
-    private Context _context;
+
     public ProfileFragment() {
     }
-
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -30,21 +27,25 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        _context = getContext();
-        btnLogout = view.findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(v -> onLogout());
-        return view;
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
+    private Button btnLogout;
 
-    private void onLogout() {
-        Intent intent = new Intent(_context, AuthenticationActivity.class);
-        startActivity(intent);
-
+    private void showLogoutDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        builder.setTitle("Logout account?");
+        builder.setMessage("Are you sure you want to logout?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Perform logout action here
+            }
+        });
+        builder.setNegativeButton("No", null);
+        builder.show();
     }
 }
