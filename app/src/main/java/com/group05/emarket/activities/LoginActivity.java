@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordLayout = findViewById(R.id.password_text_input_layout);
         alertDialogBuilder = new MaterialAlertDialogBuilder(this);
         mAuth = FirebaseAuth.getInstance();
+        MaterialToolbar topBar = findViewById(R.id.top_bar);
+        topBar.setNavigationOnClickListener(v -> finish());
 
         email.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {

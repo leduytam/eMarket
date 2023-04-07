@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
@@ -91,6 +92,9 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         usersFirestoreManager = UsersFirestoreManager.newInstance();
         setContentView(R.layout.activity_sign_up);
+
+        MaterialToolbar topBar = findViewById(R.id.top_bar);
+        topBar.setNavigationOnClickListener(v -> finish());
 
         email = findViewById(R.id.email_edit_text);
         password = findViewById(R.id.password_edit_text);
@@ -230,7 +234,6 @@ public class SignUpActivity extends AppCompatActivity {
                     } else {
                         String error = task.getException().getMessage();
                         alertDialogBuilder.setTitle("Sign up failed").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage(error).setPositiveButton("OK", (dialog, which) -> {
-                            // hide dialog
                             dialog.dismiss();
                         }).show();
                         signUpButton.setEnabled(true);

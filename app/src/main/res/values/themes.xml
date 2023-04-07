@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="rippleColor">?attr/colorControlHighlight</item>
+        <item name="android:fontFamily">@font/circular_std</item>
     </style>
 
     <style name="Theme.SplashTheme" parent="Theme.AppCompat.NoActionBar">

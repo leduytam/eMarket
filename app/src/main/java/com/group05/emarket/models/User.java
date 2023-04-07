@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class User {
 
+    static public User currentUser;
+
     enum Gender {
         MALE,
         FEMALE,
