@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.badge.ExperimentalBadgeUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.group05.emarket.R;
@@ -24,6 +26,7 @@ import com.group05.emarket.models.User;
 
 import java.util.ArrayList;
 
+@ExperimentalBadgeUtils
 public class SignUpActivity extends AppCompatActivity {
     LinearLayout indicators, passwordValidationContainer, step1Container, step2Container, step3Container;
     CardView indicator1, indicator2, indicator3, step1Indicator, step2Indicator, step3Indicator;
@@ -31,6 +34,8 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputEditText email, password;
     TextInputLayout emailLayout, passwordLayout;
     Button signUpButton;
+    MaterialAlertDialogBuilder alertDialogBuilder;
+
 
     private UsersFirestoreManager usersFirestoreManager;
 
@@ -102,6 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
         step1Indicator = findViewById(R.id.step1Indicator);
         step2Indicator = findViewById(R.id.step2Indicator);
         step3Indicator = findViewById(R.id.step3Indicator);
+        alertDialogBuilder = new MaterialAlertDialogBuilder(this);
 
         for (int i = 0; i < passwordValidation.size(); i++) {
             switch (i) {
@@ -200,11 +206,23 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void onSubmit(String email, String password) {
         User user = new User(email, password);
-        var res = usersFirestoreManager.createUser(user);
-        if (res) {
-            Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
+        var res = usersFirestoreManager.signUp(user).addOnCompleteListener(
+                task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
+                        alertDialogBuilder.setTitle("Sign up successfully").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setPositiveButton("OK", (dialog, which) -> {
+                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }).show();
+                    } else {
+                        String error = task.getException().getMessage();
+                        alertDialogBuilder.setTitle("Sign up failed").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage(error).setPositiveButton("OK", (dialog, which) -> {
+                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }).show();
+                    }
+                }
+        );
+
     }
 }

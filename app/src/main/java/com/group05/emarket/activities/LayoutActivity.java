@@ -18,6 +18,7 @@ import com.group05.emarket.fragments.SearchFragment;
     private SearchFragment _searchFragment;
     private OrderFragment _orderFragment;
     private ProfileFragment _profileFragment;
+    
 
     private NavigationBarView _bottomNav;
 
@@ -55,5 +56,11 @@ import com.group05.emarket.fragments.SearchFragment;
 
             return true;
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }
