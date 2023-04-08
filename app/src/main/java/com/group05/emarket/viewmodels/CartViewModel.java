@@ -10,10 +10,9 @@ import com.group05.emarket.repositories.CartRepository;
 import java.util.List;
 
 public class CartViewModel extends ViewModel {
-    private final CartRepository cartRepo;
+    private final CartRepository cartRepo = CartRepository.getInstance();
 
     public CartViewModel() {
-        cartRepo = new CartRepository();
     }
 
     public LiveData<List<CartItem>> getCartItems() {

@@ -4,21 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.FragmentHomeBinding;
+import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.views.activities.CartActivity;
 import com.group05.emarket.views.activities.NotificationActivity;
@@ -28,12 +30,7 @@ import com.group05.emarket.views.dialogs.AllCategoriesDialog;
 
 @ExperimentalBadgeUtils
 public class HomeFragment extends Fragment {
-    private Context _context;
-
-    private BadgeDrawable badgeNotification;
-    private BadgeDrawable badgeCart;
-
-    private FragmentHomeBinding binding;
+    private BadgeDrawable cartBadge;
 
     public HomeFragment() {
     }
@@ -43,50 +40,40 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        _context = getContext();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_home, container, false);
+        com.group05.emarket.databinding.FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
+        Context context = binding.getRoot().getContext();
 
         var gridGapItemDecoration = new GridGapItemDecoration(3, 20, true);
 
-        RecyclerView _rvCategories = layout.findViewById(R.id.rv_categories);
-        _rvCategories.setAdapter(new CategoryAdapter(_context, MockData.getCategories()));
+        binding.rvCategories.setAdapter(new CategoryAdapter(context, MockData.getCategories()));
 
-        RecyclerView rvPopularProducts = layout.findViewById(R.id.rv_popular_products);
-        rvPopularProducts.setAdapter(new ProductAdapter(_context, MockData.getProducts().subList(0, 3)));
-        rvPopularProducts.addItemDecoration(gridGapItemDecoration);
+        binding.rvPopularProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
+        binding.rvPopularProducts.addItemDecoration(gridGapItemDecoration);
 
-        RecyclerView rvNewestProducts = layout.findViewById(R.id.rv_newest_products);
-        rvNewestProducts.setAdapter(new ProductAdapter(_context, MockData.getProducts().subList(0, 3)));
-        rvNewestProducts.addItemDecoration(gridGapItemDecoration);
+        binding.rvNewestProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
+        binding.rvNewestProducts.addItemDecoration(gridGapItemDecoration);
 
-        RecyclerView rvDiscountProducts = layout.findViewById(R.id.rv_discount_products);
-        rvDiscountProducts.setAdapter(new ProductAdapter(_context, MockData.getProducts().subList(0, 3)));
-        rvDiscountProducts.addItemDecoration(gridGapItemDecoration);
+        binding.rvDiscountProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
+        binding.rvDiscountProducts.addItemDecoration(gridGapItemDecoration);
 
-        TextView tvSeeAllCategories = layout.findViewById(R.id.tv_see_all_categories);
-        tvSeeAllCategories.setOnClickListener(v -> {
+        binding.tvSeeAllCategories.setOnClickListener(v -> {
             AllCategoriesDialog dialog = new AllCategoriesDialog();
             dialog.show(getActivity().getSupportFragmentManager(), "all_categories_dialog");
         });
 
-        Toolbar _topBar = layout.findViewById(R.id.top_bar);
 
-        _topBar.setOnMenuItemClickListener(item -> {
+        MaterialToolbar topBar = binding.topBar;
+        topBar.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
 
             Intent intent;
 
             if (id == R.id.action_notification) {
-                intent = new Intent(_context, NotificationActivity.class);
+                intent = new Intent(context, NotificationActivity.class);
             } else if (id == R.id.action_cart) {
-                intent = new Intent(_context, CartActivity.class);
+                intent = new Intent(context, CartActivity.class);
             } else {
                 return false;
             }
@@ -96,15 +83,20 @@ public class HomeFragment extends Fragment {
             return true;
         });
 
-        badgeNotification = BadgeDrawable.create(_context);
+        BadgeDrawable badgeNotification = BadgeDrawable.create(context);
         badgeNotification.clearNumber();
 
-        badgeCart = BadgeDrawable.create(_context);
-        badgeCart.clearNumber();
+        cartBadge = BadgeDrawable.create(context);
 
-        BadgeUtils.attachBadgeDrawable(badgeNotification, _topBar, _topBar.getMenu().findItem(R.id.action_notification).getItemId());
-        BadgeUtils.attachBadgeDrawable(badgeCart, _topBar, _topBar.getMenu().findItem(R.id.action_cart).getItemId());
+        BadgeUtils.attachBadgeDrawable(badgeNotification, topBar, topBar.getMenu().findItem(R.id.action_notification).getItemId());
+        BadgeUtils.attachBadgeDrawable(cartBadge, topBar, topBar.getMenu().findItem(R.id.action_cart).getItemId());
 
-        return layout;
+        CartViewModel cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
+        cartViewModel.getCartItems().observe(getViewLifecycleOwner(), cartItems -> {
+            cartBadge.setNumber(cartItems.size());
+            cartBadge.setVisible(cartItems.size() != 0);
+        });
+
+        return binding.getRoot();
     }
 }

@@ -33,7 +33,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/iv_empty_cart"
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_md"
+            android:layout_marginTop="@dimen/margin_lg"
             android:text="@string/activity_cart_tv_empty_cart_title"
             android:textColor="@color/black"
             android:textSize="18sp"

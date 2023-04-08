@@ -14,8 +14,17 @@ import java.util.List;
 
 public class CartRepository {
     private final MutableLiveData<List<CartItem>> mutableCartItems;
+    private static CartRepository instance;
 
-    public CartRepository() {
+    public static CartRepository getInstance() {
+        if (instance == null) {
+            instance = new CartRepository();
+        }
+        return instance;
+    }
+
+
+    private CartRepository() {
         mutableCartItems = new MutableLiveData<>(MockData.getCartItems());
     }
 
