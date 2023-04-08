@@ -20,4 +20,14 @@
     <dimen name="corner_radius_lg">16dp</dimen>
     <dimen name="corner_radius_xl">24dp</dimen>
     <dimen name="corner_radius_xxl">32dp</dimen>
+
+
+    <dimen name="text_size_none">0dp</dimen>
+    <dimen name="text_size_sm">8sp</dimen>
+    <dimen name="text_size_md">16sp</dimen>
+    <dimen name="text_size_lg">24sp</dimen>
+    <dimen name="text_size_xl">32sp</dimen>
+    <dimen name="text_size_2xl">40sp</dimen>
+    <dimen name="text_size_3xl">48sp</dimen>
+
 </resources>

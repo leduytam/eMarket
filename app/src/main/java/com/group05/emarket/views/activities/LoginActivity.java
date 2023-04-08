@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (currentUser.isEmailVerified()) {
                                 Intent intent = new Intent(LoginActivity.this, LayoutActivity.class);
                                 startActivity(intent);
-                                finish();
                             } else {
                                 alertDialogBuilder.setTitle("Login failed").setMessage("Please verify your email").setPositiveButton("OK", (dialog, which) -> {
                                     dialog.dismiss();

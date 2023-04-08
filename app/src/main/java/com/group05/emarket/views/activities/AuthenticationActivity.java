@@ -28,9 +28,9 @@ import me.relex.circleindicator.CircleIndicator;
         Button buttonLogin = findViewById(R.id.login_button);
 
         List<BannerItem> bannerItems = new ArrayList<>();
-        bannerItems.add(new BannerItem(R.drawable.banner_1));
-        bannerItems.add(new BannerItem(R.drawable.banner_2));
-        bannerItems.add(new BannerItem(R.drawable.banner_3));
+        bannerItems.add(new BannerItem(R.drawable.banner_1, R.drawable.background_banner_item));
+        bannerItems.add(new BannerItem(R.drawable.banner_2, R.drawable.background_banner_item));
+        bannerItems.add(new BannerItem(R.drawable.banner_3, R.drawable.background_banner_item));
 
         BannerPagerAdapter pagerAdapter = new BannerPagerAdapter(this, bannerItems);
         ViewPager viewPager = findViewById(R.id.banner_viewpager);
