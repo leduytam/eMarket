@@ -3,50 +3,50 @@ package com.group05.emarket.models;
 import java.util.UUID;
 
 public class Category {
-    private UUID _id;
-    private String _name;
-    private int _image;
+    private UUID id;
+    private String name;
+    private int image;
 
     private Category() {
     }
 
     public String getName() {
-        return _name;
+        return name;
     }
 
     public int getImage() {
-        return _image;
+        return image;
     }
 
     public UUID getId() {
-        return _id;
+        return id;
     }
 
     public static class Builder {
-        private UUID _id;
-        private String _name;
-        private int _image;
+        private UUID id;
+        private String name;
+        private int image;
 
         public Builder setId(UUID id) {
-            _id = id;
+            this.id = id;
             return this;
         }
 
         public Builder setName(String name) {
-            _name = name;
+            this.name = name;
             return this;
         }
 
         public Builder setImage(int image) {
-            _image = image;
+            this.image = image;
             return this;
         }
 
         public Category build() {
             var category = new Category();
-            category._id = _id;
-            category._name = _name;
-            category._image = _image;
+            category.id = id;
+            category.name = name;
+            category.image = image;
             return category;
         }
     }

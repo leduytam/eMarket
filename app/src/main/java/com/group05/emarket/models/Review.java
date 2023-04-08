@@ -4,86 +4,86 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Review {
-    private UUID _id;
-    private String _content;
-    private float _rating;
-    private LocalDateTime _createdAt;
-    private String _reviewerName;
-    private int _reviewerAvatar;
+    private UUID id;
+    private String content;
+    private float rating;
+    private LocalDateTime createdAt;
+    private String reviewerName;
+    private int reviewerAvatar;
 
     public UUID getId() {
-        return _id;
+        return id;
     }
 
     public String getContent() {
-        return _content;
+        return content;
     }
 
     public float getRating() {
-        return _rating;
+        return rating;
     }
 
     public LocalDateTime getCreatedAt() {
-        return _createdAt;
+        return createdAt;
     }
 
     public String getReviewerName() {
-        return _reviewerName;
+        return reviewerName;
     }
 
     public int getReviewerAvatar() {
-        return _reviewerAvatar;
+        return reviewerAvatar;
     }
 
     private Review() {
     }
 
     public static class Builder {
-        private UUID _id;
-        private String _content;
-        private float _rating;
-        private LocalDateTime _createdAt;
-        private String _reviewerName;
-        private int _reviewerAvatar;
+        private UUID id;
+        private String content;
+        private float rating;
+        private LocalDateTime createdAt;
+        private String reviewerName;
+        private int reviewerAvatar;
 
         public Builder setId(UUID id) {
-            _id = id;
+            this.id = id;
             return this;
         }
 
         public Builder setContent(String content) {
-            _content = content;
+            this.content = content;
             return this;
         }
 
         public Builder setRating(float rating) {
-            _rating = rating;
+            this.rating = rating;
             return this;
         }
 
         public Builder setCreatedAt(LocalDateTime createdAt) {
-            _createdAt = createdAt;
+            this.createdAt = createdAt;
             return this;
         }
 
         public Builder setReviewerName(String reviewerName) {
-            _reviewerName = reviewerName;
+            this.reviewerName = reviewerName;
             return this;
         }
 
         public Builder setReviewerAvatar(int reviewerAvatar) {
-            _reviewerAvatar = reviewerAvatar;
+            this.reviewerAvatar = reviewerAvatar;
             return this;
         }
 
         public Review build() {
             Review review = new Review();
-            review._id = _id;
-            review._content = _content;
-            review._rating = _rating;
-            review._createdAt = _createdAt;
-            review._reviewerName = _reviewerName;
-            review._reviewerAvatar = _reviewerAvatar;
+            review.id = id;
+            review.content = content;
+            review.rating = rating;
+            review.createdAt = createdAt;
+            review.reviewerName = reviewerName;
+            review.reviewerAvatar = reviewerAvatar;
             return review;
         }
     }

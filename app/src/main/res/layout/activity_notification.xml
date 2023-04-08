@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.NotificationActivity">
+    android:background="@color/white"
+    tools:context=".views.activities.NotificationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:layout_height="48dp"
             android:background="@color/white"
             android:elevation="4dp"
-            app:navigationIcon="@drawable/ic_arrow_left"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:title="@string/activity_notification_top_bar_title"
             app:titleCentered="true"
             app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
