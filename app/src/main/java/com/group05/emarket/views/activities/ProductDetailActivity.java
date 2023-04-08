@@ -1,6 +1,7 @@
 package com.group05.emarket.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,10 +13,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
+import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
+import com.group05.emarket.databinding.ActivityProductDetailBinding;
+import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.views.adapters.ReviewAdapter;
 import com.group05.emarket.utilities.Formatter;
@@ -23,19 +30,21 @@ import com.group05.emarket.utilities.Formatter;
 import java.util.Locale;
 import java.util.UUID;
 
+@ExperimentalBadgeUtils
 public class ProductDetailActivity extends AppCompatActivity {
+    private CartViewModel cartViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_detail);
+        com.group05.emarket.databinding.ActivityProductDetailBinding binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         UUID productId = (UUID) getIntent().getSerializableExtra("id");
         var product = MockData.getProductById(productId);
 
-        MaterialToolbar topBar = findViewById(R.id.top_bar);
-        topBar.setNavigationOnClickListener(v -> finish());
-
-        topBar.setOnMenuItemClickListener(item -> {
+        binding.topBar.setNavigationOnClickListener(v -> finish());
+        binding.topBar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.action_cart) {
@@ -53,44 +62,45 @@ public class ProductDetailActivity extends AppCompatActivity {
             return true;
         });
 
-        RecyclerView rvReviews = findViewById(R.id.rv_reviews);
-        rvReviews.setAdapter(new ReviewAdapter(this, MockData.getReviews()));
-        rvReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        binding.rvReviews.setAdapter(new ReviewAdapter(this, MockData.getReviews()));
+        binding.rvReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        RecyclerView rvRelatedProducts = findViewById(R.id.rv_related_products);
-        rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
-        rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
+        binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
+        binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
 
-        TextView tvName = findViewById(R.id.tv_name);
-        TextView tvDiscount = findViewById(R.id.tv_discount);
-        ImageView ivImage = findViewById(R.id.iv_image);
-        TextView tvPrice = findViewById(R.id.tv_price);
-        TextView tvOldPrice = findViewById(R.id.tv_old_price);
-        tvOldPrice.setPaintFlags(tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        TextView tvAvgRating = findViewById(R.id.tv_avg_rating);
-        TextView tvRatingCount = findViewById(R.id.tv_rating_count);
-        TextView tvDescription = findViewById(R.id.tv_description);
-        TextView tvAvgRatingDetail = findViewById(R.id.tv_avg_rating_detail);
-        TextView tvRatingCountDetail = findViewById(R.id.tv_rating_count_detail);
-
-        tvName.setText(product.getName());
-        tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
-        ivImage.setImageResource(product.getImage());
-        tvAvgRating.setText(String.valueOf(product.getAvgRating()));
-        tvRatingCount.setText(String.format(Locale.US, "%d Reviews", product.getRatingCount()));
-        tvDescription.setText(product.getDescription());
-        tvRatingCountDetail.setText(String.format("Reviews (%s)", product.getRatingCount()));
-        tvAvgRatingDetail.setText(String.valueOf(product.getAvgRating()));
+        binding.tvName.setText(product.getName());
+        binding.tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
+        binding.ivImage.setImageResource(product.getImage());
+        binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        binding.tvAvgRating.setText(String.valueOf(product.getAvgRating()));
+        binding.tvRatingCount.setText(String.format(Locale.US, "%d Reviews", product.getRatingCount()));
+        binding.tvDescription.setText(product.getDescription());
+        binding.tvRatingCountDetail.setText(String.format("Reviews (%s)", product.getRatingCount()));
+        binding.tvAvgRatingDetail.setText(String.valueOf(product.getAvgRating()));
 
         if (product.getDiscount() == 0) {
             RelativeLayout rlDiscount = findViewById(R.id.rl_discount);
             rlDiscount.setVisibility(View.GONE);
-            tvOldPrice.setVisibility(View.GONE);
-            tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
+            binding.tvOldPrice.setVisibility(View.GONE);
+            binding.tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
         } else {
             float discountPrice = product.getPrice() * (1 - product.getDiscount() / 100f);
-            tvPrice.setText(Formatter.formatCurrency(discountPrice));
-            tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
+            binding.tvPrice.setText(Formatter.formatCurrency(discountPrice));
+            binding.tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
         }
+
+        BadgeDrawable cartBadge = BadgeDrawable.create(this);
+        BadgeUtils.attachBadgeDrawable(cartBadge, binding.topBar, binding.topBar.getMenu().findItem(R.id.action_cart).getItemId());
+
+        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        cartViewModel.getCartItems().observe(this, cart -> {
+            cartBadge.setNumber(cart.size());
+            cartBadge.setVisible(cart.size() > 0);
+        });
+
+        binding.btnAddToCart.setOnClickListener(v -> {
+            cartViewModel.addItemToCart(product);
+            Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+        });
     }
 }

@@ -263,6 +263,7 @@
         android:layout_margin="5dp">
 
         <Button
+            android:id="@+id/btn_add_to_favorite"
             style="@style/Widget.Material3.Button.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -271,11 +272,12 @@
             android:layout_weight="1"
             android:backgroundTint="@color/danger"
             android:layoutDirection="rtl"
-            android:text="@string/activity_product_detail_btn_add_to_wishlist"
+            android:text="@string/activity_product_detail_btn_add_to_favorite"
             android:textColor="@color/white"
             app:icon="@drawable/ic_heart" />
 
         <Button
+            android:id="@+id/btn_add_to_cart"
             style="@style/Widget.Material3.Button.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

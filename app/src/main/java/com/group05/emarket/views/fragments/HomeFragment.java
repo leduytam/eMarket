@@ -30,8 +30,6 @@ import com.group05.emarket.views.dialogs.AllCategoriesDialog;
 
 @ExperimentalBadgeUtils
 public class HomeFragment extends Fragment {
-    private BadgeDrawable cartBadge;
-
     public HomeFragment() {
     }
 
@@ -86,7 +84,7 @@ public class HomeFragment extends Fragment {
         BadgeDrawable badgeNotification = BadgeDrawable.create(context);
         badgeNotification.clearNumber();
 
-        cartBadge = BadgeDrawable.create(context);
+        BadgeDrawable cartBadge = BadgeDrawable.create(context);
 
         BadgeUtils.attachBadgeDrawable(badgeNotification, topBar, topBar.getMenu().findItem(R.id.action_notification).getItemId());
         BadgeUtils.attachBadgeDrawable(cartBadge, topBar, topBar.getMenu().findItem(R.id.action_cart).getItemId());
