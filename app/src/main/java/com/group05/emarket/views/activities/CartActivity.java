@@ -52,8 +52,15 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
             adapter.setCartItems(cartItems);
             binding.tvTotalPrice.setText(Formatter.formatCurrency(cartViewModel.getTotalPrice()));
             binding.tvTotalLabel.setText(String.format(Locale.US, "Total (%d items)", cartItems.size()));
-            topBar.getMenu().getItem(0).setVisible(cartViewModel.getSize() > 0);
+
+            boolean isCartEmpty = cartItems.size() == 0;
+
+            topBar.getMenu().getItem(0).setVisible(!isCartEmpty);
+            binding.rlEmptyCart.setVisibility(isCartEmpty ? android.view.View.VISIBLE : android.view.View.GONE);
+            binding.rlCartItems.setVisibility(isCartEmpty ? android.view.View.GONE : android.view.View.VISIBLE);
         });
+
+        binding.btnShopNow.setOnClickListener(v -> finish());
     }
 
     @Override

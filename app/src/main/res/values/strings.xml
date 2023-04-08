@@ -38,4 +38,7 @@
     <string name="fragment_filter_price_range">Price range</string>
     <string name="menu_cart_action_clear">Clear</string>
     <string name="activity_cart_btn_checkout">Checkout</string>
+    <string name="activity_cart_tv_empty_cart_title">Your Cart is Empty</string>
+    <string name="activity_cart_tv_empty_cart_description">Looks like you haven\'t added anything to your cart yet.</string>
+    <string name="activity_cart_btn_go_back_shop">Back to Shop</string>
 </resources>
