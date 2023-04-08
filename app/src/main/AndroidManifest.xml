@@ -26,6 +26,7 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.ProductListActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".views.activities.ProductDetailActivity"

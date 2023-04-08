@@ -1,39 +1,39 @@
 package com.group05.emarket.views.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.RectF;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group05.emarket.R;
 import com.group05.emarket.databinding.ListItemCartBinding;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.utilities.Formatter;
 
-public class CartListAdapter extends ListAdapter<CartItem, CartListAdapter.ViewHolder> {
-    private final OnCartChangedListener listener;
-    private final Context context;
+import java.util.ArrayList;
+import java.util.List;
 
-    public CartListAdapter(Context context, OnCartChangedListener listener) {
-        super(CartItem.itemCallback);
-        this.context = context;
+public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
+    private final List<CartItem> cartItems;
+    private final OnCartChangedListener listener;
+
+    public CartListAdapter(OnCartChangedListener listener) {
+        this.cartItems = new ArrayList<>();
         this.listener = listener;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems.clear();
+        this.cartItems.addAll(cartItems);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -46,8 +46,13 @@ public class CartListAdapter extends ListAdapter<CartItem, CartListAdapter.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.setCartItem(getItem(position));
+        holder.binding.setCartItem(cartItems.get(position));
         holder.binding.executePendingBindings();
+    }
+
+    @Override
+    public int getItemCount() {
+        return cartItems.size();
     }
 
     @BindingAdapter("app:price")
@@ -67,8 +72,16 @@ public class CartListAdapter extends ListAdapter<CartItem, CartListAdapter.ViewH
             super(binding.getRoot());
             this.binding = binding;
 
+            binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
             binding.btnDecreaseQuantity.setOnClickListener(v -> {
                 CartItem item = binding.getCartItem();
+
+                if (item.getQuantity() == 1) {
+                    listener.onCartItemRemoved(item);
+                    return;
+                }
+
                 listener.onCartItemQuantityChanged(item, item.getQuantity() - 1);
             });
 
@@ -80,13 +93,13 @@ public class CartListAdapter extends ListAdapter<CartItem, CartListAdapter.ViewH
     }
 
     public interface OnCartChangedListener {
-        void onCartItemDeleted(CartItem item);
+        void onCartItemRemoved(CartItem item);
 
-        void onCartItemQuantityChanged(CartItem item, int count);
+        void onCartItemQuantityChanged(CartItem item, int quantity);
     }
 
     public static class SwipeToDeleteOrderItemCallback extends ItemTouchHelper.SimpleCallback {
-        private CartListAdapter adapter;
+        private final CartListAdapter adapter;
         private final Paint p = new Paint();
 
         public SwipeToDeleteOrderItemCallback(CartListAdapter adapter) {
@@ -102,7 +115,7 @@ public class CartListAdapter extends ListAdapter<CartItem, CartListAdapter.ViewH
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             if (direction == ItemTouchHelper.LEFT) {
-                adapter.listener.onCartItemDeleted(adapter.getItem(viewHolder.getAdapterPosition()));
+                adapter.listener.onCartItemRemoved(adapter.cartItems.get(viewHolder.getAdapterPosition()));
             }
         }
     }

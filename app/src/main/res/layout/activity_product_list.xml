@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".views.activities.ProductListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -35,31 +35,24 @@
             app:theme="@style/SearchView.SmallText" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_products"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:backgroundTint="@color/white"
-        app:cardCornerRadius="25dp"
-        app:strokeWidth="0dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_products"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:overScrollMode="never" />
-    </com.google.android.material.card.MaterialCardView>
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_filter_sorting"
+        android:layout_below="@+id/app_bar"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:overScrollMode="never" />
 
     <Button
         android:id="@+id/btn_filter_sorting"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:textColor="@color/black"
-        app:rippleColor="?attr/colorControlHighlight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
-        android:text="@string/activity_product_list_btn_filter_sorting" />
-</LinearLayout>
+        android:text="@string/activity_product_list_btn_filter_sorting"
+        android:textColor="@color/black"
+        app:rippleColor="?attr/colorControlHighlight" />
+</RelativeLayout>

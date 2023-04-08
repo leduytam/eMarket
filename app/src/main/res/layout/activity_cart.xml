@@ -30,11 +30,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_cart_items"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:overScrollMode="never"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_md"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fragment_home, container, false);
+        View layout = inflater.inflate(R.layout.fragment_home, container, false);
 
         var gridGapItemDecoration = new GridGapItemDecoration(3, 20, true);
 

@@ -1,9 +1,12 @@
 package com.group05.emarket.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -11,38 +14,44 @@ import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityCartBinding;
 import com.group05.emarket.models.CartItem;
+import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.CartListAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartActivity extends AppCompatActivity implements CartListAdapter.OnCartChangedListener {
-    private ActivityCartBinding binding;
-    private CartListAdapter.SwipeToDeleteOrderItemCallback swipeToDeleteOrderItemCallback;
+    private CartViewModel cartViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityCartBinding.inflate(getLayoutInflater());
+        ActivityCartBinding binding = ActivityCartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         MaterialToolbar topBar = findViewById(R.id.top_bar);
         topBar.setNavigationOnClickListener(v -> finish());
 
-        CartListAdapter adapter = new CartListAdapter(this, this);
+        CartListAdapter adapter = new CartListAdapter(this);
         binding.rvCartItems.setAdapter(adapter);
 
-        swipeToDeleteOrderItemCallback = new CartListAdapter.SwipeToDeleteOrderItemCallback(adapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToDeleteOrderItemCallback);
+        var swipeToDeleteOrderItemCallback = new CartListAdapter.SwipeToDeleteOrderItemCallback(adapter);
+        var itemTouchHelper = new ItemTouchHelper(swipeToDeleteOrderItemCallback);
         itemTouchHelper.attachToRecyclerView(binding.rvCartItems);
 
-        adapter.submitList(MockData.getCartItems());
+        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        cartViewModel.getCartItems().observe(this, cartItems -> {
+            adapter.setCartItems(cartItems);
+        });
     }
 
     @Override
-    public void onCartItemDeleted(CartItem item) {
-        Toast.makeText(this, item.getProduct().getName() + " is deleted", Toast.LENGTH_LONG).show();
+    public void onCartItemRemoved(CartItem item) {
+        cartViewModel.removeItemFromCart(item);
     }
 
     @Override
-    public void onCartItemQuantityChanged(CartItem item, int count) {
-        Toast.makeText(this, "Quantity's changed to " + count, Toast.LENGTH_LONG).show();
+    public void onCartItemQuantityChanged(CartItem item, int quantity) {
+        cartViewModel.changeCartItemQuantity(item, quantity);
     }
 }

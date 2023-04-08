@@ -1,9 +1,5 @@
 package com.group05.emarket.models;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DiffUtil;
-
-import java.util.Objects;
 import java.util.UUID;
 
 public class Product {
@@ -50,40 +46,6 @@ public class Product {
 
     private Product() {
     }
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (obj.getClass() != getClass()) return false;
-
-        Product product = (Product) obj;
-        return product.id.equals(id) &&
-                product.name.equals(name) &&
-                product.image == image &&
-                product.avgRating == avgRating &&
-                product.price == price &&
-                product.ratingCount == ratingCount &&
-                product.discount == discount &&
-                product.description.equals(description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, image, avgRating, price, ratingCount, discount, description);
-    }
-
-    public static DiffUtil.ItemCallback<Product> itemCallback = new DiffUtil.ItemCallback<Product>() {
-        @Override
-        public boolean areItemsTheSame(Product oldItem, Product newItem) {
-            return oldItem.id.equals(newItem.id);
-        }
-
-        @Override
-        public boolean areContentsTheSame(Product oldItem, Product newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
 
     public static class Builder {
         private UUID id;

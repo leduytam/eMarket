@@ -32,26 +32,4 @@ public class CartItem {
     public float getSubtotal() {
         return product.getPrice() * quantity;
     }
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (obj.getClass() != getClass()) return false;
-
-        CartItem cartItem = (CartItem) obj;
-        return quantity == cartItem.quantity && product.equals(cartItem.product);
-    }
-
-    public static DiffUtil.ItemCallback<CartItem> itemCallback = new DiffUtil.ItemCallback<CartItem>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull CartItem oldItem, @NonNull CartItem newItem) {
-            return oldItem.getQuantity() == newItem.getQuantity();
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull CartItem oldItem, @NonNull CartItem newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
 }
