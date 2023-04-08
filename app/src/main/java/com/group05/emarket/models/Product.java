@@ -32,6 +32,10 @@ public class Product {
         return price;
     }
 
+    public float getDiscountedPrice() {
+        return price * (1.0f - discount / 100f);
+    }
+
     public int getRatingCount() {
         return ratingCount;
     }

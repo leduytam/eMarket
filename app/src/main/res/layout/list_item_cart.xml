@@ -9,6 +9,8 @@
             type="com.group05.emarket.models.CartItem" />
 
         <import type="android.view.View" />
+
+        <import type="com.group05.emarket.utilities.BindingUtils" />
     </data>
 
     <FrameLayout
@@ -18,8 +20,8 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_sm"
             android:layout_marginStart="@dimen/margin_sm"
+            android:layout_marginTop="@dimen/margin_sm"
             android:layout_marginEnd="@dimen/margin_sm"
             android:layout_marginBottom="@dimen/margin_md"
             android:backgroundTint="@color/white"
@@ -69,7 +71,7 @@
                             android:textColor="@color/danger"
                             android:textSize="13sp"
                             android:textStyle="bold"
-                            app:price="@{cartItem.product.discount != 0 ? cartItem.product.price - (1.0f - cartItem.product.discount) * cartItem.product.price : cartItem.product.price}" />
+                            app:price="@{BindingUtils.getDiscountedPrice(cartItem.product.price, cartItem.product.discount)}" />
 
                         <TextView
                             android:id="@+id/tv_old_price"

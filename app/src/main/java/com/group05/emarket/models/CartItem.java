@@ -1,9 +1,5 @@
 package com.group05.emarket.models;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DiffUtil;
-
 public class CartItem {
     private Product product;
     private int quantity;
@@ -30,6 +26,6 @@ public class CartItem {
     }
 
     public float getSubtotal() {
-        return product.getPrice() * quantity;
+        return product.getDiscountedPrice() * quantity;
     }
 }

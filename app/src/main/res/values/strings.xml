@@ -36,4 +36,6 @@
     <string name="dialog_filter_sorting_btn_apply">Apply</string>
     <string name="dialog_filter_sorting_btn_reset">Reset</string>
     <string name="fragment_filter_price_range">Price range</string>
+    <string name="menu_cart_action_clear">Clear</string>
+    <string name="activity_cart_btn_checkout">Checkout</string>
 </resources>
