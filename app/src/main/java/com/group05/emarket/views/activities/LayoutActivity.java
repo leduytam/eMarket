@@ -74,8 +74,6 @@ import com.group05.emarket.views.fragments.SearchFragment;
                 Intent intent = new Intent(LayoutActivity.this, AuthenticationActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "Please verify your email", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Welcome back " + firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
             }
         } else {
             Intent intent = new Intent(LayoutActivity.this, AuthenticationActivity.class);
