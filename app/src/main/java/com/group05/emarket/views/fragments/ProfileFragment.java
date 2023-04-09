@@ -14,6 +14,9 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.group05.emarket.R;
 import com.group05.emarket.views.activities.AuthenticationActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.group05.emarket.views.activities.LoginActivity;
+import com.group05.emarket.views.activities.SignUpActivity;
 
 public class ProfileFragment extends Fragment {
     private Button btnLogout;
@@ -21,6 +24,7 @@ public class ProfileFragment extends Fragment {
     private static FirebaseAuth mAuth;
     public ProfileFragment() {
     }
+    MaterialAlertDialogBuilder alertDialogBuilder;
 
 
     public static ProfileFragment newInstance() {
@@ -29,6 +33,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        alertDialogBuilder = new MaterialAlertDialogBuilder(requireContext());
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
     }
@@ -46,8 +51,12 @@ public class ProfileFragment extends Fragment {
 
 
     private void onLogout() {
-        mAuth.signOut();
-        Intent intent = new Intent(context, AuthenticationActivity.class);
-        startActivity(intent);
+        alertDialogBuilder.setTitle("Do you want to log out account?").setPositiveButton("Log out", (dialog, which) -> {
+            mAuth.signOut();
+            Intent intent = new Intent(context, AuthenticationActivity.class);
+            startActivity(intent);
+        }).setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
+        }).show();
     }
 }
