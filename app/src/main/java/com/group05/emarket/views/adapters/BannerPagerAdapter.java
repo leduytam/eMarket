@@ -1,9 +1,11 @@
 package com.group05.emarket.views.adapters;
 
 import android.content.Context;
+import android.graphics.Outline;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +33,21 @@ public class BannerPagerAdapter extends PagerAdapter {
 
         BannerItem item = mData.get(position);
         imageView.setImageResource(item.getImageResId());
+        int background = item.getBackground();
+        if (background != 0) {
+            itemView.setBackgroundResource(background);
+        }
+
+        int borderRadius = item.getBorderRadius();
+        if (borderRadius != 0) {
+            imageView.setClipToOutline(true);
+            imageView.setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, Outline outline) {
+                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), borderRadius);
+                }
+            });
+        }
 
         container.addView(itemView);
         return itemView;

@@ -28,11 +28,13 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/view_pager"
             android:layout_centerHorizontal="true"
-            app:ci_drawable="@color/YELLOW_DARK"
+            app:ci_drawable="@color/WARNING"
             android:layout_marginTop="15dp"
             app:ci_height="8dp"
-            app:ci_width="20dp"
+            app:ci_width="25dp"
             app:ci_margin="8dp"
+            app:ci_gravity="center"
+            app:ci_drawable_unselected="@drawable/ic_indicator_carousel_unselected"
             app:ci_orientation="horizontal" />
     </LinearLayout>
 
