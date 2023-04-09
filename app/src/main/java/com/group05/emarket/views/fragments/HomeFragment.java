@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +21,18 @@ import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.FragmentHomeBinding;
+import com.group05.emarket.models.BannerItem;
 import com.group05.emarket.viewmodels.CartViewModel;
+import com.group05.emarket.views.adapters.BannerPagerAdapter;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.views.activities.CartActivity;
 import com.group05.emarket.views.activities.NotificationActivity;
 import com.group05.emarket.views.adapters.CategoryAdapter;
 import com.group05.emarket.views.decorations.GridGapItemDecoration;
 import com.group05.emarket.views.dialogs.AllCategoriesDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ExperimentalBadgeUtils
 public class HomeFragment extends Fragment {
@@ -94,6 +100,13 @@ public class HomeFragment extends Fragment {
             cartBadge.setNumber(cartItems.size());
             cartBadge.setVisible(cartItems.size() != 0);
         });
+
+        List<BannerItem> bannerItems = new ArrayList<>();
+        bannerItems.add(new BannerItem(R.drawable.home_banner_1, 0, 20));
+        bannerItems.add(new BannerItem(R.drawable.home_banner_2, 0, 20));
+        BannerPagerAdapter pagerAdapter = new BannerPagerAdapter(getActivity(), bannerItems);
+        ViewPager viewPager = binding.getRoot().findViewById(R.id.banner_viewpager);
+        viewPager.setAdapter(pagerAdapter);
 
         return binding.getRoot();
     }

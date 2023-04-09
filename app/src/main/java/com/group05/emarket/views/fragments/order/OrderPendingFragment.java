@@ -1,4 +1,4 @@
-package com.group05.emarket.fragments.order;
+package com.group05.emarket.views.fragments.order;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,9 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.R;
-import com.group05.emarket.adapters.SortOptionAdapter;
-
-import java.util.List;
 
 public class OrderPendingFragment extends Fragment {
     public OrderPendingFragment() {
@@ -36,8 +33,6 @@ public class OrderPendingFragment extends Fragment {
         String[] options = new String[]{"Name (A-Z)", "Name (Z-A)", "Price (Ascending)", "Price (Descending)"};
 
         RecyclerView rvSortOptions = layout.findViewById(R.id.rv_sort_options);
-        SortOptionAdapter adapter = new SortOptionAdapter(getContext(), List.of(options));
-        rvSortOptions.setAdapter(adapter);
         rvSortOptions.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), RecyclerView.VERTICAL);
         rvSortOptions.addItemDecoration(dividerItemDecoration);
