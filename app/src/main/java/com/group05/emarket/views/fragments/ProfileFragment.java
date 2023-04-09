@@ -10,22 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.group05.emarket.R;
 import com.group05.emarket.views.activities.AuthenticationActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.group05.emarket.views.activities.LoginActivity;
-import com.group05.emarket.views.activities.SignUpActivity;
 
 public class ProfileFragment extends Fragment {
     private Button btnLogout;
     private Context context;
+
+    private LinearLayout editProfileLayout;
     private static FirebaseAuth mAuth;
+    private MaterialAlertDialogBuilder alertDialogBuilder;
+
     public ProfileFragment() {
     }
-    MaterialAlertDialogBuilder alertDialogBuilder;
-
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -33,22 +34,25 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        alertDialogBuilder = new MaterialAlertDialogBuilder(requireContext());
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        alertDialogBuilder = new MaterialAlertDialogBuilder(requireContext());
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         context = getContext();
-        Button btnLogout = view.findViewById(R.id.btnLogout);
+
+        btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> onLogout());
+
+        editProfileLayout = view.findViewById(R.id.editProfile_button);
+        editProfileLayout.setOnClickListener(v -> onClickEditProfile());
+
         return view;
     }
-
 
     private void onLogout() {
         alertDialogBuilder.setTitle("Do you want to log out account?").setPositiveButton("Log out", (dialog, which) -> {
@@ -58,5 +62,14 @@ public class ProfileFragment extends Fragment {
         }).setNegativeButton("Cancel", (dialog, which) -> {
             dialog.dismiss();
         }).show();
+    }
+
+    private void onClickEditProfile() {
+        EditProfileFragment editProfileFragment = new EditProfileFragment();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.profile_layout, editProfileFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
