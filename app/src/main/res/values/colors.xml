@@ -56,6 +56,6 @@
     <color name="BIOMETRIC_GRAY_BACKGROUND">#E3E3E3</color>
     <color name="WHITE">#FFFFFF</color>
     <color name="BLACK">#000000</color>
-    <color name="transparent">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
 </resources>
