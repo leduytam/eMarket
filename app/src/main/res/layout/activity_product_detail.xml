@@ -149,7 +149,7 @@
                             android:background="@drawable/background_product_quantity"
                             android:gravity="center"
                             android:hint="0"
-                            android:textSize="18dp"
+                            android:textSize="@dimen/text_size_2md"
                             android:textStyle="bold" />
 
                         <Button
@@ -184,137 +184,129 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_star" />
-
-                    <TextView
-                        android:id="@+id/tv_avg_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:textColor="@color/black"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tv_rating_count"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:dividerColor="@color/gray_300" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/activity_product_detail_description"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:justificationMode="inter_word"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginVertical="10dp"
                     app:dividerColor="@color/gray_300" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="@dimen/margin_md"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_rating_count_detail"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_star" />
-
-                    <TextView
-                        android:id="@+id/tv_avg_rating_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:textColor="@color/black"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_reviews"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:overScrollMode="never" />
-                </RelativeLayout>
+                        android:layout_marginBottom="@dimen/margin_md"
+                        android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_load_more_reviews"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/activity_product_detail_btn_load_more_reviews"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    app:rippleColor="?attr/colorControlHighlight" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/activity_product_detail_description"
+                            android:textSize="@dimen/text_size_2md"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/btn_expand_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/sl_expand" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:justificationMode="inter_word"
+                        android:lineSpacingMultiplier="1.2"
+                        android:textColor="@color/gray_800"
+                        android:textSize="@dimen/text_size_2sm"
+                        app:maxLines="3" />
+
+                </LinearLayout>
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginVertical="10dp"
                     app:dividerColor="@color/gray_300" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginTop="@dimen/margin_md"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_md"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_rating_count_detail"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/text_size_2md"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            android:id="@+id/rb_rating_stars"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_name"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:theme="@style/RatingBar" />
+
+                        <CheckBox
+                            android:id="@+id/btn_expand_reviews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/sl_expand" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_marginTop="@dimen/margin_xl"
+                            android:id="@+id/rv_reviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="never" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    app:dividerColor="@color/gray_300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="@dimen/margin_lg">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/activity_product_detail_tv_related_products"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/text_size_2md"
                         android:textStyle="bold" />
 
                     <TextView

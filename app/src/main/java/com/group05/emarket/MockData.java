@@ -128,7 +128,7 @@ public class MockData {
                 .setImage(R.drawable.image_snack_3)
                 .setDescription("Snack khoai tây giòn tan, ăn cực đã với hương vị bò bít tết đậm đà thích thú khi ăn. Snack khoai tây vị bít tết kiểu New York Swing gói 32g tiện lợi, dễ mang theo khi đi chơi, dã ngoại. Snack Swing còn thích hợp vừa ăn vừa xem phim, đọc sách")
                 .setDiscount(2)
-                .setAvgRating(4.9f)
+                .setAvgRating(3.0f)
                 .setRatingCount(10)
                 .setWeight(32)
                 .setWeightUnit("g")
