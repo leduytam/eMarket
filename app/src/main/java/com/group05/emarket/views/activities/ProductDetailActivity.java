@@ -34,11 +34,14 @@ import java.util.UUID;
 public class ProductDetailActivity extends AppCompatActivity {
     private CartViewModel cartViewModel;
 
+    private int quantity = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         com.group05.emarket.databinding.ActivityProductDetailBinding binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        quantity = 0;
 
         UUID productId = (UUID) getIntent().getSerializableExtra("id");
         var product = MockData.getProductById(productId);
@@ -69,6 +72,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
 
         binding.tvName.setText(product.getName());
+
+        binding.tvWeight.setText(String.format(Locale.US, "%s %s", product.getWeight(), product.getWeightUnit()));
+        if (product.getCategory() != null) {
+            binding.tvCategory.setText(product.getCategory().getName());
+        }
+
         binding.tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
         binding.ivImage.setImageResource(product.getImage());
         binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -99,8 +108,21 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         binding.btnAddToCart.setOnClickListener(v -> {
-            cartViewModel.addItemToCart(product);
+            cartViewModel.addItemToCart(product, quantity);
             Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+        });
+
+        binding.tvQuantity.setText(String.valueOf(quantity));
+        binding.btnAddQuantity.setOnClickListener(v -> {
+            quantity++;
+            binding.tvQuantity.setText(String.valueOf(quantity));
+        });
+
+        binding.btnRemoveQuantity.setOnClickListener(v -> {
+            if (quantity > 0) {
+                quantity--;
+                binding.tvQuantity.setText(String.valueOf(quantity));
+            }
         });
     }
 }

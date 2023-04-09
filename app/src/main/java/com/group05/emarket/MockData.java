@@ -104,6 +104,8 @@ public class MockData {
                 .setDiscount(0)
                 .setAvgRating(5)
                 .setRatingCount(13)
+                .setWeight(30)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -115,6 +117,8 @@ public class MockData {
                 .setDiscount(5)
                 .setAvgRating(4.8f)
                 .setRatingCount(5)
+                .setWeight(32)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -126,6 +130,8 @@ public class MockData {
                 .setDiscount(2)
                 .setAvgRating(4.9f)
                 .setRatingCount(10)
+                .setWeight(32)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -137,6 +143,8 @@ public class MockData {
                 .setDiscount(8)
                 .setAvgRating(4.8f)
                 .setRatingCount(9)
+                .setWeight(58)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -148,6 +156,8 @@ public class MockData {
                 .setDiscount(0)
                 .setAvgRating(5f)
                 .setRatingCount(11)
+                .setWeight(32)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -159,6 +169,8 @@ public class MockData {
                 .setDiscount(3)
                 .setAvgRating(4.8f)
                 .setRatingCount(5)
+                .setWeight(39)
+                .setWeightUnit("g")
                 .build());
 
         _reviews.add(new Review.Builder()

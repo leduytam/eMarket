@@ -51,6 +51,25 @@ public class CartRepository {
         mutableCartItems.setValue(cartItems);
     }
 
+    public void addItemToCart(Product product, int quantity) {
+        if (mutableCartItems.getValue() == null) {
+            return;
+        }
+
+        List<CartItem> cartItems = mutableCartItems.getValue();
+
+        for (var cartItem : cartItems) {
+            if (cartItem.getProduct().getId().equals(product.getId())) {
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                mutableCartItems.setValue(cartItems);
+                return;
+            }
+        }
+
+        cartItems.add(new CartItem(product, quantity));
+        mutableCartItems.setValue(cartItems);
+    }
+
     public void removeItemFromCart(CartItem item) {
         if (mutableCartItems.getValue() == null) {
             return;
