@@ -3,7 +3,6 @@ package com.group05.emarket.models;
 import java.util.UUID;
 
 public class Product {
-
     protected UUID id;
     protected String name;
     protected int image;
@@ -12,9 +11,6 @@ public class Product {
     protected int ratingCount;
     protected int discount;
     protected String description;
-    protected String weightUnit;
-    protected float weight;
-    protected Category category;
 
     public UUID getId() {
         return id;
@@ -52,18 +48,6 @@ public class Product {
         return description;
     }
 
-    public String getWeightUnit() {
-        return weightUnit;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
     private Product() {
     }
 
@@ -76,10 +60,6 @@ public class Product {
         private int ratingCount;
         private int discount;
         private String description;
-
-        private float weight;
-
-        private String weightUnit;
 
         public Builder setId(UUID id) {
             this.id = id;
@@ -121,16 +101,6 @@ public class Product {
             return this;
         }
 
-        public Builder setWeight(float weight) {
-            this.weight = weight;
-            return this;
-        }
-
-        public Builder setWeightUnit(String weightUnit) {
-            this.weightUnit = weightUnit;
-            return this;
-        }
-
         public Product build() {
             Product product = new Product();
 
@@ -142,9 +112,6 @@ public class Product {
             product.ratingCount = ratingCount;
             product.discount = discount;
             product.description = description;
-            product.weight = weight;
-            product.weightUnit = weightUnit;
-            product.category = null;
 
             return product;
         }

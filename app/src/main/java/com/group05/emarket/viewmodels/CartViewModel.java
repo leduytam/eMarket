@@ -23,10 +23,6 @@ public class CartViewModel extends ViewModel {
         cartRepo.addItemToCart(product);
     }
 
-    public void addItemToCart(Product product, int quantity) {
-        cartRepo.addItemToCart(product, quantity);
-    }
-
     public void removeItemFromCart(CartItem item) {
         cartRepo.removeItemFromCart(item);
     }

@@ -5,7 +5,7 @@
     <string name="menu_home_action_cart">Cart</string>
     <string name="cart_action_item_iv_description">Cart</string>
     <string name="notification_action_item_iv_description">Notification</string>
-    <string name="activity_home_tv_see_all">See all</string>
+    <string name="activity_home_tv_see_all">See All</string>
     <string name="activity_home_tv_categories">Categories</string>
     <string name="activity_home_tv_popular_products">Popular Products</string>
     <string name="activity_home_tv_newest_products">New Products</string>
@@ -26,7 +26,7 @@
     <string name="activity_product_detail_tv_see_all_related_products">See All</string>
     <string name="activity_product_detail_tv_related_products">Related Products</string>
     <string name="activity_product_detail_btn_load_more_reviews">Load More Reviews</string>
-    <string name="activity_product_detail_description">Product Detail</string>
+    <string name="activity_product_detail_description">Description</string>
     <string name="dialog_filter_amp_sorting_title"><![CDATA[Filter & Sorting]]></string>
     <string name="dialog_all_categories_title">All Categories</string>
     <string name="dialog_filter_sorting_tab_item_filter">Filter</string>

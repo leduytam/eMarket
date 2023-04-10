@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -35,14 +34,11 @@ import java.util.UUID;
 public class ProductDetailActivity extends AppCompatActivity {
     private CartViewModel cartViewModel;
 
-    private int quantity = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         com.group05.emarket.databinding.ActivityProductDetailBinding binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        quantity = 0;
 
         UUID productId = (UUID) getIntent().getSerializableExtra("id");
         var product = MockData.getProductById(productId);
@@ -68,31 +64,19 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         binding.rvReviews.setAdapter(new ReviewAdapter(this, MockData.getReviews()));
         binding.rvReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.rvReviews.setVisibility(View.GONE);
 
         binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
         binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
 
         binding.tvName.setText(product.getName());
-
-        binding.tvWeight.setText(String.format(Locale.US, "%s %s", product.getWeight(), product.getWeightUnit()));
-        if (product.getCategory() != null) {
-            binding.tvCategory.setText(product.getCategory().getName());
-        }
-
         binding.tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
         binding.ivImage.setImageResource(product.getImage());
         binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        binding.tvAvgRating.setText(String.valueOf(product.getAvgRating()));
+        binding.tvRatingCount.setText(String.format(Locale.US, "%d Reviews", product.getRatingCount()));
         binding.tvDescription.setText(product.getDescription());
         binding.tvRatingCountDetail.setText(String.format("Reviews (%s)", product.getRatingCount()));
-        binding.rbRatingStars.setRating((product.getAvgRating()));
-        binding.btnExpandReviews.setOnClickListener(v -> {
-            if (binding.rvReviews.getVisibility() == View.VISIBLE) {
-                binding.rvReviews.setVisibility(View.GONE);
-            } else {
-                binding.rvReviews.setVisibility(View.VISIBLE);
-            }
-        });
+        binding.tvAvgRatingDetail.setText(String.valueOf(product.getAvgRating()));
 
         if (product.getDiscount() == 0) {
             RelativeLayout rlDiscount = findViewById(R.id.rl_discount);
@@ -115,31 +99,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         binding.btnAddToCart.setOnClickListener(v -> {
-            cartViewModel.addItemToCart(product, quantity);
+            cartViewModel.addItemToCart(product);
             Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
-        });
-
-        binding.tvQuantity.setText(String.valueOf(quantity));
-        binding.btnAddQuantity.setOnClickListener(v -> {
-            quantity++;
-            binding.tvQuantity.setText(String.valueOf(quantity));
-        });
-
-        binding.btnRemoveQuantity.setOnClickListener(v -> {
-            if (quantity > 0) {
-                quantity--;
-                binding.tvQuantity.setText(String.valueOf(quantity));
-            }
-        });
-
-        binding.tvDescription.setMaxLines(3);
-        binding.tvDescription.setEllipsize(TextUtils.TruncateAt.END);
-        binding.btnExpandDescription.setOnClickListener(v -> {
-            if (binding.tvDescription.getMaxLines() == 3) {
-                binding.tvDescription.setMaxLines(Integer.MAX_VALUE);
-            } else {
-                binding.tvDescription.setMaxLines(3);
-            }
         });
     }
 }
