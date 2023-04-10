@@ -17,7 +17,10 @@
             android:layout_height="48dp"
             android:background="@color/white"
             android:elevation="4dp"
-            app:navigationIcon="@drawable/ic_arrow_back"/>
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="@string/fragment_profile_edit_profile"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -29,14 +32,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="Edit Profile"
-                android:textSize="24sp"
-                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"

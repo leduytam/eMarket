@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.group05.emarket.R;
@@ -51,7 +52,10 @@ public class EditProfileFragment extends Fragment {
         context = getContext();
 
         MaterialToolbar topBar = view.findViewById(R.id.top_bar);
-        topBar.setNavigationOnClickListener(v -> requireActivity().finish());
+        topBar.setNavigationOnClickListener(v -> {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.popBackStack();
+        });
 
         tiDOb = view.findViewById(R.id.dob_edit_text);
         tiDOb.setInputType(InputType.TYPE_NULL);
