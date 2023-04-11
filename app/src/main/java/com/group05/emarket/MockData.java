@@ -104,6 +104,8 @@ public class MockData {
                 .setDiscount(0)
                 .setAvgRating(5)
                 .setRatingCount(13)
+                .setWeight(30)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -115,6 +117,8 @@ public class MockData {
                 .setDiscount(5)
                 .setAvgRating(4.8f)
                 .setRatingCount(5)
+                .setWeight(32)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -124,8 +128,10 @@ public class MockData {
                 .setImage(R.drawable.image_snack_3)
                 .setDescription("Snack khoai tây giòn tan, ăn cực đã với hương vị bò bít tết đậm đà thích thú khi ăn. Snack khoai tây vị bít tết kiểu New York Swing gói 32g tiện lợi, dễ mang theo khi đi chơi, dã ngoại. Snack Swing còn thích hợp vừa ăn vừa xem phim, đọc sách")
                 .setDiscount(2)
-                .setAvgRating(4.9f)
+                .setAvgRating(3.0f)
                 .setRatingCount(10)
+                .setWeight(32)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -137,6 +143,8 @@ public class MockData {
                 .setDiscount(8)
                 .setAvgRating(4.8f)
                 .setRatingCount(9)
+                .setWeight(58)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -148,6 +156,8 @@ public class MockData {
                 .setDiscount(0)
                 .setAvgRating(5f)
                 .setRatingCount(11)
+                .setWeight(32)
+                .setWeightUnit("g")
                 .build());
 
         _products.add(new Product.Builder()
@@ -159,6 +169,8 @@ public class MockData {
                 .setDiscount(3)
                 .setAvgRating(4.8f)
                 .setRatingCount(5)
+                .setWeight(39)
+                .setWeightUnit("g")
                 .build());
 
         _reviews.add(new Review.Builder()

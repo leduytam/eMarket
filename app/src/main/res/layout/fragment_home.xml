@@ -7,6 +7,7 @@
     android:background="@color/white"
     tools:context=".views.fragments.HomeFragment">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,11 +24,11 @@
             app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
+        android:paddingHorizontal="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -36,7 +37,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,12 +83,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginVertical="20dp"
                 android:background="@color/white"
+                android:gravity="center"
                 android:orientation="vertical">
+
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/banner_viewpager"
                     android:layout_width="match_parent"
@@ -99,9 +100,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -114,8 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/activity_home_tv_popular_products"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_2md" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -142,9 +140,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -157,8 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/activity_home_tv_newest_products"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_2md" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -185,9 +181,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -200,8 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/activity_home_tv_discount_products"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/text_size_2md"/>
 
                     <TextView
                         android:layout_width="wrap_content"
