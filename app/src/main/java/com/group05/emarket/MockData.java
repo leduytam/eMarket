@@ -83,13 +83,6 @@ public class MockData {
                 .build());
 
         _categories.add(new Category.Builder()
-                .setId(UUID.fromString("e3f3e2f3-d41e-4940-bd09-f94ef83e674e"))
-                .setName("Beverages")
-                .setBackground(R.color.category_beverages)
-                .setImage(R.drawable.ic_category_beverages)
-                .build());
-
-        _categories.add(new Category.Builder()
                 .setId(UUID.fromString("c334a846-1596-4491-9b9a-90968e48f16a"))
                 .setName("Bakeries")
                 .setBackground(R.color.category_bakeries)
@@ -101,6 +94,13 @@ public class MockData {
                 .setName("Snacks")
                 .setBackground(R.color.category_snacks)
                 .setImage(R.drawable.ic_category_snacks)
+                .build());
+
+        _categories.add(new Category.Builder()
+                .setId(UUID.fromString("e3f3e2f3-d41e-4940-bd09-f94ef83e674e"))
+                .setName("Beverages")
+                .setBackground(R.color.category_beverages)
+                .setImage(R.drawable.ic_category_beverages)
                 .build());
 
         _products.add(new Product.Builder()

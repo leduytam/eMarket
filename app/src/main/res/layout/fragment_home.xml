@@ -7,7 +7,6 @@
     android:background="@color/white"
     tools:context=".views.fragments.HomeFragment">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -113,7 +112,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/activity_home_tv_popular_products"
-                        android:textSize="@dimen/text_size_2md" />
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_md" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,7 +154,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/activity_home_tv_newest_products"
-                        android:textSize="@dimen/text_size_2md" />
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_md"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -194,7 +195,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/activity_home_tv_discount_products"
-                        android:textSize="@dimen/text_size_2md"/>
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_md"/>
 
                     <TextView
                         android:layout_width="wrap_content"
