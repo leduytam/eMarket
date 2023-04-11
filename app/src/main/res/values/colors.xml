@@ -58,4 +58,16 @@
     <color name="BLACK">#000000</color>
     <color name="transparent">#00000000</color>
 
+<!--    categories color-->
+    <color name="category_bakeries">#E8DEC7</color>
+    <color name="category_beverages">#EBEBF4</color>
+    <color name="category_eggs">#fff6e4</color>
+    <color name="category_fruits">#ffece8</color>
+    <color name="category_fishes">#D2E7FF</color>
+    <color name="category_meats">#f1edfc</color>
+    <color name="category_snacks">#F4DCC8</color>
+    <color name="category_vegetables">#e4f3ea</color>
+
+
+
 </resources>

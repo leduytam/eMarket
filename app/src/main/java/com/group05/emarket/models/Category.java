@@ -6,6 +6,7 @@ public class Category {
     private UUID id;
     private String name;
     private int image;
+    private int background;
 
     private Category() {
     }
@@ -22,10 +23,15 @@ public class Category {
         return id;
     }
 
+    public int getBackground() {
+        return background;
+    }
+
     public static class Builder {
         private UUID id;
         private String name;
         private int image;
+        private int background;
 
         public Builder setId(UUID id) {
             this.id = id;
@@ -42,11 +48,17 @@ public class Category {
             return this;
         }
 
+        public Builder setBackground(int background) {
+            this.background = background;
+            return this;
+        }
+
         public Category build() {
             var category = new Category();
             category.id = id;
             category.name = name;
             category.image = image;
+            category.background = background;
             return category;
         }
     }

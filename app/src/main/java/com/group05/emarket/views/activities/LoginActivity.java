@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.Button;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -78,20 +77,20 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 alertDialogBuilder.setTitle("Login failed").setMessage("Please verify your email").setPositiveButton("OK", (dialog, which) -> {
                                     dialog.dismiss();
-                                }).setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).show();
+                                }).setBackground(getResources().getDrawable(R.drawable.background_dialog_alert)).show();
                             }
                         }
                     } else {
                         String error = task.getException().getMessage();
                         alertDialogBuilder.setTitle("Login failed").setMessage(error).setPositiveButton("OK", (dialog, which) -> {
                             dialog.dismiss();
-                        }).setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).show();
+                        }).setBackground(getResources().getDrawable(R.drawable.background_dialog_alert)).show();
                     }
                 });
             } catch (Exception e) {
                 alertDialogBuilder.setTitle("Login failed").setMessage(e.getMessage()).setPositiveButton("OK", (dialog, which) -> {
                     dialog.dismiss();
-                }).setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).show();
+                }).setBackground(getResources().getDrawable(R.drawable.background_dialog_alert)).show();
             }
         });
     }
