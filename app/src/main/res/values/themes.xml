@@ -36,4 +36,9 @@
         <item name="colorControlNormal">@color/gray_700</item>
         <item name="colorControlActivated">@color/dusk_yellow</item>
     </style>
+
+    <style name="SearchView.Background" parent="Widget.Material3.SearchView">
+        <item name="background">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+    </style>
 </resources>

@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="cartItem"
             type="com.group05.emarket.models.CartItem" />
+
         <import type="android.view.View" />
+
         <import type="com.group05.emarket.utilities.BindingUtils" />
     </data>
 
@@ -86,7 +89,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="end"
                         android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/btn_decrease_quantity"

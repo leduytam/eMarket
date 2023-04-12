@@ -27,17 +27,21 @@
         <com.google.android.material.search.SearchBar
             android:id="@+id/search_bar"
             style="@style/Widget.Material3.SearchBar.Outlined"
+            android:backgroundTint="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/searchbar_hint"
-            app:background="@color/gray_200" />
+            app:background="@color/white" />
 
         <com.google.android.material.search.SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:backgroundTint="@color/WHITE"
             android:hint="@string/searchbar_hint"
-            app:layout_anchor="@id/search_bar">
+            app:layout_anchor="@id/search_bar"
+            app:queryBackground="@color/WHITE"
+            app:submitBackground="@color/WHITE">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_search_results"
