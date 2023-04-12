@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.views.adapters.CategoryAdapter;
+import com.group05.emarket.views.adapters.SearchResultsAdapter;
 import com.group05.emarket.views.adapters.SearchingCategoryAdapter;
 import com.group05.emarket.views.decorations.GridGapItemDecoration;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment   {
     public SearchFragment() {
     }
 
@@ -33,12 +34,13 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_search, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.rv_search_all_categories);
+        RecyclerView recyclerCategoriesView = view.findViewById(R.id.rv_search_all_categories);
         var gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(new SearchingCategoryAdapter(getContext(), MockData.getCategories()));
-        recyclerView.addItemDecoration(new GridGapItemDecoration(2, 30, true));
+        recyclerCategoriesView.setLayoutManager(gridLayoutManager);
+        recyclerCategoriesView.setAdapter(new SearchingCategoryAdapter(getContext(), MockData.getCategories()));
+        recyclerCategoriesView.addItemDecoration(new GridGapItemDecoration(2, 30, true));
+
         return view;
     }
 }

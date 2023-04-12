@@ -21,7 +21,9 @@
             android:elevation="4dp"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
+            app:titleTextAppearance="@style/Toolbar.SmallTitleText"
+            app:menu="@menu/menu_top_category"
+            />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar"
@@ -39,20 +41,9 @@
         android:id="@+id/rv_products"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_filter_sorting"
         android:layout_below="@+id/app_bar"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:overScrollMode="never" />
 
-    <Button
-        android:id="@+id/btn_filter_sorting"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:text="@string/activity_product_list_btn_filter_sorting"
-        android:textColor="@color/black"
-        app:rippleColor="?attr/colorControlHighlight" />
 </RelativeLayout>

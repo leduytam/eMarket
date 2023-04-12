@@ -40,6 +40,7 @@
     <string name="order_screen_title">Order</string>
     <string name="search_screen_title">Find products</string>
     <string name="menu_cart_action_clear">Clear</string>
+    <string name="menu_cart_action_filter">Filter</string>
     <string name="activity_cart_btn_checkout">Checkout</string>
     <string name="activity_cart_tv_empty_cart_title">Your Cart is Empty</string>
     <string name="activity_cart_tv_empty_cart_description">Looks like you haven\'t added anything to your cart yet.</string>

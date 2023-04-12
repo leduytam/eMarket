@@ -12,6 +12,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.views.adapters.ProductAdapter;
+import com.group05.emarket.views.adapters.SearchResultsAdapter;
 import com.group05.emarket.views.decorations.GridGapItemDecoration;
 import com.group05.emarket.views.dialogs.FilterSortingDialog;
 
@@ -23,6 +24,15 @@ public class ProductListActivity extends AppCompatActivity {
 
         MaterialToolbar topBar = findViewById(R.id.top_bar);
         topBar.setNavigationOnClickListener(v -> finish());
+        topBar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_filter_sort:
+                    FilterSortingDialog dialog = new FilterSortingDialog();
+                    dialog.show(getSupportFragmentManager(), "FilterSortingDialog");
+                    return true;
+            }
+            return false;
+        });
 
         Bundle extras = getIntent().getExtras();
 
@@ -32,12 +42,6 @@ public class ProductListActivity extends AppCompatActivity {
 
         SearchView searchBar = findViewById(R.id.search_bar);
         searchBar.setIconifiedByDefault(false);
-
-        Button btnFilterSorting = findViewById(R.id.btn_filter_sorting);
-        btnFilterSorting.setOnClickListener(v -> {
-            FilterSortingDialog dialog = new FilterSortingDialog();
-            dialog.show(getSupportFragmentManager(), "FilterSortingDialog");
-        });
 
         RecyclerView rvProducts = findViewById(R.id.rv_products);
         rvProducts.setAdapter(new ProductAdapter(this, MockData.getProducts()));
