@@ -221,7 +221,7 @@ public class SignUpActivity extends AppCompatActivity {
                         firebaseUser.sendEmailVerification().addOnCompleteListener(
                                 taskSendingEmail -> {
                                     if (taskSendingEmail.isSuccessful()) {
-                                        alertDialogBuilder.setTitle("Sign up successfully").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage("Verification email sent! Please check your inbox (and spam folder) and follow the instructions to complete the process. Contact support if needed. Thanks!").setPositiveButton("OK", (dialog, which) -> {
+                                        alertDialogBuilder.setTitle("Sign up successfully").setBackground(getResources().getDrawable(R.drawable.background_dialog_alert)).setMessage("Verification email sent! Please check your inbox (and spam folder) and follow the instructions to complete the process. Contact support if needed. Thanks!").setPositiveButton("OK", (dialog, which) -> {
                                             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                             startActivity(intent);
                                         }).show();
@@ -233,7 +233,7 @@ public class SignUpActivity extends AppCompatActivity {
                         signUpButton.setEnabled(true);
                     } else {
                         String error = task.getException().getMessage();
-                        alertDialogBuilder.setTitle("Sign up failed").setBackground(getResources().getDrawable(R.drawable.dialog_alert_background)).setMessage(error).setPositiveButton("OK", (dialog, which) -> {
+                        alertDialogBuilder.setTitle("Sign up failed").setBackground(getResources().getDrawable(R.drawable.background_dialog_alert)).setMessage(error).setPositiveButton("OK", (dialog, which) -> {
                             dialog.dismiss();
                         }).show();
                         signUpButton.setEnabled(true);
