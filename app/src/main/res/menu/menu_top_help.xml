@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_user_guide"
+        android:title="User Guide"/>
+    <item
+        android:id="@+id/action_customer_support"
+        android:title="Customer Support"/>
+    <item
+        android:id="@+id/action_policies_and_regulations"
+        android:title="Policies and Regulations"/>
+    <item
+        android:id="@+id/action_faq"
+        android:title="FAQ"/>
+</menu>
