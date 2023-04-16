@@ -12,7 +12,7 @@ import com.group05.emarket.views.fragments.order.OrderProcessingFragment;
 import com.group05.emarket.views.fragments.order.OrderShippingFragment;
 
 public class OrderStatesAdapter extends FragmentStateAdapter {
-    // 5 states: Pending, Processing, Shipping, Delivered, Cancelled
+    // 4 states: Pending, Shipping, Delivered, Cancelled
 
     public OrderStatesAdapter(@NonNull FragmentActivity fa) {
         super(fa);
@@ -25,12 +25,10 @@ public class OrderStatesAdapter extends FragmentStateAdapter {
             case 0:
                 return new OrderPendingFragment();
             case 1:
-                return new OrderProcessingFragment();
-            case 2:
                 return new OrderShippingFragment();
-            case 3:
+            case 2:
                 return new OrderDeliveredFragment();
-            case 4:
+            case 3:
                 return new OrderCancelledFragment();
         }
         return null;
@@ -38,6 +36,6 @@ public class OrderStatesAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 4;
     }
 }

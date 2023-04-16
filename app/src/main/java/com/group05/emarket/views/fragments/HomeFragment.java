@@ -102,8 +102,12 @@ public class HomeFragment extends Fragment {
         });
 
         List<BannerItem> bannerItems = new ArrayList<>();
-        bannerItems.add(new BannerItem(R.drawable.home_banner_1, 0, 20));
-        bannerItems.add(new BannerItem(R.drawable.home_banner_2, 0, 20));
+        var banner1 = new BannerItem(R.drawable.home_banner_1, 0, 20);
+        banner1.setPaddingHorizontal(50);
+        bannerItems.add(banner1);
+        var banner2 = new BannerItem(R.drawable.home_banner_2, 0, 20);
+        banner2.setPaddingHorizontal(50);
+        bannerItems.add(banner2);
         BannerPagerAdapter pagerAdapter = new BannerPagerAdapter(getActivity(), bannerItems);
         ViewPager viewPager = binding.getRoot().findViewById(R.id.banner_viewpager);
         viewPager.setAdapter(pagerAdapter);

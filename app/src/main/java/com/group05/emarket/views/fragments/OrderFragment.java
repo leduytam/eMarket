@@ -40,17 +40,21 @@ public class OrderFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if (position == 0) {
                 tab.setText("Pending");
+                tab.setIcon(R.drawable.ic_order_pending);
             } else if (position == 1) {
-                tab.setText("Processing");
-            } else if (position == 2) {
                 tab.setText("Shipping");
-            } else if (position == 3) {
+                tab.setIcon(R.drawable.ic_order_shipping);
+            } else if (position == 2) {
                 tab.setText("Delivered");
-            } else if (position == 4) {
+                tab.setIcon(R.drawable.ic_order_deliveried);
+            } else if (position == 3) {
                 tab.setText("Cancelled");
+                tab.setIcon(R.drawable.ic_order_cancelled);
             }
         }).attach();
 
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         return view;
     }

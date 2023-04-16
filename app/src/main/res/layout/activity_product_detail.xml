@@ -19,6 +19,7 @@
         app:menu="@menu/menu_top_product_detail"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:titleCentered="true"
+        app:title="@string/activity_product_detail_top_bar_title"
         app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
 
 

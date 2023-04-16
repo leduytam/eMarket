@@ -49,6 +49,14 @@ public class BannerPagerAdapter extends PagerAdapter {
             });
         }
 
+        int paddingHorizontal = item.getPaddingHorizontal();
+        if (paddingHorizontal != 0) {
+            // set marin
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) imageView.getLayoutParams();
+            params.setMargins(paddingHorizontal, 0, paddingHorizontal, 0);
+            imageView.setLayoutParams(params);
+        }
+
         container.addView(itemView);
         return itemView;
     }
