@@ -178,7 +178,7 @@
                         android:layout_margin="5dp"
                         android:elevation="4dp"
                         android:padding="20dp"
-                        android:text="@string/fragment_profile_about"
+                        android:text= "@string/fragment_profile_about"
                         android:textStyle="bold" />
 
                     <ImageView
