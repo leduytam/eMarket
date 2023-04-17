@@ -1,4 +1,4 @@
-package com.group05.emarket.adapters;
+package com.group05.emarket.views.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -8,7 +8,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.group05.emarket.views.fragments.order.OrderCancelledFragment;
 import com.group05.emarket.views.fragments.order.OrderDeliveredFragment;
 import com.group05.emarket.views.fragments.order.OrderPendingFragment;
-import com.group05.emarket.views.fragments.order.OrderProcessingFragment;
 import com.group05.emarket.views.fragments.order.OrderShippingFragment;
 
 public class OrderStatesAdapter extends FragmentStateAdapter {

@@ -15,7 +15,6 @@
         android:background="@color/transparent"
         android:elevation="0dp"
         app:elevation="1dp"
-        app:navigationIcon="@drawable/ic_arrow_back"
         app:titleCentered="true"
         app:title="@string/fragment_order_title"
         app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
@@ -35,13 +34,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/margin_lg">
+            android:layout_weight="1">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintHeight_max="200dp" />
+                android:layout_height="match_parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

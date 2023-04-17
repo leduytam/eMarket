@@ -1,8 +1,13 @@
 package com.group05.emarket.models;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Order {
 
-    enum Status {
+    public enum OrderStatus {
         PENDING,
         DELIVERING,
         DELIVERED,
@@ -15,26 +20,26 @@ public class Order {
     private String phone;
     private String email;
     private String note;
-    private Status status;
+    private OrderStatus orderStatus;
     private String created_at;
     private String updated_at;
 
-    private Product[] products;
+    private List<OrderProduct> orderProducts;
 
     private DeliveryMan deliveryMan;
 
-    public Order(int id, String name, String address, String phone, String email, String note, Status status, String created_at, String updated_at, float totalPrice, Product[] products, DeliveryMan deliveryMan) {
+    public Order(int id, String name, String address, String phone, String email, String note, OrderStatus orderStatus, String created_at, String updated_at, float totalPrice, List<OrderProduct> products, DeliveryMan deliveryMan) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.note = note;
-        this.status = status;
+        this.orderStatus = orderStatus;
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.totalPrice = totalPrice;
-        this.products = products;
+        this.orderProducts = products;
         this.deliveryMan = deliveryMan;
     }
 
@@ -86,12 +91,12 @@ public class Order {
         this.note = note;
     }
 
-    public Status getStatus() {
-        return status;
+    public OrderStatus getStatus() {
+        return orderStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public String getCreated_at() {
@@ -118,12 +123,12 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Product[] getProducts() {
-        return products;
+    public List<OrderProduct> getProducts() {
+        return orderProducts;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
+    public void setProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     public DeliveryMan getDeliveryMan() {
@@ -141,78 +146,87 @@ public class Order {
         private String phone;
         private String email;
         private String note;
-        private Status status;
+        private OrderStatus orderStatus;
         private String created_at;
         private String updated_at;
         private float totalPrice;
-        private Product[] products;
+        private List<OrderProduct> products;
         private DeliveryMan deliveryMan;
 
         public Builder() {
         }
 
-        public Builder id(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder address(String address) {
+        public Builder setAddress(String address) {
             this.address = address;
             return this;
         }
 
-        public Builder phone(String phone) {
+        public Builder setPhone(String phone) {
             this.phone = phone;
             return this;
         }
 
-        public Builder email(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public Builder note(String note) {
+        public Builder setNote(String note) {
             this.note = note;
             return this;
         }
 
-        public Builder status(Status status) {
-            this.status = status;
+        public Builder setStatus(OrderStatus orderStatus) {
+            this.orderStatus = orderStatus;
             return this;
         }
 
-        public Builder created_at(String created_at) {
+        public Builder setCreatedAt(String created_at) {
             this.created_at = created_at;
             return this;
         }
 
-        public Builder updated_at(String updated_at) {
+        public Builder setUpdatedAt(String updated_at) {
             this.updated_at = updated_at;
             return this;
         }
 
-        public Builder totalPrice(float totalPrice) {
+        public Builder setUpdatedAt(Date updated_at) {
+            this.updated_at = updated_at.toString();
+            return this;
+        }
+
+        public Builder setTotalPrice(float totalPrice) {
             this.totalPrice = totalPrice;
             return this;
         }
 
-        public Builder products(Product[] products) {
-            this.products = products;
+        public Builder setProducts(List<CartItem> carts) {
+            var list = new ArrayList<OrderProduct>();
+            list.addAll(carts.stream().map(
+                    cart -> new OrderProduct(cart.getProduct(), cart.getQuantity(), this.id)
+            ).collect(Collectors.toList()));
+            this.products = list;
             return this;
         }
 
-        public Builder deliveryMan(DeliveryMan deliveryMan) {
+        public Builder setDeliveryMan(DeliveryMan deliveryMan) {
             this.deliveryMan = deliveryMan;
             return this;
         }
 
         public Order build() {
-            var order = new Order(id, name, address, phone, email, note, status, created_at, updated_at, totalPrice, products, deliveryMan);
+            var order = new Order(id, name, address, phone, email, note, orderStatus, created_at, updated_at, totalPrice, products, deliveryMan);
             return order;
         }
     }
