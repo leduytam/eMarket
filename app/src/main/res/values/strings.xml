@@ -47,7 +47,7 @@
     <string name="activity_cart_btn_go_back_shop">Back to Shop</string>
     <string name="fragment_profile_edit_profile">Edit Profile</string>
     <string name="fragment_profile_all_history">All History</string>
-    <string name="fragment_profile_help">Help</string>
+    <string name="fragment_profile_help">FAQ</string>
     <string name="fragment_profile_about">About Us</string>
     <string name="fragment_profile_log_out">Log-out</string>
     <string name="fragment_profile_username">tansang752</string>
@@ -61,7 +61,7 @@
     <string name="fragment_edit_profile_dob">DOB</string>
     <string name="fragment_about_title">About Us</string>
     <string name="fragment_all_history_title">All History</string>
-    <string name="fragment_help_title">Help</string>
+    <string name="fragment_help_title">FAQ</string>
     <string name="searchbar_hint">Search store</string>
     <string name="fragment_order_title">Orders</string>
     <string name="fragment_order_empty">There is no order yet.</string>
