@@ -23,11 +23,17 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.group05.emarket.R;
 import com.group05.emarket.firestore.UsersFirestoreManager;
 import com.group05.emarket.models.User;
+import com.group05.emarket.repositories.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @ExperimentalBadgeUtils
 public class SignUpActivity extends AppCompatActivity {
@@ -38,6 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputLayout emailLayout, passwordLayout;
     Button signUpButton;
     MaterialAlertDialogBuilder alertDialogBuilder;
+
+    UserRepository userRepository;
 
     private UsersFirestoreManager usersFirestoreManager;
 
@@ -92,6 +100,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         usersFirestoreManager = UsersFirestoreManager.newInstance();
         setContentView(R.layout.activity_sign_up);
+
+        userRepository = new UserRepository();
 
         MaterialToolbar topBar = findViewById(R.id.top_bar);
         topBar.setNavigationOnClickListener(v -> finish());
@@ -218,6 +228,8 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, "Create successfully", Toast.LENGTH_LONG).show();
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         FirebaseUser firebaseUser = auth.getCurrentUser();
+                        String userUid = firebaseUser.getUid();
+                        userRepository.createUser(user, userUid);
                         firebaseUser.sendEmailVerification().addOnCompleteListener(
                                 taskSendingEmail -> {
                                     if (taskSendingEmail.isSuccessful()) {

@@ -18,31 +18,35 @@ public class User {
     private String documentId;
     private String email;
     private String password;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String phoneNumber;
     private String address;
     private String city;
     private Gender gender;
-    private Date birthday;
+    private String birthday;
 
 
     public User() {
         this.email = "";
         this.password = "";
-        this.firstName = "";
-        this.lastName = "";
+        this.fullName = "";
         this.phoneNumber = "";
         this.address = "";
         this.city = "";
         this.gender = Gender.NONE;
-        this.birthday = new Date();
+        this.birthday = "";
     }
 
 
     public User(String email, String password) {
+        this.fullName = email;
         this.email = email;
         this.password = password;
+        this.phoneNumber = "";
+        this.address = "";
+        this.city = "";
+        this.gender = Gender.NONE;
+        this.birthday = "";
     }
 
     public String getDocumentId() {
@@ -69,20 +73,12 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhoneNumber() {
@@ -100,4 +96,21 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
 }
