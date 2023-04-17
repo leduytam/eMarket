@@ -8,17 +8,22 @@
     android:orientation="vertical"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/order_screen_title"
-        android:textSize="@dimen/text_size_xl"
-        android:layout_marginHorizontal="@dimen/margin_md"
-        android:layout_marginVertical="@dimen/margin_lg"
-        />
-    <FrameLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:elevation="0dp"
+        app:elevation="1dp"
+        app:titleCentered="true"
+        app:title="@string/fragment_order_title"
+        app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
@@ -29,14 +34,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/margin_lg">
+            android:layout_weight="1">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintHeight_max="200dp" />
+                android:layout_height="match_parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 </LinearLayout>

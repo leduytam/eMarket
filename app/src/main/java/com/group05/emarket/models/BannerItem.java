@@ -5,10 +5,17 @@ public class BannerItem {
     private int mBackground;
     private int mBorderRadius;
 
+    private int mPadding;
+    private int mPaddingHorizontal;
+    private int mPaddingVertical;
+
     public BannerItem(int imageResId) {
         mImageResId = imageResId;
         mBackground = 0;
         mBorderRadius = 0;
+        mPadding = 0;
+        mPaddingHorizontal = 0;
+        mPaddingVertical = 0;
     }
 
     public BannerItem(int imageResId, int background) {
@@ -40,6 +47,30 @@ public class BannerItem {
 
     public void setBackground(int background) {
         mBackground = background;
+    }
+
+    public int getPadding() {
+        return mPadding;
+    }
+
+    public void setPadding(int padding) {
+        mPadding = padding;
+    }
+
+    public int getPaddingHorizontal() {
+        return mPaddingHorizontal;
+    }
+
+    public void setPaddingHorizontal(int paddingHorizontal) {
+        mPaddingHorizontal = paddingHorizontal;
+    }
+
+    public int getPaddingVertical() {
+        return mPaddingVertical;
+    }
+
+    public void setPaddingVertical(int paddingVertical) {
+        mPaddingVertical = paddingVertical;
     }
 
 }

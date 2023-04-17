@@ -2,6 +2,7 @@ package com.group05.emarket;
 
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Category;
+import com.group05.emarket.models.Order;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.models.Review;
 
@@ -10,12 +11,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class MockData {
     private final static List<Product> _products;
     private final static List<Category> _categories;
     private final static List<Review> _reviews;
     private final static List<CartItem> _cartItems;
+
+    private final static List<Order> _orders;
 
     public static List<Product> getProducts() {
         List<Product> products = new ArrayList<>(_products);
@@ -41,11 +45,20 @@ public class MockData {
         return _cartItems;
     }
 
+    public static List<Order> getOrders() {
+        return _orders;
+    }
+
+    public static List<Order> getOrders(Order.OrderStatus status) {
+        return _orders.stream().filter(o -> o.getStatus() == status).collect(Collectors.toList());
+    }
+
     static {
         _products = new ArrayList<>();
         _categories = new ArrayList<>();
         _reviews = new ArrayList<>();
         _cartItems = new ArrayList<>();
+        _orders = new ArrayList<Order>();
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("b88f672b-8135-4cf2-9c4b-0050a1304e4c"))
@@ -235,9 +248,62 @@ public class MockData {
                 .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
                 .build());
 
+
         _cartItems.add(new CartItem(_products.get(0), 1));
         _cartItems.add(new CartItem(_products.get(1), 2));
         _cartItems.add(new CartItem(_products.get(2), 3));
         _cartItems.add(new CartItem(_products.get(3), 4));
+
+        _orders.add(new Order.Builder()
+                .setId(1)
+                .setTotalPrice(100000)
+                .setName("pending order 1")
+                .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
+                .setPhone("0123456789")
+                .setProducts(_cartItems)
+                .setStatus(Order.OrderStatus.PENDING)
+                .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
+                .build());
+
+        _orders.add(new Order.Builder()
+                .setId(2)
+                .setTotalPrice(200000)
+                .setName("delivering order 2")
+                .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
+                .setPhone("0123456789")
+                .setProducts(_cartItems)
+                .setStatus(Order.OrderStatus.DELIVERING)
+                .build());
+
+        _orders.add(new Order.Builder()
+                .setId(3)
+                .setTotalPrice(300000)
+                .setName("delivered order 3")
+                .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
+                .setPhone("0123456789")
+                .setProducts(_cartItems)
+                .setStatus(Order.OrderStatus.DELIVERED)
+                .build());
+
+        _orders.add(new Order.Builder()
+                .setId(4)
+                .setTotalPrice(400000)
+                .setName("canceled order 4")
+                .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
+                .setPhone("0123456789")
+                .setProducts(_cartItems)
+                .setStatus(Order.OrderStatus.PENDING)
+                .build());
+
+        _orders.add(new Order.Builder()
+                .setId(5)
+                .setTotalPrice(500000)
+                .setName("pending order 5")
+                .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
+                .setPhone("0123456789")
+                .setProducts(_cartItems)
+                .setStatus(Order.OrderStatus.PENDING)
+                .build());
+
     }
 }
