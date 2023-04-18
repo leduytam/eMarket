@@ -126,12 +126,15 @@
 
         <Button
             android:id="@+id/btn_checkout"
+            style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/margin_lg"
             android:layout_marginEnd="@dimen/margin_lg"
             android:layout_marginBottom="@dimen/margin_lg"
-            android:text="@string/activity_cart_btn_checkout" />
+            android:text="@string/activity_cart_btn_checkout"
+            app:cornerRadius="10dp" />
     </RelativeLayout>
+
 </RelativeLayout>

@@ -68,9 +68,15 @@
     <string name="searchbar_hint">Search store</string>
     <string name="fragment_order_title">Orders</string>
     <string name="fragment_order_empty">There is no order yet.</string>
+    <string name="bottom_sheet_checkout_title">Checkout</string>
     <string name="fragment_about_duc">Thân Minh Đức</string>
     <string name="fragment_about_nam">Hoàng Quốc Nam</string>
     <string name="fragment_about_sang">Bùi Tấn Sang</string>
     <string name="fragment_about_tam">Lê Duy Tâm</string>
     <string name="fragment_add_payment_select_payment_method">Select Payment Method</string>
+    <string name="checkout_confirm_order">Place Order</string>
+    <string name="term_privacy">By placing an order you agree to our Terms And Conditions</string>
+    <string name="check_out_total_cost_title">Total cost</string>
+    <string name="checkout_promo_code_title">Promo code</string>
+    <string name="checkout_payment_title">Payment</string>
 </resources>

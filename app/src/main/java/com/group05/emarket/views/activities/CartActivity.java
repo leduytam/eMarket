@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityCartBinding;
@@ -14,6 +16,7 @@ import com.group05.emarket.models.CartItem;
 import com.group05.emarket.utilities.Formatter;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.CartListAdapter;
+import com.group05.emarket.views.dialogs.CheckoutBottomSheetDialog;
 
 import java.util.Locale;
 
@@ -59,8 +62,11 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
             binding.rlEmptyCart.setVisibility(isCartEmpty ? android.view.View.VISIBLE : android.view.View.GONE);
             binding.rlCartItems.setVisibility(isCartEmpty ? android.view.View.GONE : android.view.View.VISIBLE);
         });
+        BottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this);
 
-        binding.btnShopNow.setOnClickListener(v -> finish());
+        binding.btnCheckout.setOnClickListener(v -> {
+            bottomSheetDialog.show();
+        });
     }
 
     @Override

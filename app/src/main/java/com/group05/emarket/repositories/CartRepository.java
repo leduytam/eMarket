@@ -52,7 +52,7 @@ public class CartRepository {
     }
 
     public void addItemToCart(Product product, int quantity) {
-        if (mutableCartItems.getValue() == null) {
+        if (mutableCartItems.getValue() == null || quantity <= 0) {
             return;
         }
 
