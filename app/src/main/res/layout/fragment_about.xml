@@ -24,11 +24,259 @@
             app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical">
 
-    </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/logo_hcmus"
+                android:layout_gravity="center"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HCMUS"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Group 5"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F5F5F5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_duc"
+                android:layout_marginEnd="20dp"
+                />
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_about_duc"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20127470"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginEnd="10dp"
+                android:textAlignment="textEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:text="BE Dev"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F5F5F5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_nam"
+                android:layout_marginEnd="20dp"
+                />
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_about_nam"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20127566"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginEnd="10dp"
+                android:textAlignment="textEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:text="BE Dev"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F5F5F5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_sang"
+                android:layout_marginEnd="20dp"
+                />
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_about_sang"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20127611"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginEnd="10dp"
+                android:textAlignment="textEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:text="FE Dev"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F5F5F5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_tam"
+                android:layout_marginEnd="20dp"
+                />
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_about_tam"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20127619"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginEnd="10dp"
+                android:textAlignment="textEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:text="FE Dev"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 </FrameLayout>

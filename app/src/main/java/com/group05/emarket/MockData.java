@@ -3,6 +3,7 @@ package com.group05.emarket;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Category;
 import com.group05.emarket.models.Order;
+import com.group05.emarket.models.Payment;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.models.Review;
 
@@ -18,6 +19,8 @@ public class MockData {
     private final static List<Category> _categories;
     private final static List<Review> _reviews;
     private final static List<CartItem> _cartItems;
+
+    private final static List<Payment> _payments;
 
     private final static List<Order> _orders;
 
@@ -53,12 +56,42 @@ public class MockData {
         return _orders.stream().filter(o -> o.getStatus() == status).collect(Collectors.toList());
     }
 
+    public static List<Payment> getPayments() {
+        return _payments;
+    }
+
     static {
         _products = new ArrayList<>();
         _categories = new ArrayList<>();
         _reviews = new ArrayList<>();
         _cartItems = new ArrayList<>();
         _orders = new ArrayList<Order>();
+        _payments = new ArrayList<Payment>();
+
+        _payments.add(new Payment.Builder()
+                .setId(UUID.randomUUID())
+                .setTitle("Master Card")
+                .setCardNumber("4242 4242 4242 4242")
+                .setImage(R.drawable.ic_master_card)
+                .setPrimary(true)
+                .build());
+
+        _payments.add(new Payment.Builder()
+                .setId(UUID.randomUUID())
+                .setTitle("Momo")
+                .setCardNumber("0383937992")
+                .setImage(R.drawable.ic_momo)
+                .setPrimary(false)
+                .build());
+
+//        _payments.add(new Payment.Builder()
+//                .setId(UUID.randomUUID())
+//                .setTitle("Paypal")
+//                .setCardNumber("4242 4242 4242 4242")
+//                .setImage(R.drawable.ic_paypal)
+//                .setPrimary(false)
+//                .build());
+
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("b88f672b-8135-4cf2-9c4b-0050a1304e4c"))
@@ -273,6 +306,7 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.DELIVERING)
+                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
         _orders.add(new Order.Builder()
@@ -283,6 +317,7 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.DELIVERED)
+                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
         _orders.add(new Order.Builder()
@@ -293,6 +328,7 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
+                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
         _orders.add(new Order.Builder()
@@ -303,7 +339,18 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
+                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
+        _orders.add(new Order.Builder()
+                .setId(6)
+                .setTotalPrice(600000)
+                .setName("Pending order 2")
+                .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
+                .setPhone("0123456789")
+                .setProducts(_cartItems)
+                .setStatus(Order.OrderStatus.PENDING)
+                .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
+                .build());
     }
 }
