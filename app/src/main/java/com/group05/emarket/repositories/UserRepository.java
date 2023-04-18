@@ -36,7 +36,6 @@ public class UserRepository {
         userMap.put(PHONE_NUMBER, user.getPhoneNumber());
         userMap.put(FULL_NAME, user.getFullName());
         userMap.put(ADDRESS, user.getAddress());
-        userMap.put(CITY, user.getCity());
         userMap.put(BIRTHDAY, user.getBirthday());
 
         userRef.update(userMap);
@@ -69,7 +68,6 @@ public class UserRepository {
                     currentUser.setFullName(task.getResult().getString(FULL_NAME));
                     currentUser.setPhoneNumber(task.getResult().getString(PHONE_NUMBER));
                     currentUser.setAddress(task.getResult().getString(ADDRESS));
-                    currentUser.setCity(task.getResult().getString(CITY));
                     currentUser.setBirthday(task.getResult().getString(BIRTHDAY));
                 }
             });

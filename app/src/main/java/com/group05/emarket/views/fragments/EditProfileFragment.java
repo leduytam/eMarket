@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -113,7 +114,10 @@ public class EditProfileFragment extends Fragment {
             userMap.put(BIRTHDAY, dob);
 
             documentReference.update(userMap);
+            Toast.makeText(context, "Update profile successfully", Toast.LENGTH_SHORT).show();
 
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.popBackStack();
         });
         tiDOb.setOnClickListener(new View.OnClickListener() {
             @Override

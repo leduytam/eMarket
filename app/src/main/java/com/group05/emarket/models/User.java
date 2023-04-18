@@ -8,11 +8,6 @@ public class User {
 
     static public User currentUser;
 
-    enum Gender {
-        MALE,
-        FEMALE,
-        NONE,
-    }
 
     @DocumentId
     private String documentId;
@@ -21,8 +16,6 @@ public class User {
     private String fullName;
     private String phoneNumber;
     private String address;
-    private String city;
-    private Gender gender;
     private String birthday;
 
 
@@ -32,11 +25,8 @@ public class User {
         this.fullName = "";
         this.phoneNumber = "";
         this.address = "";
-        this.city = "";
-        this.gender = Gender.NONE;
         this.birthday = "";
     }
-
 
     public User(String email, String password) {
         this.fullName = email;
@@ -44,8 +34,6 @@ public class User {
         this.password = password;
         this.phoneNumber = "";
         this.address = "";
-        this.city = "";
-        this.gender = Gender.NONE;
         this.birthday = "";
     }
 
@@ -95,14 +83,6 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getBirthday() {
