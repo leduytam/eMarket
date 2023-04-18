@@ -1,23 +1,41 @@
 package com.group05.emarket.views.fragments;
 
+import static com.group05.emarket.schemas.UsersFirestoreSchema.COLLECTION_NAME;
+import static com.group05.emarket.schemas.UsersFirestoreSchema.EMAIL;
+import static com.group05.emarket.schemas.UsersFirestoreSchema.FULL_NAME;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.group05.emarket.R;
+import com.group05.emarket.models.User;
+import com.group05.emarket.repositories.UserRepository;
 import com.group05.emarket.views.activities.AuthenticationActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ProfileFragment extends Fragment {
+    private TextView tvFullName, tvShortBio;
     private Button btnLogout;
     private Context context;
 
@@ -28,11 +46,36 @@ public class ProfileFragment extends Fragment {
     private static FirebaseAuth mAuth;
     private MaterialAlertDialogBuilder alertDialogBuilder;
 
+
     public ProfileFragment() {
     }
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        tvFullName = getView().findViewById(R.id.user_profile_name);
+        tvShortBio = getView().findViewById(R.id.user_profile_short_bio);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uuid = user.getUid();
+        DocumentReference documentReference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document(uuid);
+        documentReference.get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if(document.exists()){
+                            String fullName = document.getString(FULL_NAME);
+                            String email = document.getString(EMAIL);
+                            tvFullName.setText(fullName);
+                            tvShortBio.setText(email);
+                        }
+                    }
+                });
     }
 
     @Override
