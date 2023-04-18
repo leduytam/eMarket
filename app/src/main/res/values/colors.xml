@@ -57,6 +57,8 @@
     <color name="WHITE">#FFFFFF</color>
     <color name="BLACK">#000000</color>
     <color name="transparent">#00000000</color>
+    <color name="gray_900">#A7A9B7</color>
+    <color name="light_mode_blue">#1D272F</color>
 
 <!--    categories color-->
     <color name="category_bakeries">#EDE7D7</color>

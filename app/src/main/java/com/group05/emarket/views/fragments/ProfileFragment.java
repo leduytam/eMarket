@@ -40,9 +40,10 @@ public class ProfileFragment extends Fragment {
     private Context context;
 
     private LinearLayout editProfileLayout;
-    private LinearLayout allHistoryLayout;
     private LinearLayout helpLayout;
     private LinearLayout aboutLayout;
+
+    private LinearLayout walletLayout;
     private static FirebaseAuth mAuth;
     private MaterialAlertDialogBuilder alertDialogBuilder;
 
@@ -97,14 +98,14 @@ public class ProfileFragment extends Fragment {
         editProfileLayout = view.findViewById(R.id.editProfile_button);
         editProfileLayout.setOnClickListener(v -> onClickEditProfile());
 
-        allHistoryLayout = view.findViewById(R.id.allHistory_button);
-        allHistoryLayout.setOnClickListener(v -> onClickAllHistory());
-
         helpLayout = view.findViewById(R.id.help_button);
         helpLayout.setOnClickListener(v -> onClickHelp());
 
         aboutLayout = view.findViewById(R.id.about_button);
         aboutLayout.setOnClickListener(v -> onClickAbout());
+
+        walletLayout = view.findViewById(R.id.wallet_button);
+        walletLayout.setOnClickListener(v -> onClickWallet());
 
 
         return view;
@@ -130,16 +131,6 @@ public class ProfileFragment extends Fragment {
                 .commit();
     }
 
-    private void onClickAllHistory() {
-        int fragmentId = this.getId();
-        AllHistoryFragment allHistoryFragment = new AllHistoryFragment();
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(fragmentId, allHistoryFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
     private void onClickHelp() {
         int fragmentId = this.getId();
         HelpFragment helpFragment = new HelpFragment();
@@ -156,6 +147,16 @@ public class ProfileFragment extends Fragment {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(fragmentId, aboutFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void onClickWallet() {
+        int fragmentId = this.getId();
+        WalletFragment walletFragment = new WalletFragment();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(fragmentId, walletFragment)
                 .addToBackStack(null)
                 .commit();
     }

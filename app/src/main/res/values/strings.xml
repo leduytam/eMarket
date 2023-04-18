@@ -48,6 +48,7 @@
     <string name="fragment_profile_edit_profile">Edit Profile</string>
     <string name="fragment_profile_all_history">All History</string>
     <string name="fragment_profile_help">FAQ</string>
+    <string name="fragment_profile_wallet">Wallet</string>
     <string name="fragment_profile_about">About Us</string>
     <string name="fragment_profile_log_out">Log-out</string>
     <string name="fragment_profile_username">tansang752</string>
@@ -62,6 +63,8 @@
     <string name="fragment_about_title">About Us</string>
     <string name="fragment_all_history_title">All History</string>
     <string name="fragment_help_title">FAQ</string>
+    <string name="fragment_wallet_title">Wallet</string>
+    <string name="fragment_add_payment_title">Add Payment</string>
     <string name="searchbar_hint">Search store</string>
     <string name="fragment_order_title">Orders</string>
     <string name="fragment_order_empty">There is no order yet.</string>
@@ -69,4 +72,5 @@
     <string name="fragment_about_nam">Hoàng Quốc Nam</string>
     <string name="fragment_about_sang">Bùi Tấn Sang</string>
     <string name="fragment_about_tam">Lê Duy Tâm</string>
+    <string name="fragment_add_payment_select_payment_method">Select Payment Method</string>
 </resources>
