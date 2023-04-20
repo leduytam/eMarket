@@ -76,9 +76,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.tvName.setText(product.getName());
 
         binding.tvWeight.setText(String.format(Locale.US, "%s %s", product.getWeight(), product.getWeightUnit()));
-        if (product.getCategory() != null) {
-            binding.tvCategory.setText(product.getCategory().getName());
-        }
 
         binding.tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
         binding.ivImage.setImageResource(product.getImage());

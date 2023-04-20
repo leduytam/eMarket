@@ -30,12 +30,26 @@ public class MockData {
         return products;
     }
 
+    public static List<Product> getProductsByCategory(UUID categoryId) {
+        List<Product> products = new ArrayList<>(_products);
+        return products.stream().filter(p -> p.getCategoryId().equals(categoryId)).collect(Collectors.toList());
+    }
+
+    public static List<Product> getProducts(String query, UUID categoryId) {
+        List<Product> products = new ArrayList<>(_products);
+        return products.stream().filter(p -> p.getName().toLowerCase().contains(query.toLowerCase()) && p.getCategoryId().equals(categoryId)).collect(Collectors.toList());
+    }
+
     public static Product getProductById(UUID id) {
         return _products.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
     }
 
     public static List<Category> getCategories() {
         return _categories;
+    }
+
+    public static Category getCategoryById(UUID id) {
+        return _categories.stream().filter(c -> c.getId().equals(id)).findFirst().orElse(null);
     }
 
     public static List<Review> getReviews() {
@@ -160,6 +174,7 @@ public class MockData {
                 .setRatingCount(13)
                 .setWeight(30)
                 .setWeightUnit("g")
+                .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
         _products.add(new Product.Builder()
@@ -173,6 +188,7 @@ public class MockData {
                 .setRatingCount(5)
                 .setWeight(32)
                 .setWeightUnit("g")
+                .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
         _products.add(new Product.Builder()
@@ -186,6 +202,7 @@ public class MockData {
                 .setRatingCount(10)
                 .setWeight(32)
                 .setWeightUnit("g")
+                .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
         _products.add(new Product.Builder()
@@ -199,6 +216,7 @@ public class MockData {
                 .setRatingCount(9)
                 .setWeight(58)
                 .setWeightUnit("g")
+                .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
         _products.add(new Product.Builder()
@@ -212,6 +230,7 @@ public class MockData {
                 .setRatingCount(11)
                 .setWeight(32)
                 .setWeightUnit("g")
+                .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
         _products.add(new Product.Builder()
@@ -225,6 +244,7 @@ public class MockData {
                 .setRatingCount(5)
                 .setWeight(39)
                 .setWeightUnit("g")
+                .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
         _reviews.add(new Review.Builder()
@@ -306,7 +326,7 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.DELIVERING)
-                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
+                .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
         _orders.add(new Order.Builder()
@@ -317,7 +337,7 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.DELIVERED)
-                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
+                .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
         _orders.add(new Order.Builder()
@@ -328,7 +348,7 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
-                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
+                .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
         _orders.add(new Order.Builder()
@@ -339,7 +359,7 @@ public class MockData {
                 .setPhone("0123456789")
                 .setProducts(_cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
-                        .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
+                .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
         _orders.add(new Order.Builder()
