@@ -18,8 +18,8 @@
         app:elevation="0dp"
         app:menu="@menu/menu_top_product_detail"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleCentered="true"
         app:title="@string/activity_product_detail_top_bar_title"
+        app:titleCentered="true"
         app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
 
 
@@ -243,56 +243,36 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="@dimen/margin_md"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="@dimen/margin_md"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_rating_count"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/margin_md"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_size_2md"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tv_rating_count_detail"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/text_size_2md"
-                            android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/rb_rating_stars"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:stepSize="0.1"
+                        android:theme="@style/RatingBar" />
 
-                        <androidx.appcompat.widget.AppCompatRatingBar
-                            android:id="@+id/rb_rating_stars"
-                            style="@style/Widget.AppCompat.RatingBar.Small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_name"
-                            android:isIndicator="true"
-                            android:numStars="5"
-                            android:stepSize="0.1"
-                            android:theme="@style/RatingBar" />
-
-                        <CheckBox
-                            android:id="@+id/btn_expand_reviews"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:button="@drawable/sl_expand" />
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_reviews"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_xl"
-                            android:overScrollMode="never" />
-                    </RelativeLayout>
+                    <CheckBox
+                        android:id="@+id/btn_open_reviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/sl_expand" />
                 </LinearLayout>
-
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
@@ -343,11 +323,11 @@
         android:layout_height="67dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
+        android:elevation="1dp"
         android:layoutDirection="rtl"
         android:text="@string/activity_product_detail_btn_add_to_cart"
-        android:textSize="@dimen/padding_lg"
+        android:textSize="16dp"
         app:cornerRadius="10dp"
         app:elevation="1dp"
-        android:elevation="1dp"
         app:icon="@drawable/ic_cart_plus" />
 </LinearLayout>

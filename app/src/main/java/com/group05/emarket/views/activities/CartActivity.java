@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -68,6 +69,12 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
 
         binding.btnCheckout.setOnClickListener(v -> {
             bottomSheetDialog.show();
+        });
+
+        binding.btnShopNow.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LayoutActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         });
     }
 

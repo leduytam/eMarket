@@ -66,10 +66,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             return true;
         });
 
-        binding.rvReviews.setAdapter(new ReviewAdapter(this, MockData.getReviews().subList(0, 3)));
-        binding.rvReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        binding.rvReviews.setVisibility(View.GONE);
-
         binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
         binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
 
@@ -81,14 +77,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.ivImage.setImageResource(product.getImage());
         binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         binding.tvDescription.setText(product.getDescription());
-        binding.tvRatingCountDetail.setText(String.format("Reviews (%s)", product.getRatingCount()));
+        binding.tvRatingCount.setText(String.format("Reviews (%s)", product.getRatingCount()));
         binding.rbRatingStars.setRating((product.getAvgRating()));
-        binding.btnExpandReviews.setOnClickListener(v -> {
-            if (binding.rvReviews.getVisibility() == View.VISIBLE) {
-                binding.rvReviews.setVisibility(View.GONE);
-            } else {
-                binding.rvReviews.setVisibility(View.VISIBLE);
-            }
+        binding.btnOpenReviews.setOnClickListener(v -> {
+            binding.btnOpenReviews.setChecked(false);
+            Intent intent = new Intent(this, ReviewActivity.class);
+            intent.putExtra("productId", product.getId());
+            startActivity(intent);
         });
 
         if (product.getDiscount() == 0) {
