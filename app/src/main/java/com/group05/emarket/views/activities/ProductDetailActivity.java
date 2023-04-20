@@ -1,5 +1,6 @@
 package com.group05.emarket.views.activities;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -23,10 +24,14 @@ import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityProductDetailBinding;
+import com.group05.emarket.firestore.ProductsFirestoreManger;
+import com.group05.emarket.models.Product;
+import com.group05.emarket.schemas.ProductsFirestoreSchema;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.views.adapters.ReviewAdapter;
 import com.group05.emarket.utilities.Formatter;
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -44,8 +49,68 @@ public class ProductDetailActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         quantity = 0;
 
-        UUID productId = (UUID) getIntent().getSerializableExtra("id");
-        var product = MockData.getProductById(productId);
+        String productId = (String) getIntent().getSerializableExtra("id");
+        ProductsFirestoreManger productsFirestoreManger = ProductsFirestoreManger.newInstance();
+        productsFirestoreManger.getProductById(productId).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Product product = new Product.Builder()
+                        .setDocumentId(task.getResult().getId())
+                        .setName(task.getResult().getString(ProductsFirestoreSchema.NAME))
+                        .setPrice(task.getResult().getDouble(ProductsFirestoreSchema.PRICE).floatValue())
+                        .setDescription(task.getResult().getString(ProductsFirestoreSchema.DESCRIPTION))
+                        .setWeight(task.getResult().getDouble(ProductsFirestoreSchema.WEIGHT).floatValue())
+                        .setWeightUnit(task.getResult().getString(ProductsFirestoreSchema.WEIGHT_UNIT))
+                        .setDiscount(task.getResult().getLong(ProductsFirestoreSchema.DISCOUNT).intValue())
+                        .setImageUrl(task.getResult().getString(ProductsFirestoreSchema.IMAGE_URL))
+                        .setCategoryUuid(task.getResult().getString(ProductsFirestoreSchema.CATEGORY_UUID))
+                        .build();
+                binding.tvName.setText(product.getName());
+
+                binding.tvWeight.setText(String.format(Locale.US, "%s %s", product.getWeight(), product.getWeightUnit()));
+                if (product.getCategory() != null) {
+                    binding.tvCategory.setText(product.getCategory().getName());
+                }
+
+                binding.tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
+                Picasso.get().load(product.getImageUrl()).into(binding.ivImage);
+                binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                binding.tvDescription.setText(product.getDescription());
+                binding.tvRatingCountDetail.setText(String.format("Reviews (%s)", product.getRatingCount()));
+                binding.rbRatingStars.setRating((product.getAvgRating()));
+                binding.btnExpandReviews.setOnClickListener(v -> {
+                    if (binding.rvReviews.getVisibility() == View.VISIBLE) {
+                        binding.rvReviews.setVisibility(View.GONE);
+                    } else {
+                        binding.rvReviews.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                if (product.getDiscount() == 0) {
+                    RelativeLayout rlDiscount = findViewById(R.id.rl_discount);
+                    rlDiscount.setVisibility(View.GONE);
+                    binding.tvOldPrice.setVisibility(View.GONE);
+                    binding.tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
+                } else {
+                    float discountPrice = product.getPrice() * (1 - product.getDiscount() / 100f);
+                    binding.tvPrice.setText(Formatter.formatCurrency(discountPrice));
+                    binding.tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
+                }
+
+                BadgeDrawable cartBadge = BadgeDrawable.create(this);
+                BadgeUtils.attachBadgeDrawable(cartBadge, binding.topBar, binding.topBar.getMenu().findItem(R.id.action_cart).getItemId());
+
+                cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+                cartViewModel.getCartItems().observe(this, cart -> {
+                    cartBadge.setNumber(cart.size());
+                    cartBadge.setVisible(cart.size() > 0);
+                });
+
+                binding.btnAddToCart.setOnClickListener(v -> {
+                    cartViewModel.addItemToCart(product, quantity);
+                    Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
 
         binding.topBar.setNavigationOnClickListener(v -> finish());
         binding.topBar.setOnMenuItemClickListener(item -> {
@@ -73,51 +138,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
         binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
 
-        binding.tvName.setText(product.getName());
 
-        binding.tvWeight.setText(String.format(Locale.US, "%s %s", product.getWeight(), product.getWeightUnit()));
-        if (product.getCategory() != null) {
-            binding.tvCategory.setText(product.getCategory().getName());
-        }
-
-        binding.tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
-        binding.ivImage.setImageResource(product.getImage());
-        binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        binding.tvDescription.setText(product.getDescription());
-        binding.tvRatingCountDetail.setText(String.format("Reviews (%s)", product.getRatingCount()));
-        binding.rbRatingStars.setRating((product.getAvgRating()));
-        binding.btnExpandReviews.setOnClickListener(v -> {
-            if (binding.rvReviews.getVisibility() == View.VISIBLE) {
-                binding.rvReviews.setVisibility(View.GONE);
-            } else {
-                binding.rvReviews.setVisibility(View.VISIBLE);
-            }
-        });
-
-        if (product.getDiscount() == 0) {
-            RelativeLayout rlDiscount = findViewById(R.id.rl_discount);
-            rlDiscount.setVisibility(View.GONE);
-            binding.tvOldPrice.setVisibility(View.GONE);
-            binding.tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
-        } else {
-            float discountPrice = product.getPrice() * (1 - product.getDiscount() / 100f);
-            binding.tvPrice.setText(Formatter.formatCurrency(discountPrice));
-            binding.tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
-        }
-
-        BadgeDrawable cartBadge = BadgeDrawable.create(this);
-        BadgeUtils.attachBadgeDrawable(cartBadge, binding.topBar, binding.topBar.getMenu().findItem(R.id.action_cart).getItemId());
-
-        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
-        cartViewModel.getCartItems().observe(this, cart -> {
-            cartBadge.setNumber(cart.size());
-            cartBadge.setVisible(cart.size() > 0);
-        });
-
-        binding.btnAddToCart.setOnClickListener(v -> {
-            cartViewModel.addItemToCart(product, quantity);
-            Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
-        });
 
         binding.tvQuantity.setText(String.valueOf(quantity));
         binding.btnAddQuantity.setOnClickListener(v -> {

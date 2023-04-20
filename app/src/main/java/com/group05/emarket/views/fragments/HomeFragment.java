@@ -1,5 +1,7 @@
 package com.group05.emarket.views.fragments;
 
+import static com.group05.emarket.schemas.ProductsFirestoreSchema.COLLECTION_NAME;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +20,16 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.FragmentHomeBinding;
 import com.group05.emarket.models.BannerItem;
+import com.group05.emarket.models.Product;
+import com.group05.emarket.schemas.ProductsFirestoreSchema;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.BannerPagerAdapter;
 import com.group05.emarket.views.adapters.ProductAdapter;
@@ -33,14 +41,24 @@ import com.group05.emarket.views.dialogs.AllCategoriesDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @ExperimentalBadgeUtils
 public class HomeFragment extends Fragment {
+
+    private List<Product> products;
     public HomeFragment() {
     }
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
@@ -51,16 +69,40 @@ public class HomeFragment extends Fragment {
 
         var gridGapItemDecoration = new GridGapItemDecoration(3, 20, true);
 
+        CollectionReference productsDocument = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        productsDocument.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                products = new ArrayList<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Product product = new Product.Builder()
+                            .setDocumentId(document.getId())
+                            .setName(document.getString(ProductsFirestoreSchema.NAME))
+                            .setPrice(document.getDouble(ProductsFirestoreSchema.PRICE).floatValue())
+                            .setDiscount(document.getDouble(ProductsFirestoreSchema.DISCOUNT).intValue())
+                            .setDescription(document.getString(ProductsFirestoreSchema.DESCRIPTION))
+                            .setWeight(document.getDouble(ProductsFirestoreSchema.WEIGHT).floatValue())
+                            .setWeightUnit(document.getString(ProductsFirestoreSchema.WEIGHT_UNIT))
+                            .setImageUrl(document.getString(ProductsFirestoreSchema.IMAGE_URL))
+                            .setCategoryUuid(document.getString(ProductsFirestoreSchema.CATEGORY_UUID))
+                            .build();
+
+                    products.add(product);
+                }
+
+                binding.rvPopularProducts.setAdapter(new ProductAdapter(context, products.subList(4, 7)));
+                binding.rvPopularProducts.addItemDecoration(gridGapItemDecoration);
+                binding.rvNewestProducts.setAdapter(new ProductAdapter(context, products.subList(0, 3)));
+                binding.rvNewestProducts.addItemDecoration(gridGapItemDecoration);
+
+                binding.rvDiscountProducts.setAdapter(new ProductAdapter(context, products.subList(5, 8)));
+                binding.rvDiscountProducts.addItemDecoration(gridGapItemDecoration);
+
+            }
+        });
+
         binding.rvCategories.setAdapter(new CategoryAdapter(context, MockData.getCategories()));
 
-        binding.rvPopularProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
-        binding.rvPopularProducts.addItemDecoration(gridGapItemDecoration);
 
-        binding.rvNewestProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
-        binding.rvNewestProducts.addItemDecoration(gridGapItemDecoration);
-
-        binding.rvDiscountProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
-        binding.rvDiscountProducts.addItemDecoration(gridGapItemDecoration);
 
         binding.tvSeeAllCategories.setOnClickListener(v -> {
             AllCategoriesDialog dialog = new AllCategoriesDialog();
