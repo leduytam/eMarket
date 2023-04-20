@@ -23,7 +23,6 @@ public class CartRepository {
         return instance;
     }
 
-
     private CartRepository() {
         mutableCartItems = new MutableLiveData<>(MockData.getCartItems());
     }

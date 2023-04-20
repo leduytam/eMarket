@@ -49,12 +49,14 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
         var swipeToDeleteOrderItemCallback = new CartListAdapter.SwipeToDeleteOrderItemCallback(adapter);
         var itemTouchHelper = new ItemTouchHelper(swipeToDeleteOrderItemCallback);
         itemTouchHelper.attachToRecyclerView(binding.rvCartItems);
+        CheckoutBottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this);
 
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.getCartItems().observe(this, cartItems -> {
             adapter.setCartItems(cartItems);
             binding.tvTotalPrice.setText(Formatter.formatCurrency(cartViewModel.getTotalPrice()));
             binding.tvTotalLabel.setText(String.format(Locale.US, "Total (%d items)", cartItems.size()));
+            bottomSheetDialog.setTotalCost(cartViewModel.getTotalPrice());
 
             boolean isCartEmpty = cartItems.size() == 0;
 
@@ -62,7 +64,7 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
             binding.rlEmptyCart.setVisibility(isCartEmpty ? android.view.View.VISIBLE : android.view.View.GONE);
             binding.rlCartItems.setVisibility(isCartEmpty ? android.view.View.GONE : android.view.View.VISIBLE);
         });
-        BottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this);
+
 
         binding.btnCheckout.setOnClickListener(v -> {
             bottomSheetDialog.show();

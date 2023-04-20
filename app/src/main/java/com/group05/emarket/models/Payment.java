@@ -1,10 +1,8 @@
 package com.group05.emarket.models;
 
-import java.util.UUID;
-
 public class Payment {
 
-    private UUID id;
+    private String id;
 
     private String title;
 
@@ -17,7 +15,7 @@ public class Payment {
     private Payment() {
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
@@ -38,7 +36,7 @@ public class Payment {
     }
 
     public static class Builder {
-        private UUID id;
+        private String id;
 
         private String title;
 
@@ -49,7 +47,7 @@ public class Payment {
         private boolean isPrimary;
 
 
-        public Builder setId(UUID id) {
+        public Builder setId(String id) {
             this.id = id;
             return this;
         }
