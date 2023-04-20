@@ -2,7 +2,10 @@ package com.group05.emarket.views.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,11 @@ import com.group05.emarket.R;
 import com.group05.emarket.views.activities.ProductDetailActivity;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.utilities.Formatter;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
@@ -39,9 +46,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Product product = products.get(position);
+//        Log.d("ProductAdapter", "onBindViewHolder: " + product.getName());
+//        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/emarket-11129.appspot.com/o/avatar.jpeg?alt=media&token=ddf38f4c-0ac0-4bbc-8e1e-99d417198255").into(holder._ivImage);
+        // call bind function
+        holder.setImage(product.getImageUrl());
         holder._tvName.setText(product.getName());
-        holder._ivImage.setImageResource(product.getImage());
         holder._tvRatingCount.setText(String.format("%s Reviews", product.getRatingCount()));
         holder._tvRating.setText(String.valueOf(product.getAvgRating()));
 
@@ -60,7 +71,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
-            intent.putExtra("id", product.getId());
+            intent.putExtra("id", product.getDocumentId());
             context.startActivity(intent);
         });
     }
@@ -81,8 +92,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         private final RelativeLayout _rlDiscount;
 
         public ViewHolder(@NonNull View itemView) {
-            super(itemView);
 
+            super(itemView);
             _ivImage = itemView.findViewById(R.id.iv_image);
             _tvName = itemView.findViewById(R.id.tv_name);
             _tvPrice = itemView.findViewById(R.id.tv_price);
@@ -92,6 +103,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             _tvRating = itemView.findViewById(R.id.tv_rating);
             _tvDiscount = itemView.findViewById(R.id.tv_discount);
             _rlDiscount = itemView.findViewById(R.id.rl_discount);
+        }
+
+        public void setImage(String url) {
+            Picasso.get().load(url).into(_ivImage);
         }
     }
 }
