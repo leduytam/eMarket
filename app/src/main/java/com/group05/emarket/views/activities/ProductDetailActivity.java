@@ -5,22 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.badge.ExperimentalBadgeUtils;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityProductDetailBinding;
@@ -33,12 +30,15 @@ import com.group05.emarket.views.adapters.ReviewAdapter;
 import com.group05.emarket.utilities.Formatter;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 @ExperimentalBadgeUtils
 public class ProductDetailActivity extends AppCompatActivity {
     private CartViewModel cartViewModel;
+    List<Product> relatedProducts;
 
     private int quantity = 0;
 
@@ -48,7 +48,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         com.group05.emarket.databinding.ActivityProductDetailBinding binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         quantity = 0;
-
+        relatedProducts = new ArrayList<>();
         String productId = (String) getIntent().getSerializableExtra("id");
         ProductsFirestoreManger productsFirestoreManger = ProductsFirestoreManger.newInstance();
         productsFirestoreManger.getProductById(productId).addOnCompleteListener(task -> {
@@ -64,6 +64,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         .setImageUrl(task.getResult().getString(ProductsFirestoreSchema.IMAGE_URL))
                         .setCategoryUuid(task.getResult().getString(ProductsFirestoreSchema.CATEGORY_UUID))
                         .build();
+                final String categoryUuid = product.getCategoryUuid();
                 binding.tvName.setText(product.getName());
 
                 binding.tvWeight.setText(String.format(Locale.US, "%s %s", product.getWeight(), product.getWeightUnit()));
@@ -109,8 +110,53 @@ public class ProductDetailActivity extends AppCompatActivity {
                     cartViewModel.addItemToCart(product, quantity);
                     Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
                 });
+
+                productsFirestoreManger.getProductsByCategory(categoryUuid).addOnCompleteListener(querySnapshotTask -> {
+                    if (querySnapshotTask.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : querySnapshotTask.getResult()) {
+                            if (document.getId().equals(productId)) {
+                                continue;
+                            }
+                            Product relatedProduct = new Product.Builder()
+                                    .setDocumentId(document.getId())
+                                    .setName(document.getString(ProductsFirestoreSchema.NAME))
+                                    .setPrice(document.getDouble(ProductsFirestoreSchema.PRICE).floatValue())
+                                    .setDescription(document.getString(ProductsFirestoreSchema.DESCRIPTION))
+                                    .setWeight(document.getDouble(ProductsFirestoreSchema.WEIGHT).floatValue())
+                                    .setWeightUnit(document.getString(ProductsFirestoreSchema.WEIGHT_UNIT))
+                                    .setDiscount(document.getLong(ProductsFirestoreSchema.DISCOUNT).intValue())
+                                    .setImageUrl(document.getString(ProductsFirestoreSchema.IMAGE_URL))
+                                    .setCategoryUuid(document.getString(ProductsFirestoreSchema.CATEGORY_UUID))
+                                    .build();
+                            relatedProducts.add(relatedProduct);
+                        }
+                        binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, relatedProducts.subList(0, 3)));
+                        binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
+                    }
+                });
             }
         });
+
+//        productsFirestoreManger.getProductsByCategory(categoryUuid.get()).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                for (QueryDocumentSnapshot document : task.getResult()) {
+//                    Product product = new Product.Builder()
+//                            .setDocumentId(document.getId())
+//                            .setName(document.getString(ProductsFirestoreSchema.NAME))
+//                            .setPrice(document.getDouble(ProductsFirestoreSchema.PRICE).floatValue())
+//                            .setDescription(document.getString(ProductsFirestoreSchema.DESCRIPTION))
+//                            .setWeight(document.getDouble(ProductsFirestoreSchema.WEIGHT).floatValue())
+//                            .setWeightUnit(document.getString(ProductsFirestoreSchema.WEIGHT_UNIT))
+//                            .setDiscount(document.getLong(ProductsFirestoreSchema.DISCOUNT).intValue())
+//                            .setImageUrl(document.getString(ProductsFirestoreSchema.IMAGE_URL))
+//                            .setCategoryUuid(document.getString(ProductsFirestoreSchema.CATEGORY_UUID))
+//                            .build();
+//                    relatedProducts.add(product);
+//                }
+//                binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, relatedProducts.subList(0, 3)));
+//                binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
+//            }
+//        });
 
         binding.topBar.setNavigationOnClickListener(v -> finish());
         binding.topBar.setOnMenuItemClickListener(item -> {
@@ -135,8 +181,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.rvReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.rvReviews.setVisibility(View.GONE);
 
-        binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
-        binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
+
 
 
 

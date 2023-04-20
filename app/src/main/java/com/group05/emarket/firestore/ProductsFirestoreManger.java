@@ -7,8 +7,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.group05.emarket.models.Product;
+import com.group05.emarket.schemas.ProductsFirestoreSchema;
 
 public class ProductsFirestoreManger {
     private static ProductsFirestoreManger productsFirestoreManager;
@@ -29,5 +31,10 @@ public class ProductsFirestoreManger {
 
     public Task<DocumentSnapshot> getProductById(String id) {
         return productsCollectionReference.document(id).get();
+    }
+
+    public Task<QuerySnapshot> getProductsByCategory(String CategoryUuid) {
+        Query query = productsCollectionReference.whereEqualTo(ProductsFirestoreSchema.CATEGORY_UUID, CategoryUuid);
+        return query.get();
     }
 }
