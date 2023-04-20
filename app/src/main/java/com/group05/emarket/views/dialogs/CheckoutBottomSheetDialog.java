@@ -23,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.group05.emarket.R;
 import com.group05.emarket.views.activities.LayoutActivity;
+import com.group05.emarket.views.activities.OrderSuccessActivity;
 import com.group05.emarket.views.adapters.FilterSortingViewPagerAdapter;
 import com.group05.emarket.views.fragments.ProfileFragment;
 import com.group05.emarket.views.fragments.WalletFragment;
@@ -73,6 +74,13 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog {
 
 
         btnClose.setOnClickListener(v -> dismiss());
+
+        Button btnConfirm = view.findViewById(R.id.btn_confirm_checkout);
+        btnConfirm.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), OrderSuccessActivity.class);
+            getContext().startActivity(intent);
+            dismiss();
+        });
 
 
     }

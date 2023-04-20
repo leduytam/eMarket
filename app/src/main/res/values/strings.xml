@@ -79,4 +79,8 @@
     <string name="check_out_total_cost_title">Total cost</string>
     <string name="checkout_promo_code_title">Promo code</string>
     <string name="checkout_payment_title">Payment</string>
+    <string name="order_success_title">Your Order has been  accepted</string>
+    <string name="order_success_description">Your items has been placcd and is on  it’s way to being processed</string>
+    <string name="track_order_title">Track Order</string>
+    <string name="back_to_home_title">Back to home</string>
 </resources>
