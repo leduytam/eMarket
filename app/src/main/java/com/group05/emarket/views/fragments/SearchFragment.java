@@ -2,14 +2,17 @@ package com.group05.emarket.views.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.search.SearchBar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.views.adapters.CategoryAdapter;
@@ -40,6 +43,7 @@ public class SearchFragment extends Fragment   {
         recyclerCategoriesView.setLayoutManager(gridLayoutManager);
         recyclerCategoriesView.setAdapter(new SearchingCategoryAdapter(getContext(), MockData.getCategories()));
         recyclerCategoriesView.addItemDecoration(new GridGapItemDecoration(2, 30, true));
+
 
         return view;
     }

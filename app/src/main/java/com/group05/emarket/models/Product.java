@@ -14,7 +14,7 @@ public class Product {
     protected String description;
     protected String weightUnit;
     protected float weight;
-    protected Category category;
+    protected UUID categoryId;
 
     public UUID getId() {
         return id;
@@ -60,8 +60,8 @@ public class Product {
         return weight;
     }
 
-    public Category getCategory() {
-        return category;
+    public UUID getCategoryId() {
+        return categoryId;
     }
 
     private Product() {
@@ -76,7 +76,7 @@ public class Product {
         private int ratingCount;
         private int discount;
         private String description;
-
+        private UUID categoryId;
         private float weight;
 
         private String weightUnit;
@@ -131,6 +131,11 @@ public class Product {
             return this;
         }
 
+        public Builder setCategoryId(UUID categoryId) {
+            this.categoryId = categoryId;
+            return this;
+        }
+
         public Product build() {
             Product product = new Product();
 
@@ -144,7 +149,7 @@ public class Product {
             product.description = description;
             product.weight = weight;
             product.weightUnit = weightUnit;
-            product.category = null;
+            product.categoryId = categoryId;
 
             return product;
         }

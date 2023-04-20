@@ -25,7 +25,7 @@
             android:name=".views.activities.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activities.ProductListActivity"
+            android:name=".views.activities.ProductListCategoryActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity

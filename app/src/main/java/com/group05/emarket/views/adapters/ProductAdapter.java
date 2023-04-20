@@ -29,6 +29,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         this.products = products;
     }
 
+    public void setProducts(List<Product> products) {
+        this.products.clear();
+        this.products.addAll(products);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
