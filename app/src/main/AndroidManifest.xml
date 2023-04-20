@@ -19,6 +19,9 @@
         android:theme="@style/Theme.EMarket"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.ReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.OrderSuccessActivity"
             android:exported="false" />
         <activity
