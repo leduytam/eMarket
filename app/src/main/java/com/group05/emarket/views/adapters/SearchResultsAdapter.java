@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.R;
 import com.group05.emarket.models.Product;
-import com.group05.emarket.views.activities.ProductListActivity;
-import com.group05.emarket.models.Category;
 
 import java.util.List;
 
