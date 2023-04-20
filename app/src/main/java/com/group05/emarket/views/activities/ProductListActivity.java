@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.views.adapters.ProductAdapter;
+import com.group05.emarket.views.adapters.SearchResultsAdapter;
 import com.group05.emarket.views.decorations.GridGapItemDecoration;
 import com.group05.emarket.views.dialogs.FilterSortingDialog;
 

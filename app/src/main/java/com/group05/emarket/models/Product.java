@@ -5,7 +5,6 @@ import java.util.UUID;
 public class Product {
 
     protected UUID id;
-    protected String documentId;
     protected String name;
     protected int image;
     protected float price;
@@ -16,8 +15,6 @@ public class Product {
     protected String weightUnit;
     protected float weight;
     protected Category category;
-    protected String imageUrl;
-    private String categoryUuid;
 
     public UUID getId() {
         return id;
@@ -67,19 +64,7 @@ public class Product {
         return category;
     }
 
-    public String getDocumentId() {
-        return documentId;
-    }
-
     private Product() {
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getCategoryUuid() {
-        return categoryUuid;
     }
 
     public static class Builder {
@@ -95,24 +80,6 @@ public class Product {
         private float weight;
 
         private String weightUnit;
-        private String imageUrl;
-        private String categoryUuid;
-        private String documentId;
-
-        public Builder setCategoryUuid(String categoryUuid) {
-            this.categoryUuid = categoryUuid;
-            return this;
-        }
-
-        public Builder setImageUrl(String imageUrl) {
-            this.imageUrl = imageUrl;
-            return this;
-        }
-
-        public Builder setDocumentId(String documentId) {
-            this.documentId = documentId;
-            return this;
-        }
 
         public Builder setId(UUID id) {
             this.id = id;
@@ -168,7 +135,6 @@ public class Product {
             Product product = new Product();
 
             product.id = id;
-            product.documentId = documentId;
             product.name = name;
             product.image = image;
             product.avgRating = avgRating;
@@ -179,8 +145,6 @@ public class Product {
             product.weight = weight;
             product.weightUnit = weightUnit;
             product.category = null;
-            product.imageUrl = imageUrl;
-            product.categoryUuid = categoryUuid;
 
             return product;
         }

@@ -153,14 +153,13 @@ public class MockData {
                 .setId(UUID.fromString("5e12bb3e-14d9-4c1e-853d-4a8a94ecb17c"))
                 .setName("Snack mì hương gà Enaak gói 30g")
                 .setPrice(0.26f)
+                .setImage(R.drawable.image_snack_1)
                 .setDescription("Snack có hình dáng của những sợi mì cùng hương gà, snack Enaak Gemez còn mang đến ăn cay cay hấp dẫn, kích thích vị giác và tạo một cảm giác rất lạ miệng. Snack mì hương gà Enaak gói 30g tiện lợi, ăn vặt vui và tiện lợi, an toàn.\n\nĐôi nét về thương hiệu\n\nSnack Enaak là thương hiệu bánh snack nổi tiếng đến từ Indonesia với thành phần từ 100% khoai tây thật và sợi mì được nướng không qua chiên dầu mỡ. Bánh snack Enaak mang đến cho người tiêu dùng món ăn vặt thú vị hấp dẫn thích hợp sử dụng khi đi du lịch, xem phim hoặc trong các buổi gặp mặt trò chuyện cùng bạn bè.\n\nThành phần dinh dưỡng của sản phẩm\n\nThành phần chính của sản phẩm gồm: Bột mì, dầu cọ, tinh bột sắn, bột hành, bột tỏi, sốt đậu nành, bột gia vị gà (đường, chất điều vị (E621), hương gà giống tự nhiên), chất điều vị (E621), đường, chất tạo xốp, muối, chất tạo ngọt. Ngoài ra, sản phẩm cung cấp cho cơ thể khoảng 120kcal trong 30g mì.\n\nTác dụng của sản phẩm với sức khỏe\n\nSnack mì hương gà Enaak gói 30g sẽ là một món ăn độc đáo và thơm ngon cho những ai yêu thích hương vị của sợi mì kết hợp với mùi hương thịt gà. Với hương vị thơm ngon được tạo thành từ việc phối trộn gia vị thích hợp và cách chế biến kết hợp với các sợi mì tươi ngon được thấm đều gia vị và sấy khô giòn rụm, sản phẩm mang đến cho người ăn một cảm giác giòn rụm, thơm ngon vị gà và có thể nhâm nhi cả ngày không biết chán.\n\nLưu ý khi sử dụng sản phẩm\n\nLưu ý, Snack mì hương gà Enaak gói 30g không phù hợp dùng cho trẻ dưới 1 tuổi. Để bảo quản mì, bạn cần để sản phẩm ở nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.")
                 .setDiscount(0)
                 .setAvgRating(5)
                 .setRatingCount(13)
                 .setWeight(30)
                 .setWeightUnit("g")
-                .setCategoryUuid("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e")
-                .setImageUrl("https://cdn.tgdd.vn/Products/Images/3364/79791/bhx/snack-pho-mat-mieng-oishi-goi-39g-202203281428192678.jpg")
                 .build());
 
         _products.add(new Product.Builder()
@@ -174,8 +173,6 @@ public class MockData {
                 .setRatingCount(5)
                 .setWeight(32)
                 .setWeightUnit("g")
-                        .setCategoryUuid("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e")
-                        .setImageUrl("https://cdn.tgdd.vn/Products/Images/3364/79792/bhx/snack-phong-muc-oishi-indo-chips-goi-39g-202203281430561584.jpg")
                 .build());
 
         _products.add(new Product.Builder()
@@ -189,8 +186,6 @@ public class MockData {
                 .setRatingCount(10)
                 .setWeight(32)
                 .setWeightUnit("g")
-                .setCategoryUuid("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e")
-                .setImageUrl("https://cdn.tgdd.vn/Products/Images/3364/79729/bhx/snack-ca-chua-oishi-tomati-goi-39g-202203281417472641.jpg")
                 .build());
 
         _products.add(new Product.Builder()
@@ -204,8 +199,6 @@ public class MockData {
                 .setRatingCount(9)
                 .setWeight(58)
                 .setWeightUnit("g")
-                .setCategoryUuid("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e")
-                .setImageUrl("https://cdn.tgdd.vn/Products/Images/3364/79729/bhx/snack-ca-chua-oishi-tomati-goi-39g-202203281417472641.jpg")
                 .build());
 
         _products.add(new Product.Builder()
@@ -219,8 +212,6 @@ public class MockData {
                 .setRatingCount(11)
                 .setWeight(32)
                 .setWeightUnit("g")
-                .setCategoryUuid("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e")
-                .setImageUrl("https://cdn.tgdd.vn/Products/Images/3364/79729/bhx/snack-khoai-tay-vi-tao-bien-o-star-goi-32g-202203281417472641.jpg")
                 .build());
 
         _products.add(new Product.Builder()
@@ -234,63 +225,61 @@ public class MockData {
                 .setRatingCount(5)
                 .setWeight(39)
                 .setWeightUnit("g")
-                .setCategoryUuid("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e")
-                .setImageUrl("https://cdn.tgdd.vn/Products/Images/3364/79729/bhx/snack-pho-mat-mieng-oishi-goi-39g-202203281417472641.jpg")
                 .build());
 
-//        _reviews.add(new Review.Builder()
-//                .setId(UUID.randomUUID())
-//                .setRating(5)
-//                .setContent("Mình đã ăn nhiều loại mì ăn sống nhưng loại này mình thấy ngon nhất nha")
-//                .setReviewerName("Bùi Thị Ngọc Hoa")
-//                .setReviewerAvatar(R.drawable.image_avatar_1)
-//                .setCreatedAt(LocalDateTime.parse("2023-04-03T00:00:00"))
-//                .build());
-//
-//        _reviews.add(new Review.Builder()
-//                .setId(UUID.randomUUID())
-//                .setRating(4)
-//                .setContent("Sản phẩm dùng rất thích")
-//                .setReviewerName("Nguyễn Văn Hạnh")
-//                .setReviewerAvatar(R.drawable.image_avatar_2)
-//                .setCreatedAt(LocalDateTime.parse("2023-04-04T00:00:00"))
-//                .build());
-//
-//        _reviews.add(new Review.Builder()
-//                .setId(UUID.randomUUID())
-//                .setRating(4)
-//                .setContent("Snack này rất ngon, giòn giòn vị vừa phải k cay, giá như này mình thấy hơi cao ah")
-//                .setReviewerName("An Thu Thảo")
-//                .setReviewerAvatar(R.drawable.image_avatar_3)
-//                .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
-//                .build());
-//
-//        _reviews.add(new Review.Builder()
-//                .setId(UUID.randomUUID())
-//                .setRating(5)
-//                .setContent("Bé nhà mình thích ăn loại mì này lắm. Mì giòn nhưng không bị cứng như mì bình thường. Vị mặn mặn, ngọt ngọt nữa. Mình cong thích nữa chứ đừng nói con nít.")
-//                .setReviewerName("Khả Khanh")
-//                .setReviewerAvatar(R.drawable.image_avatar_4)
-//                .setCreatedAt(LocalDateTime.parse("2023-04-02T00:00:00"))
-//                .build());
-//
-//        _reviews.add(new Review.Builder()
-//                .setId(UUID.randomUUID())
-//                .setRating(5)
-//                .setContent("Vị ăn rất ngon, chống đói nhanh chóng")
-//                .setReviewerName("Lê Tuấn")
-//                .setReviewerAvatar(R.drawable.image_avatar_5)
-//                .setCreatedAt(LocalDateTime.parse("2023-04-05T00:00:00"))
-//                .build());
-//
-//        _reviews.add(new Review.Builder()
-//                .setId(UUID.randomUUID())
-//                .setRating(3)
-//                .setContent("Tạm được")
-//                .setReviewerName("Kim Ánh")
-//                .setReviewerAvatar(R.drawable.image_avatar_6)
-//                .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
-//                .build());
+        _reviews.add(new Review.Builder()
+                .setId(UUID.randomUUID())
+                .setRating(5)
+                .setContent("Mình đã ăn nhiều loại mì ăn sống nhưng loại này mình thấy ngon nhất nha")
+                .setReviewerName("Bùi Thị Ngọc Hoa")
+                .setReviewerAvatar(R.drawable.image_avatar_1)
+                .setCreatedAt(LocalDateTime.parse("2023-04-03T00:00:00"))
+                .build());
+
+        _reviews.add(new Review.Builder()
+                .setId(UUID.randomUUID())
+                .setRating(4)
+                .setContent("Sản phẩm dùng rất thích")
+                .setReviewerName("Nguyễn Văn Hạnh")
+                .setReviewerAvatar(R.drawable.image_avatar_2)
+                .setCreatedAt(LocalDateTime.parse("2023-04-04T00:00:00"))
+                .build());
+
+        _reviews.add(new Review.Builder()
+                .setId(UUID.randomUUID())
+                .setRating(4)
+                .setContent("Snack này rất ngon, giòn giòn vị vừa phải k cay, giá như này mình thấy hơi cao ah")
+                .setReviewerName("An Thu Thảo")
+                .setReviewerAvatar(R.drawable.image_avatar_3)
+                .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
+                .build());
+
+        _reviews.add(new Review.Builder()
+                .setId(UUID.randomUUID())
+                .setRating(5)
+                .setContent("Bé nhà mình thích ăn loại mì này lắm. Mì giòn nhưng không bị cứng như mì bình thường. Vị mặn mặn, ngọt ngọt nữa. Mình cong thích nữa chứ đừng nói con nít.")
+                .setReviewerName("Khả Khanh")
+                .setReviewerAvatar(R.drawable.image_avatar_4)
+                .setCreatedAt(LocalDateTime.parse("2023-04-02T00:00:00"))
+                .build());
+
+        _reviews.add(new Review.Builder()
+                .setId(UUID.randomUUID())
+                .setRating(5)
+                .setContent("Vị ăn rất ngon, chống đói nhanh chóng")
+                .setReviewerName("Lê Tuấn")
+                .setReviewerAvatar(R.drawable.image_avatar_5)
+                .setCreatedAt(LocalDateTime.parse("2023-04-05T00:00:00"))
+                .build());
+
+        _reviews.add(new Review.Builder()
+                .setId(UUID.randomUUID())
+                .setRating(3)
+                .setContent("Tạm được")
+                .setReviewerName("Kim Ánh")
+                .setReviewerAvatar(R.drawable.image_avatar_6)
+                .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
+                .build());
 
 
         _cartItems.add(new CartItem(_products.get(0), 1));
