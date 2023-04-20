@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,7 @@ public class MockData {
 
     public static List<Review> getReviews() {
         List<Review> reviews = new ArrayList<>(_reviews);
-        Collections.shuffle(reviews);
+        reviews.sort((r1, r2) -> r2.getCreatedAt().compareTo(r1.getCreatedAt()));
         return reviews;
     }
 
@@ -296,6 +297,17 @@ public class MockData {
                 .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
                 .build());
 
+        Random random = new Random();
+        for (int i = 0; i < 100; i++) {
+            _reviews.add(new Review.Builder()
+                    .setId(UUID.randomUUID())
+                    .setRating(random.nextInt(5) + 1)
+                    .setContent("Tạm được")
+                    .setReviewerName("Review #" + (i + 1))
+                    .setReviewerAvatar(R.drawable.image_avatar_6)
+                    .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
+                    .build());
+        }
 
         _cartItems.add(new CartItem(_products.get(0), 1));
         _cartItems.add(new CartItem(_products.get(1), 2));

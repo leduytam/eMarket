@@ -16,25 +16,36 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/white"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:title="Review"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/Toolbar.SmallTitleText"
-            app:navigationIcon="@drawable/ic_arrow_back" />
+            app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_reviews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_lg"
         android:layout_marginEnd="@dimen/margin_lg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:overScrollMode="never"
-            android:id="@+id/rv_reviews"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-    </androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/primary"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone" />
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

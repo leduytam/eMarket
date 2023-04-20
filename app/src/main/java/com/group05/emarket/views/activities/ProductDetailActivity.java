@@ -66,7 +66,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             return true;
         });
 
-        binding.rvReviews.setAdapter(new ReviewAdapter(this, MockData.getReviews()));
+        binding.rvReviews.setAdapter(new ReviewAdapter(this, MockData.getReviews().subList(0, 3)));
         binding.rvReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.rvReviews.setVisibility(View.GONE);
 
