@@ -5,54 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingHorizontal="@dimen/padding_md"
     tools:context=".views.fragments.SearchFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
+        android:layout_height="48dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/search_bar_background"
+        android:elevation="4dp"
+        app:queryBackground="@android:color/transparent"
+        app:queryHint="@string/searchbar_hint"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_all_categories"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="90dp"
             android:layout_below="@+id/search_bar"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:overScrollMode="never" />
 
 
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/search_bar"
-            style="@style/Widget.Material3.SearchBar.Outlined"
-            android:backgroundTint="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/searchbar_hint"
-            app:background="@color/white" />
-
-        <com.google.android.material.search.SearchView
-            android:id="@+id/search_view"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_results"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/WHITE"
-            android:hint="@string/searchbar_hint"
-            app:layout_anchor="@id/search_bar"
-            app:queryBackground="@color/WHITE"
-            app:submitBackground="@color/WHITE">
+            android:layout_below="@+id/search_bar"
+            android:layout_gravity="center"
+            android:overScrollMode="never" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_search_results"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/search_bar"
-                android:layout_gravity="center"
-                android:overScrollMode="never" />
-
-        </com.google.android.material.search.SearchView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </LinearLayout>

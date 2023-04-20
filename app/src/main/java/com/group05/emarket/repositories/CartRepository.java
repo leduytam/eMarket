@@ -23,7 +23,6 @@ public class CartRepository {
         return instance;
     }
 
-
     private CartRepository() {
         mutableCartItems = new MutableLiveData<>(MockData.getCartItems());
     }
@@ -52,7 +51,7 @@ public class CartRepository {
     }
 
     public void addItemToCart(Product product, int quantity) {
-        if (mutableCartItems.getValue() == null) {
+        if (mutableCartItems.getValue() == null || quantity <= 0) {
             return;
         }
 

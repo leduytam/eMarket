@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityCartBinding;
@@ -14,6 +16,7 @@ import com.group05.emarket.models.CartItem;
 import com.group05.emarket.utilities.Formatter;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.CartListAdapter;
+import com.group05.emarket.views.dialogs.CheckoutBottomSheetDialog;
 
 import java.util.Locale;
 
@@ -46,12 +49,14 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
         var swipeToDeleteOrderItemCallback = new CartListAdapter.SwipeToDeleteOrderItemCallback(adapter);
         var itemTouchHelper = new ItemTouchHelper(swipeToDeleteOrderItemCallback);
         itemTouchHelper.attachToRecyclerView(binding.rvCartItems);
+        CheckoutBottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this);
 
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.getCartItems().observe(this, cartItems -> {
             adapter.setCartItems(cartItems);
             binding.tvTotalPrice.setText(Formatter.formatCurrency(cartViewModel.getTotalPrice()));
             binding.tvTotalLabel.setText(String.format(Locale.US, "Total (%d items)", cartItems.size()));
+            bottomSheetDialog.setTotalCost(cartViewModel.getTotalPrice());
 
             boolean isCartEmpty = cartItems.size() == 0;
 
@@ -60,7 +65,10 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
             binding.rlCartItems.setVisibility(isCartEmpty ? android.view.View.GONE : android.view.View.VISIBLE);
         });
 
-        binding.btnShopNow.setOnClickListener(v -> finish());
+
+        binding.btnCheckout.setOnClickListener(v -> {
+            bottomSheetDialog.show();
+        });
     }
 
     @Override

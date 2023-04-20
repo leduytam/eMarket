@@ -42,7 +42,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         com.group05.emarket.databinding.ActivityProductDetailBinding binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        quantity = 0;
+        quantity = 1;
 
         UUID productId = (UUID) getIntent().getSerializableExtra("id");
         var product = MockData.getProductById(productId);
@@ -123,7 +123,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         binding.btnRemoveQuantity.setOnClickListener(v -> {
-            if (quantity > 0) {
+            if (quantity > 1) {
                 quantity--;
                 binding.tvQuantity.setText(String.valueOf(quantity));
             }

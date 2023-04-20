@@ -70,6 +70,10 @@ public class MockData {
         return _orders.stream().filter(o -> o.getStatus() == status).collect(Collectors.toList());
     }
 
+    public static List<Product> getProductsByKeyword(String keyword) {
+        return _products.stream().filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase())).collect(Collectors.toList());
+    }
+
     public static List<Payment> getPayments() {
         return _payments;
     }
@@ -83,7 +87,7 @@ public class MockData {
         _payments = new ArrayList<Payment>();
 
         _payments.add(new Payment.Builder()
-                .setId(UUID.randomUUID())
+                .setId("b88f672b-8135-4cf2-9c4b-0050a1304e4c")
                 .setTitle("Master Card")
                 .setCardNumber("4242 4242 4242 4242")
                 .setImage(R.drawable.ic_master_card)
@@ -91,21 +95,12 @@ public class MockData {
                 .build());
 
         _payments.add(new Payment.Builder()
-                .setId(UUID.randomUUID())
+                .setId("b88f672b-8135-4cf2-9c4b-0050a1304e4c")
                 .setTitle("Momo")
                 .setCardNumber("0383937992")
                 .setImage(R.drawable.ic_momo)
                 .setPrimary(false)
                 .build());
-
-//        _payments.add(new Payment.Builder()
-//                .setId(UUID.randomUUID())
-//                .setTitle("Paypal")
-//                .setCardNumber("4242 4242 4242 4242")
-//                .setImage(R.drawable.ic_paypal)
-//                .setPrimary(false)
-//                .build());
-
 
         _categories.add(new Category.Builder()
                 .setId(UUID.fromString("b88f672b-8135-4cf2-9c4b-0050a1304e4c"))
@@ -372,5 +367,7 @@ public class MockData {
                 .setStatus(Order.OrderStatus.PENDING)
                 .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
+
+
     }
 }

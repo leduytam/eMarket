@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.badge.ExperimentalBadgeUtils;
@@ -17,7 +18,8 @@ import com.group05.emarket.views.fragments.OrderFragment;
 import com.group05.emarket.views.fragments.ProfileFragment;
 import com.group05.emarket.views.fragments.SearchFragment;
 
-@ExperimentalBadgeUtils public class LayoutActivity extends AppCompatActivity {
+@ExperimentalBadgeUtils
+public class LayoutActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
     private OrderFragment orderFragment;
@@ -37,6 +39,7 @@ import com.group05.emarket.views.fragments.SearchFragment;
         searchFragment = SearchFragment.newInstance();
         orderFragment = OrderFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
+
 
         var ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fl_fragment_container, homeFragment);
@@ -62,6 +65,7 @@ import com.group05.emarket.views.fragments.SearchFragment;
 
             return true;
         });
+
     }
 
     @Override
@@ -79,5 +83,27 @@ import com.group05.emarket.views.fragments.SearchFragment;
             Intent intent = new Intent(LayoutActivity.this, AuthenticationActivity.class);
             startActivity(intent);
         }
+
+        // get extra data from intent
+        Intent intent = getIntent();
+        String fragment = intent.getStringExtra("fragment");
+        if (fragment != null) {
+            switch (fragment) {
+                case "home":
+                    bottomNav.setSelectedItemId(R.id.action_home);
+                    break;
+                case "search":
+                    bottomNav.setSelectedItemId(R.id.action_search);
+                    break;
+                case "order":
+                    bottomNav.setSelectedItemId(R.id.action_order);
+                    break;
+                case "profile":
+                    bottomNav.setSelectedItemId(R.id.action_profile);
+                    break;
+            }
+        }
+
     }
+
 }
