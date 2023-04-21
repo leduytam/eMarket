@@ -1,5 +1,6 @@
 package com.group05.emarket.views.adapters;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group05.emarket.databinding.ListItemCartBinding;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.utilities.Formatter;
+import com.group05.emarket.views.activities.ProductDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +72,14 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             this.binding = binding;
 
             binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+            binding.tvProductName.setOnClickListener(v -> {
+                CartItem item = binding.getCartItem();
+
+                Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
+                intent.putExtra("id", item.getProduct().getId());
+                v.getContext().startActivity(intent);
+            });
 
             binding.btnDecreaseQuantity.setOnClickListener(v -> {
                 CartItem item = binding.getCartItem();

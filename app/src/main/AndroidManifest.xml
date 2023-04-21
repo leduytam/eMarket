@@ -48,6 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.LayoutActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".views.activities.SplashActivity"
