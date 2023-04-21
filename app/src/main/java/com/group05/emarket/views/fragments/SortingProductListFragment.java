@@ -39,12 +39,12 @@ public class SortingProductListFragment extends Fragment {
 
         this.context = context;
         adapter = new SortProductOptionAdapter(context, List.of(
-                SortProductOption.NEWEST,
-                SortProductOption.OLDEST,
                 SortProductOption.NAME_ASCENDING,
                 SortProductOption.NAME_DESCENDING,
                 SortProductOption.PRICE_ASCENDING,
-                SortProductOption.PRICE_DESCENDING
+                SortProductOption.PRICE_DESCENDING,
+                SortProductOption.HIGHEST_RATED,
+                SortProductOption.LOWEST_RATED
         ));
 
         if (initialSortOption != null) {

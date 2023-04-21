@@ -13,8 +13,4 @@ public class Formatter {
     public static String formatCurrency(double value) {
         return _currencyFormatter.format(value);
     }
-
-    public static String formatDiscount(int discount) {
-        return String.format("%s%%", discount);
-    }
 }

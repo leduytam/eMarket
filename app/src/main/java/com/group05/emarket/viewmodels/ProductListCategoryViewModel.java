@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.group05.emarket.Constants;
-import com.group05.emarket.MockData;
 import com.group05.emarket.enums.SortProductOption;
 import com.group05.emarket.models.Product;
+import com.group05.emarket.repositories.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,23 +19,33 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class ProductListCategoryViewModel extends ViewModel {
+    private final ProductRepository productRepo;
     private final UUID categoryId;
     private final MutableLiveData<List<Product>> products;
     private final MutableLiveData<Boolean> isLoading;
-    private float[] priceRange;
-    private SortProductOption sortOption;
-    private String query;
+    private float[] priceRange = Constants.DEFAULT_FILTER_PRODUCT_PRICE_RANGE;
+    private SortProductOption sortOption = Constants.DEFAULT_SORT_PRODUCT_OPTION;
+    private String query = "";
+    private boolean isLastPageReached = false;
+    private int currentPage = 1;
+    private int totalPageCount = 0;
+    private CompletableFuture<List<Product>> currentFetchTask;
 
     public ProductListCategoryViewModel(UUID categoryId) {
+        this.productRepo = ProductRepository.getInstance();
         this.categoryId = categoryId;
         this.products = new MutableLiveData<>(new ArrayList<>());
         this.isLoading = new MutableLiveData<>(false);
 
-        this.priceRange = Constants.DEFAULT_FILTER_PRODUCT_PRICE_RANGE;
-        this.sortOption = Constants.DEFAULT_SORT_PRODUCT_OPTION;
-        this.query = "";
-
-        fetchProducts();
+        productRepo.getProductPageCount(query, categoryId, priceRange, Constants.PRODUCT_ITEM_PER_PAGE)
+                .thenAccept(pageCount -> {
+                    totalPageCount = pageCount;
+                    fetchProducts();
+                })
+                .exceptionally(throwable -> {
+                    Log.e("ProductListCategoryViewModel", "Failed to get product page count", throwable);
+                    return null;
+                });
     }
 
     public LiveData<List<Product>> getProducts() {
@@ -56,12 +66,30 @@ public class ProductListCategoryViewModel extends ViewModel {
 
     public void setQuery(String query) {
         this.query = query;
-        fetchProducts();
+        currentPage = 1;
+        isLastPageReached = false;
+
+        if (currentFetchTask != null && !currentFetchTask.isDone()) {
+            currentFetchTask.cancel(true);
+        }
+
+        productRepo.getProductPageCount(query, categoryId, priceRange, Constants.PRODUCT_ITEM_PER_PAGE)
+                .thenAccept(pageCount -> {
+                    totalPageCount = pageCount;
+                    fetchProducts();
+                })
+                .exceptionally(throwable -> {
+                    Log.e("ProductListCategoryViewModel", "Failed to get product page count", throwable);
+                    return null;
+                });
     }
 
     public void setFilterSorting(float[] priceRange, SortProductOption sortOption) {
         this.priceRange = priceRange;
         this.sortOption = sortOption;
+        currentPage = 1;
+        isLastPageReached = false;
+
         fetchProducts();
     }
 
@@ -81,20 +109,24 @@ public class ProductListCategoryViewModel extends ViewModel {
     }
 
     private void fetchProducts() {
+        if (isLoading.getValue() == null || isLoading.getValue() || isLastPageReached) {
+            return;
+        }
+
         isLoading.setValue(true);
 
-        CompletableFuture<List<Product>> future = CompletableFuture.supplyAsync(() -> {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        var future = productRepo.getProducts(query, categoryId, priceRange, sortOption, currentPage, Constants.PRODUCT_ITEM_PER_PAGE);
 
-            return MockData.getProducts(query, categoryId, priceRange, sortOption);
-        });
+        currentFetchTask = future;
 
         future.thenAccept(products -> {
             this.products.postValue(products);
+
+            if (currentPage >= totalPageCount) {
+                isLastPageReached = true;
+            }
+
+            currentPage++;
             isLoading.postValue(false);
         }).exceptionally(throwable -> {
             isLoading.postValue(false);

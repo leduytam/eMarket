@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
@@ -62,7 +64,21 @@ public class ProductListCategoryActivity extends AppCompatActivity {
         });
 
         viewModel.getProducts().observe(this, products -> {
+            Log.d("ProductListCategory", "onCreate: " + products.size());
+            binding.tvNoProducts.setVisibility(products.size() == 0 ? View.VISIBLE : View.GONE);
+            binding.rvProducts.setVisibility(products.size() == 0 ? View.GONE : View.VISIBLE);
             binding.rvProducts.setAdapter(new ProductAdapter(this, products));
+        });
+
+        viewModel.isLoading().observe(this, isLoading -> {
+            binding.progressBar.setVisibility(isLoading ? android.view.View.VISIBLE : android.view.View.GONE);
+            binding.rvProducts.setVisibility(isLoading ? android.view.View.GONE : android.view.View.VISIBLE);
+
+            if (isLoading || (viewModel.getProducts().getValue() != null && viewModel.getProducts().getValue().size() > 0)) {
+                binding.tvNoProducts.setVisibility(View.GONE);
+            } else {
+                binding.tvNoProducts.setVisibility(View.VISIBLE);
+            }
         });
 
         binding.rvProducts.setLayoutManager(new GridLayoutManager(this, 3));

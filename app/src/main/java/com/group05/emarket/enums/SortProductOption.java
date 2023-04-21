@@ -5,8 +5,8 @@ public enum SortProductOption {
     NAME_DESCENDING,
     PRICE_ASCENDING,
     PRICE_DESCENDING,
-    NEWEST,
-    OLDEST;
+    HIGHEST_RATED,
+    LOWEST_RATED;
 
     public static String toString(SortProductOption option) {
         switch (option) {
@@ -18,10 +18,10 @@ public enum SortProductOption {
                 return "Price (Ascending)";
             case PRICE_DESCENDING:
                 return "Price (Descending)";
-            case NEWEST:
-                return "Newest";
-            case OLDEST:
-                return "Oldest";
+            case HIGHEST_RATED:
+                return "Highest Rated";
+            case LOWEST_RATED:
+                return "Lowest Rated";
             default:
                 return null;
         }

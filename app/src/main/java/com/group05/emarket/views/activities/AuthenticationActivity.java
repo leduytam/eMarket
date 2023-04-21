@@ -7,7 +7,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.R;
 import com.group05.emarket.views.adapters.BannerPagerAdapter;
 import com.group05.emarket.models.BannerItem;

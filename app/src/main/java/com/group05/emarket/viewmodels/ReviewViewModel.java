@@ -8,15 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.group05.emarket.Constants;
 import com.group05.emarket.models.Review;
 import com.group05.emarket.repositories.ReviewRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutionException;
 
 public class ReviewViewModel extends ViewModel {
     private final ReviewRepository reviewRepo = ReviewRepository.getInstance();
@@ -26,7 +24,6 @@ public class ReviewViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isLoading;
     private boolean isLastPageReached = false;
     private int currentPage = 1;
-    private final int ITEMS_PER_PAGE = 15;
     private int totalPageCount = 0;
 
     private ReviewViewModel(UUID productId) {
@@ -34,10 +31,10 @@ public class ReviewViewModel extends ViewModel {
         isLoading = new MutableLiveData<>(false);
         reviews = new MutableLiveData<>(new ArrayList<>());
 
-        reviewRepo.getReviewPageCount(productId, ITEMS_PER_PAGE)
+        reviewRepo.getReviewPageCount(productId, Constants.REVIEW_ITEMS_PER_PAGE)
                 .thenAccept(pageCount -> {
                     totalPageCount = pageCount;
-                    loadMoreReviews();
+                    fetchReviews();
                 })
                 .exceptionally(throwable -> {
                     Log.e("ReviewViewModel", "Failed to get review page count", throwable);
@@ -45,14 +42,14 @@ public class ReviewViewModel extends ViewModel {
                 });
     }
 
-    public void loadMoreReviews() {
+    public void fetchReviews() {
         if (isLoading.getValue() == null || isLoading.getValue() || isLastPageReached) {
             return;
         }
 
         isLoading.setValue(true);
 
-        reviewRepo.getReviews(productId, currentPage, ITEMS_PER_PAGE)
+        reviewRepo.getReviews(productId, currentPage, Constants.REVIEW_ITEMS_PER_PAGE)
                 .thenAccept(reviews -> {
                     List<Review> currentReviews = this.reviews.getValue();
 
