@@ -1,6 +1,5 @@
 package com.group05.emarket.views.adapters;
 
-import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,10 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.databinding.ListItemCartBinding;
@@ -100,7 +97,6 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     public static class SwipeToDeleteOrderItemCallback extends ItemTouchHelper.SimpleCallback {
         private final CartListAdapter adapter;
-        private final Paint p = new Paint();
 
         public SwipeToDeleteOrderItemCallback(CartListAdapter adapter) {
             super(0, ItemTouchHelper.LEFT);

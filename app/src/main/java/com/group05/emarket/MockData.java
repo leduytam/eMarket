@@ -1,5 +1,6 @@
 package com.group05.emarket;
 
+import com.group05.emarket.enums.SortProductOption;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Category;
 import com.group05.emarket.models.Order;
@@ -31,14 +32,31 @@ public class MockData {
         return products;
     }
 
-    public static List<Product> getProductsByCategory(UUID categoryId) {
+    public static List<Product> getProducts(String query, UUID categoryId, float[] priceRange, SortProductOption option) {
         List<Product> products = new ArrayList<>(_products);
-        return products.stream().filter(p -> p.getCategoryId().equals(categoryId)).collect(Collectors.toList());
-    }
 
-    public static List<Product> getProducts(String query, UUID categoryId) {
-        List<Product> products = new ArrayList<>(_products);
-        return products.stream().filter(p -> p.getName().toLowerCase().contains(query.toLowerCase()) && p.getCategoryId().equals(categoryId)).collect(Collectors.toList());
+        products = products.stream().filter(p -> p.getName().toLowerCase().contains(query.toLowerCase()) && p.getCategoryId().equals(categoryId) && p.getPrice() >= priceRange[0] && p.getPrice() <= priceRange[1]).collect(Collectors.toList());
+
+        products.sort((p1, p2) -> {
+            switch (option) {
+                case PRICE_ASCENDING:
+                    return Float.compare(p1.getPrice(), p2.getPrice());
+                case PRICE_DESCENDING:
+                    return Float.compare(p2.getPrice(), p1.getPrice());
+                case NAME_ASCENDING:
+                    return p1.getName().compareTo(p2.getName());
+                case NAME_DESCENDING:
+                    return p2.getName().compareTo(p1.getName());
+                case NEWEST:
+                    return new Random().nextInt(3) - 1;
+                case OLDEST:
+                    return new Random().nextInt(3) - 1;
+                default:
+                    return 0;
+            }
+        });
+
+        return products;
     }
 
     public static Product getProductById(UUID id) {
@@ -47,10 +65,6 @@ public class MockData {
 
     public static List<Category> getCategories() {
         return _categories;
-    }
-
-    public static Category getCategoryById(UUID id) {
-        return _categories.stream().filter(c -> c.getId().equals(id)).findFirst().orElse(null);
     }
 
     public static List<Review> getReviews() {
@@ -309,10 +323,10 @@ public class MockData {
                     .build());
         }
 
-        _cartItems.add(new CartItem(_products.get(0), 1));
-        _cartItems.add(new CartItem(_products.get(1), 2));
-        _cartItems.add(new CartItem(_products.get(2), 3));
-        _cartItems.add(new CartItem(_products.get(3), 4));
+//        _cartItems.add(new CartItem(_products.get(0), 1));
+//        _cartItems.add(new CartItem(_products.get(1), 2));
+//        _cartItems.add(new CartItem(_products.get(2), 3));
+//        _cartItems.add(new CartItem(_products.get(3), 4));
 
         _orders.add(new Order.Builder()
                 .setId(1)

@@ -3,6 +3,7 @@ package com.group05.emarket.views.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +60,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder._tvPrice.setText(Formatter.formatCurrency(discountPrice));
             holder._tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
         } else {
-            holder._rlDiscount.setVisibility(View.GONE);
-            holder._tvOldPrice.setVisibility(View.GONE);
             holder._tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
         }
+
+        holder._rlDiscount.setVisibility(product.getDiscount() > 0 ? View.VISIBLE : View.GONE);
+        holder._tvOldPrice.setVisibility(product.getDiscount() > 0 ? View.VISIBLE : View.GONE);
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
