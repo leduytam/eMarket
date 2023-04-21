@@ -3,40 +3,34 @@ package com.group05.emarket.views.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityProductDetailBinding;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.ProductAdapter;
-import com.group05.emarket.views.adapters.ReviewAdapter;
 import com.group05.emarket.utilities.Formatter;
 
 import java.util.Locale;
 import java.util.UUID;
 
-@ExperimentalBadgeUtils
 public class ProductDetailActivity extends AppCompatActivity {
     private CartViewModel cartViewModel;
 
     private int quantity = 0;
 
+    @SuppressLint("UnsafeOptInUsageError")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

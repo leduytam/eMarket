@@ -35,7 +35,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@ExperimentalBadgeUtils
 public class SignUpActivity extends AppCompatActivity {
     LinearLayout indicators, passwordValidationContainer, step1Container, step2Container, step3Container;
     CardView indicator1, indicator2, indicator3, step1Indicator, step2Indicator, step3Indicator;

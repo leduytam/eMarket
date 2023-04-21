@@ -17,7 +17,7 @@ import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
 
-@ExperimentalBadgeUtils public class AuthenticationActivity extends AppCompatActivity {
+public class AuthenticationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
