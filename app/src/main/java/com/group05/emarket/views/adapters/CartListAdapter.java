@@ -1,6 +1,6 @@
 package com.group05.emarket.views.adapters;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,15 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.databinding.ListItemCartBinding;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.utilities.Formatter;
+import com.group05.emarket.views.activities.ProductDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +73,14 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
             binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+            binding.tvProductName.setOnClickListener(v -> {
+                CartItem item = binding.getCartItem();
+
+                Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
+                intent.putExtra("id", item.getProduct().getId());
+                v.getContext().startActivity(intent);
+            });
+
             binding.btnDecreaseQuantity.setOnClickListener(v -> {
                 CartItem item = binding.getCartItem();
 
@@ -100,7 +107,6 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     public static class SwipeToDeleteOrderItemCallback extends ItemTouchHelper.SimpleCallback {
         private final CartListAdapter adapter;
-        private final Paint p = new Paint();
 
         public SwipeToDeleteOrderItemCallback(CartListAdapter adapter) {
             super(0, ItemTouchHelper.LEFT);

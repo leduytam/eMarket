@@ -17,9 +17,4 @@ public class Encrypt {
             return null;
         }
     }
-
-    public static String decodePassword(String password) {
-        byte[] decodedString = Base64.decode(password, Base64.DEFAULT);
-        return new String(decodedString);
-    }
 }

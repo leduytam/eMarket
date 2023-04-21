@@ -1,5 +1,6 @@
 package com.group05.emarket;
 
+import com.group05.emarket.enums.SortProductOption;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Category;
 import com.group05.emarket.models.Order;
@@ -16,78 +17,91 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MockData {
-    private final static List<Product> _products;
-    private final static List<Category> _categories;
-    private final static List<Review> _reviews;
-    private final static List<CartItem> _cartItems;
+    private final static List<Product> products;
+    private final static List<Category> categories;
+    private final static List<Review> reviews;
+    private final static List<CartItem> cartItems;
 
-    private final static List<Payment> _payments;
+    private final static List<Payment> payments;
 
-    private final static List<Order> _orders;
+    private final static List<Order> orders;
 
     public static List<Product> getProducts() {
-        List<Product> products = new ArrayList<>(_products);
+        List<Product> products = new ArrayList<>(MockData.products);
         Collections.shuffle(products);
         return products;
     }
 
-    public static List<Product> getProductsByCategory(UUID categoryId) {
-        List<Product> products = new ArrayList<>(_products);
-        return products.stream().filter(p -> p.getCategoryId().equals(categoryId)).collect(Collectors.toList());
-    }
+    public static List<Product> getProducts(String query, UUID categoryId, float[] priceRange, SortProductOption option) {
+        List<Product> products = new ArrayList<>(MockData.products);
 
-    public static List<Product> getProducts(String query, UUID categoryId) {
-        List<Product> products = new ArrayList<>(_products);
-        return products.stream().filter(p -> p.getName().toLowerCase().contains(query.toLowerCase()) && p.getCategoryId().equals(categoryId)).collect(Collectors.toList());
+        products = products.stream().filter(p -> p.getName().toLowerCase().contains(query.toLowerCase()) && p.getCategoryId().equals(categoryId) && p.getPrice() >= priceRange[0] && p.getPrice() <= priceRange[1]).collect(Collectors.toList());
+
+        products.sort((p1, p2) -> {
+            switch (option) {
+                case PRICE_ASCENDING:
+                    return Float.compare(p1.getPrice(), p2.getPrice());
+                case PRICE_DESCENDING:
+                    return Float.compare(p2.getPrice(), p1.getPrice());
+                case NAME_ASCENDING:
+                    return p1.getName().compareTo(p2.getName());
+                case NAME_DESCENDING:
+                    return p2.getName().compareTo(p1.getName());
+                case HIGHEST_RATED:
+                    return Float.compare(p2.getAvgRating(), p1.getAvgRating());
+                case LOWEST_RATED:
+                    return Float.compare(p1.getAvgRating(), p2.getAvgRating());
+                default:
+                    return 0;
+            }
+        });
+
+        return products;
     }
 
     public static Product getProductById(UUID id) {
-        return _products.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
+        return products.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
     }
 
     public static List<Category> getCategories() {
-        return _categories;
-    }
-
-    public static Category getCategoryById(UUID id) {
-        return _categories.stream().filter(c -> c.getId().equals(id)).findFirst().orElse(null);
+        return categories;
     }
 
     public static List<Review> getReviews() {
-        List<Review> reviews = new ArrayList<>(_reviews);
+        List<Review> reviews = new ArrayList<>(MockData.reviews);
         reviews.sort((r1, r2) -> r2.getCreatedAt().compareTo(r1.getCreatedAt()));
         return reviews;
     }
 
     public static List<CartItem> getCartItems() {
-        return _cartItems;
+        return cartItems;
     }
 
     public static List<Order> getOrders() {
-        return _orders;
+        return orders;
     }
 
     public static List<Order> getOrders(Order.OrderStatus status) {
-        return _orders.stream().filter(o -> o.getStatus() == status).collect(Collectors.toList());
+        return orders.stream().filter(o -> o.getStatus() == status).collect(Collectors.toList());
     }
 
     public static List<Product> getProductsByKeyword(String keyword) {
-        return _products.stream().filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase())).collect(Collectors.toList());
+        return products.stream().filter(p -> p.getName().toLowerCase().contains(keyword.toLowerCase())).collect(Collectors.toList());
     }
 
     public static List<Payment> getPayments() {
-        return _payments;
+        return payments;
     }
 
     static {
-        _products = new ArrayList<>();
-        _categories = new ArrayList<>();
-        _reviews = new ArrayList<>();
-        _cartItems = new ArrayList<>();
-        _orders = new ArrayList<Order>();
-        _payments = new ArrayList<Payment>();
+        products = new ArrayList<>();
+        categories = new ArrayList<>();
+        reviews = new ArrayList<>();
+        cartItems = new ArrayList<>();
+        orders = new ArrayList<Order>();
+        payments = new ArrayList<Payment>();
 
-        _payments.add(new Payment.Builder()
+        payments.add(new Payment.Builder()
                 .setId("b88f672b-8135-4cf2-9c4b-0050a1304e4c")
                 .setTitle("Master Card")
                 .setCardNumber("4242 4242 4242 4242")
@@ -95,7 +109,7 @@ public class MockData {
                 .setPrimary(true)
                 .build());
 
-        _payments.add(new Payment.Builder()
+        payments.add(new Payment.Builder()
                 .setId("b88f672b-8135-4cf2-9c4b-0050a1304e4c")
                 .setTitle("Momo")
                 .setCardNumber("0383937992")
@@ -103,63 +117,63 @@ public class MockData {
                 .setPrimary(false)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("b88f672b-8135-4cf2-9c4b-0050a1304e4c"))
                 .setName("Vegetables")
                 .setImage(R.drawable.ic_category_vegetables)
                 .setBackground(R.color.category_vegetables)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("4dbb88c5-1394-4f33-8e2a-5c5e2d5b5c5a"))
                 .setName("Fruits")
                 .setBackground(R.color.category_fruits)
                 .setImage(R.drawable.ic_category_fruits)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("f659857d-39d5-4ba3-8c92-9b170c15b14d"))
                 .setName("Meats")
                 .setBackground(R.color.category_meats)
                 .setImage(R.drawable.ic_category_meats)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("b49c50e3-36d2-4467-82d1-04a7eb34e9c7"))
                 .setName("Eggs")
                 .setBackground(R.color.category_eggs)
                 .setImage(R.drawable.ic_category_eggs)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("6cf10f6a-b271-46f1-98d1-c84095638fb9"))
                 .setName("Fishes")
                 .setBackground(R.color.category_fishes)
                 .setImage(R.drawable.ic_category_fishes)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("c334a846-1596-4491-9b9a-90968e48f16a"))
                 .setName("Bakeries")
                 .setBackground(R.color.category_bakeries)
                 .setImage(R.drawable.ic_category_bakeries)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .setName("Snacks")
                 .setBackground(R.color.category_snacks)
                 .setImage(R.drawable.ic_category_snacks)
                 .build());
 
-        _categories.add(new Category.Builder()
+        categories.add(new Category.Builder()
                 .setId(UUID.fromString("e3f3e2f3-d41e-4940-bd09-f94ef83e674e"))
                 .setName("Beverages")
                 .setBackground(R.color.category_beverages)
                 .setImage(R.drawable.ic_category_beverages)
                 .build());
 
-        _products.add(new Product.Builder()
+        products.add(new Product.Builder()
                 .setId(UUID.fromString("5e12bb3e-14d9-4c1e-853d-4a8a94ecb17c"))
                 .setName("Snack mì hương gà Enaak gói 30g")
                 .setPrice(0.26f)
@@ -173,7 +187,7 @@ public class MockData {
                 .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
-        _products.add(new Product.Builder()
+        products.add(new Product.Builder()
                 .setId(UUID.fromString("b632a614-1e49-4f70-bd6c-bbc4ba11e4c4"))
                 .setName("Snack vị cua Kinh Đô gói 32g")
                 .setPrice(0.28f)
@@ -187,7 +201,7 @@ public class MockData {
                 .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
-        _products.add(new Product.Builder()
+        products.add(new Product.Builder()
                 .setId(UUID.fromString("c8cc8d12-424e-447c-9cf9-79922d3e3d2d"))
                 .setName("Snack khoai tây vị bít tết kiểu New York Swing gói 32g")
                 .setPrice(0.30f)
@@ -201,7 +215,7 @@ public class MockData {
                 .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
-        _products.add(new Product.Builder()
+        products.add(new Product.Builder()
                 .setId(UUID.fromString("e601862a-b2c4-4d1e-87aa-0a9e15e1c4d7"))
                 .setName("Snack khoai tây vị tảo biển Nori Lay's gói 58g")
                 .setPrice(0.49f)
@@ -215,7 +229,7 @@ public class MockData {
                 .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
-        _products.add(new Product.Builder()
+        products.add(new Product.Builder()
                 .setId(UUID.fromString("d79b40e4-7c2f-4b18-83f4-02b9e1f78a67"))
                 .setName("Snack khoai tây vị tảo biển O'Star gói 32g")
                 .setPrice(0.28f)
@@ -229,7 +243,7 @@ public class MockData {
                 .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
-        _products.add(new Product.Builder()
+        products.add(new Product.Builder()
                 .setId(UUID.fromString("15a40d0e-eed7-443c-8bbd-7f202bf1d9c9"))
                 .setName("Snack pho mát miếng Oishi gói 39g")
                 .setPrice(0.28f)
@@ -243,7 +257,7 @@ public class MockData {
                 .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
                 .build());
 
-        _reviews.add(new Review.Builder()
+        reviews.add(new Review.Builder()
                 .setId(UUID.randomUUID())
                 .setRating(5)
                 .setContent("Mình đã ăn nhiều loại mì ăn sống nhưng loại này mình thấy ngon nhất nha")
@@ -252,7 +266,7 @@ public class MockData {
                 .setCreatedAt(LocalDateTime.parse("2023-04-03T00:00:00"))
                 .build());
 
-        _reviews.add(new Review.Builder()
+        reviews.add(new Review.Builder()
                 .setId(UUID.randomUUID())
                 .setRating(4)
                 .setContent("Sản phẩm dùng rất thích")
@@ -261,7 +275,7 @@ public class MockData {
                 .setCreatedAt(LocalDateTime.parse("2023-04-04T00:00:00"))
                 .build());
 
-        _reviews.add(new Review.Builder()
+        reviews.add(new Review.Builder()
                 .setId(UUID.randomUUID())
                 .setRating(4)
                 .setContent("Snack này rất ngon, giòn giòn vị vừa phải k cay, giá như này mình thấy hơi cao ah")
@@ -270,7 +284,7 @@ public class MockData {
                 .setCreatedAt(LocalDateTime.parse("2023-04-01T00:00:00"))
                 .build());
 
-        _reviews.add(new Review.Builder()
+        reviews.add(new Review.Builder()
                 .setId(UUID.randomUUID())
                 .setRating(5)
                 .setContent("Bé nhà mình thích ăn loại mì này lắm. Mì giòn nhưng không bị cứng như mì bình thường. Vị mặn mặn, ngọt ngọt nữa. Mình cong thích nữa chứ đừng nói con nít.")
@@ -279,7 +293,7 @@ public class MockData {
                 .setCreatedAt(LocalDateTime.parse("2023-04-02T00:00:00"))
                 .build());
 
-        _reviews.add(new Review.Builder()
+        reviews.add(new Review.Builder()
                 .setId(UUID.randomUUID())
                 .setRating(5)
                 .setContent("Vị ăn rất ngon, chống đói nhanh chóng")
@@ -288,7 +302,7 @@ public class MockData {
                 .setCreatedAt(LocalDateTime.parse("2023-04-05T00:00:00"))
                 .build());
 
-        _reviews.add(new Review.Builder()
+        reviews.add(new Review.Builder()
                 .setId(UUID.randomUUID())
                 .setRating(3)
                 .setContent("Tạm được")
@@ -299,7 +313,7 @@ public class MockData {
 
         Random random = new Random();
         for (int i = 0; i < 100; i++) {
-            _reviews.add(new Review.Builder()
+            reviews.add(new Review.Builder()
                     .setId(UUID.randomUUID())
                     .setRating(random.nextInt(5) + 1)
                     .setContent("Tạm được")
@@ -309,73 +323,73 @@ public class MockData {
                     .build());
         }
 
-        _cartItems.add(new CartItem(_products.get(0), 1));
-        _cartItems.add(new CartItem(_products.get(1), 2));
-        _cartItems.add(new CartItem(_products.get(2), 3));
-        _cartItems.add(new CartItem(_products.get(3), 4));
+        cartItems.add(new CartItem(products.get(0), 1));
+        cartItems.add(new CartItem(products.get(1), 2));
+        cartItems.add(new CartItem(products.get(2), 3));
+        cartItems.add(new CartItem(products.get(3), 4));
 
-        _orders.add(new Order.Builder()
+        orders.add(new Order.Builder()
                 .setId(1)
                 .setTotalPrice(100000)
                 .setName("pending order 1")
                 .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
                 .setPhone("0123456789")
-                .setProducts(_cartItems)
+                .setProducts(cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
                 .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
-        _orders.add(new Order.Builder()
+        orders.add(new Order.Builder()
                 .setId(2)
                 .setTotalPrice(200000)
                 .setName("delivering order 2")
                 .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
                 .setPhone("0123456789")
-                .setProducts(_cartItems)
+                .setProducts(cartItems)
                 .setStatus(Order.OrderStatus.DELIVERING)
                 .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
-        _orders.add(new Order.Builder()
+        orders.add(new Order.Builder()
                 .setId(3)
                 .setTotalPrice(300000)
                 .setName("delivered order 3")
                 .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
                 .setPhone("0123456789")
-                .setProducts(_cartItems)
+                .setProducts(cartItems)
                 .setStatus(Order.OrderStatus.DELIVERED)
                 .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
-        _orders.add(new Order.Builder()
+        orders.add(new Order.Builder()
                 .setId(4)
                 .setTotalPrice(400000)
                 .setName("canceled order 4")
                 .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
                 .setPhone("0123456789")
-                .setProducts(_cartItems)
+                .setProducts(cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
                 .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
-        _orders.add(new Order.Builder()
+        orders.add(new Order.Builder()
                 .setId(5)
                 .setTotalPrice(500000)
                 .setName("pending order 5")
                 .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
                 .setPhone("0123456789")
-                .setProducts(_cartItems)
+                .setProducts(cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
                 .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());
 
-        _orders.add(new Order.Builder()
+        orders.add(new Order.Builder()
                 .setId(6)
                 .setTotalPrice(600000)
                 .setName("Pending order 2")
                 .setAddress("123 Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh")
                 .setPhone("0123456789")
-                .setProducts(_cartItems)
+                .setProducts(cartItems)
                 .setStatus(Order.OrderStatus.PENDING)
                 .setUpdatedAt(LocalDateTime.parse("2023-04-01T00:00:00").toString())
                 .build());

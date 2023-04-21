@@ -1,5 +1,6 @@
 package com.group05.emarket.views.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.FragmentHomeBinding;
@@ -34,7 +33,6 @@ import com.group05.emarket.views.dialogs.AllCategoriesDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-@ExperimentalBadgeUtils
 public class HomeFragment extends Fragment {
     public HomeFragment() {
     }
@@ -43,6 +41,7 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
+    @SuppressLint("UnsafeOptInUsageError")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

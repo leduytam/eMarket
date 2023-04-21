@@ -2,7 +2,7 @@ package com.group05.emarket.models;
 
 import java.util.UUID;
 
-public class Category {
+public class Category implements java.io.Serializable {
     private UUID id;
     private String name;
     private int image;

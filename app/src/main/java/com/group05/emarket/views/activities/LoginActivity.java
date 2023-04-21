@@ -21,7 +21,6 @@ import com.group05.emarket.R;
 import com.group05.emarket.firestore.UsersFirestoreManager;
 import com.group05.emarket.models.User;
 
-@ExperimentalBadgeUtils
 public class LoginActivity extends AppCompatActivity {
     TextInputEditText email, password;
     TextInputLayout emailLayout, passwordLayout;

@@ -5,20 +5,16 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.group05.emarket.R;
 import com.group05.emarket.views.fragments.HomeFragment;
 import com.group05.emarket.views.fragments.OrderFragment;
 import com.group05.emarket.views.fragments.ProfileFragment;
 import com.group05.emarket.views.fragments.SearchFragment;
 
-@ExperimentalBadgeUtils
 public class LayoutActivity extends AppCompatActivity {
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;

@@ -19,17 +19,16 @@
             android:layout_height="48dp"
             android:background="@color/white"
             android:elevation="4dp"
+            app:menu="@menu/menu_top_category"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/Toolbar.SmallTitleText"
-            app:menu="@menu/menu_top_category"
-            />
+            app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin_md"
             android:background="@drawable/search_bar_background"
             android:elevation="4dp"
             app:queryBackground="@android:color/transparent"
@@ -42,8 +41,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_bar"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/margin_md"
+        android:layout_marginEnd="@dimen/margin_md"
+        android:layout_marginBottom="@dimen/margin_md"
         android:overScrollMode="never" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_lg"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/primary"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_no_products"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_lg"
+        android:text="@string/activity_category_product_list_tv_no_products"
+        android:textSize="14sp"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -52,7 +52,7 @@ public class SearchingCategoryAdapter extends RecyclerView.Adapter<SearchingCate
 
         holder.itemView.setOnClickListener(v -> {
             Intent intentToCategory = new Intent(context, ProductListCategoryActivity.class);
-            intentToCategory.putExtra("categoryId", category.getId());
+            intentToCategory.putExtra("category", category);
             context.startActivity(intentToCategory);
         });
     }
