@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.R;
@@ -59,10 +60,19 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
             boolean isCartEmpty = cartItems.size() == 0;
 
             topBar.getMenu().getItem(0).setVisible(!isCartEmpty);
-            binding.rlEmptyCart.setVisibility(isCartEmpty ? android.view.View.VISIBLE : android.view.View.GONE);
-            binding.rlCartItems.setVisibility(isCartEmpty ? android.view.View.GONE : android.view.View.VISIBLE);
+
+            binding.rlEmptyCart.setVisibility(isCartEmpty ? View.VISIBLE : View.GONE);
+            binding.rlCartItems.setVisibility(isCartEmpty ? View.GONE : View.VISIBLE);
         });
 
+        cartViewModel.getIsLoading().observe(this, isLoading -> {
+            binding.pbIsLoading.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+
+            if (isLoading) {
+                binding.rlEmptyCart.setVisibility(View.GONE);
+                binding.rlCartItems.setVisibility(View.GONE);
+            }
+        });
 
         binding.btnCheckout.setOnClickListener(v -> {
             bottomSheetDialog.show();

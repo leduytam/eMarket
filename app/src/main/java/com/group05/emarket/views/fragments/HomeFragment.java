@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
     private OverviewProductsFragment fragmentOverviewNewProducts;
     private OverviewProductsFragment fragmentOverviewDiscountProducts;
 
+
     public HomeFragment() {
     }
 
@@ -53,6 +55,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        cartViewModel.fetch();
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -133,7 +142,7 @@ public class HomeFragment extends Fragment {
         BadgeDrawable badgeNotification = BadgeDrawable.create(context);
         badgeNotification.clearNumber();
 
-        BadgeDrawable cartBadge = BadgeDrawable.create(context);
+        var cartBadge = BadgeDrawable.create(context);
 
         BadgeUtils.attachBadgeDrawable(badgeNotification, topBar, topBar.getMenu().findItem(R.id.action_notification).getItemId());
         BadgeUtils.attachBadgeDrawable(cartBadge, topBar, topBar.getMenu().findItem(R.id.action_cart).getItemId());

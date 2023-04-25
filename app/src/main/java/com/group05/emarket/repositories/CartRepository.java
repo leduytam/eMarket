@@ -5,16 +5,27 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.group05.emarket.MockData;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class CartRepository {
-    private final MutableLiveData<List<CartItem>> mutableCartItems;
     private static CartRepository instance;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public static CartRepository getInstance() {
         if (instance == null) {
@@ -24,107 +35,98 @@ public class CartRepository {
     }
 
     private CartRepository() {
-        mutableCartItems = new MutableLiveData<>(MockData.getCartItems());
     }
 
-    public LiveData<List<CartItem>> getCartItems() {
-        return mutableCartItems;
-    }
+    public CompletableFuture<List<CartItem>> getCart() {
+        CompletableFuture<List<CartItem>> future = new CompletableFuture<>();
 
-    public void addItemToCart(Product product) {
-        if (mutableCartItems.getValue() == null) {
-            return;
+        var user = auth.getCurrentUser();
+
+        if (user == null) {
+            future.complete(new ArrayList<>());
+            return future;
         }
 
-        List<CartItem> cartItems = mutableCartItems.getValue();
+        Query query = db.collection("users").document(user.getUid()).collection("cart");
 
-        for (var cartItem : cartItems) {
-            if (cartItem.getProduct().getId().equals(product.getId())) {
-                cartItem.setQuantity(cartItem.getQuantity() + 1);
-                mutableCartItems.setValue(cartItems);
-                return;
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                var cartItemDocs = task.getResult().getDocuments();
+
+                if (cartItemDocs.size() == 0) {
+                    future.complete(new ArrayList<>());
+                    return;
+                }
+
+                List<CartItem> cart = new ArrayList<>();
+
+                for (var doc : cartItemDocs) {
+                    DocumentReference productRef = doc.getDocumentReference("productRef");
+                    int quantity = doc.getLong("quantity").intValue();
+
+                    productRef.get().addOnCompleteListener(productTask -> {
+                        if (productTask.isSuccessful()) {
+                            Product product = productTask.getResult().toObject(Product.class);
+                            cart.add(new CartItem(product, quantity));
+
+                            if (cart.size() == cartItemDocs.size()) {
+                                future.complete(cart);
+                            }
+                        } else {
+                            future.completeExceptionally(productTask.getException());
+                        }
+                    });
+                }
+            } else {
+                future.completeExceptionally(task.getException());
             }
-        }
+        });
 
-        cartItems.add(new CartItem(product, 1));
-        mutableCartItems.setValue(cartItems);
+        return future;
     }
 
-    public void addItemToCart(Product product, int quantity) {
-        if (mutableCartItems.getValue() == null || quantity <= 0) {
-            return;
+    public CompletableFuture<Void> updateCart(List<CartItem> cart) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        var user = auth.getCurrentUser();
+
+        if (user == null) {
+            future.complete(null);
+            return future;
         }
 
-        List<CartItem> cartItems = mutableCartItems.getValue();
+        var batch = db.batch();
 
-        for (var cartItem : cartItems) {
-            if (cartItem.getProduct().getId().equals(product.getId())) {
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                mutableCartItems.setValue(cartItems);
-                return;
+        var cartRef = db.collection("users").document(user.getUid()).collection("cart");
+
+        cartRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (var doc : task.getResult()) {
+                    batch.delete(doc.getReference());
+                }
+
+                for (var item : cart) {
+                    Map<String, Object> data = new HashMap<>();
+                    DocumentReference productRef = db.collection("products").document(item.getProduct().getId());
+
+                    data.put("productRef", productRef);
+                    data.put("quantity", item.getQuantity());
+
+                    batch.set(cartRef.document(), data);
+                }
+
+                batch.commit().addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        future.complete(null);
+                    } else {
+                        future.completeExceptionally(task1.getException());
+                    }
+                });
+            } else {
+                future.completeExceptionally(task.getException());
             }
-        }
+        });
 
-        cartItems.add(new CartItem(product, quantity));
-        mutableCartItems.setValue(cartItems);
-    }
-
-    public void removeItemFromCart(CartItem item) {
-        if (mutableCartItems.getValue() == null) {
-            return;
-        }
-
-        List<CartItem> cartItems = mutableCartItems.getValue();
-        cartItems.remove(item);
-        mutableCartItems.setValue(cartItems);
-    }
-
-    public int getCartItemCount() {
-        if (mutableCartItems.getValue() == null) {
-            return 0;
-        }
-
-        return mutableCartItems.getValue().size();
-    }
-
-    public void clearCart() {
-        if (mutableCartItems.getValue() == null) {
-            return;
-        }
-
-        var cartItems = mutableCartItems.getValue();
-        cartItems.clear();
-        mutableCartItems.setValue(cartItems);
-    }
-
-    public float getTotalPrice() {
-        if (mutableCartItems.getValue() == null) {
-            return 0;
-        }
-
-        var totalPrice = 0.0f;
-        var cartItems = mutableCartItems.getValue();
-
-        for (var cartItem : mutableCartItems.getValue()) {
-            totalPrice += cartItem.getSubtotal();
-        }
-
-        return totalPrice;
-    }
-
-    public void changeCartItemQuantity(CartItem item, int quantity) {
-        if (mutableCartItems.getValue() == null) {
-            return;
-        }
-
-        List<CartItem> cartItems = mutableCartItems.getValue();
-
-        for (var cartItem : cartItems) {
-            if (cartItem.getProduct().getId().equals(item.getProduct().getId())) {
-                cartItem.setQuantity(quantity);
-                mutableCartItems.setValue(cartItems);
-                return;
-            }
-        }
+        return future;
     }
 }
