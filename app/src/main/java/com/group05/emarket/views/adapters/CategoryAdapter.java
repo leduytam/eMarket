@@ -11,8 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.group05.emarket.R;
-import com.group05.emarket.views.activities.ProductListCategoryActivity;
+import com.group05.emarket.enums.EProductListType;
+import com.group05.emarket.views.activities.ProductListActivity;
 import com.group05.emarket.models.Category;
 
 import java.util.List;
@@ -37,13 +39,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Category category = categories.get(position);
-        holder._ivCategory.setImageResource(category.getImage());
-        holder._tvName.setText(category.getName());
+
+        Glide.with(context)
+                .load(category.getImage())
+                .into(holder.ivCategory);
+
+        holder.tvName.setText(category.getName());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intentToCategory = new Intent(context, ProductListCategoryActivity.class);
-            intentToCategory.putExtra("category", category);
-            context.startActivity(intentToCategory);
+            Intent intent = new Intent(context, ProductListActivity.class);
+
+            intent.putExtra("title", category.getName());
+            intent.putExtra("categoryId", category.getId());
+            intent.putExtra("type", EProductListType.SEARCH);
+            intent.putExtra("isEnableQuery", true);
+
+            context.startActivity(intent);
         });
     }
 
@@ -53,13 +64,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView _ivCategory;
-        private final TextView _tvName;
+        private final ImageView ivCategory;
+        private final TextView tvName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            _ivCategory = itemView.findViewById(R.id.iv_category);
-            _tvName = itemView.findViewById(R.id.tv_name);
+            ivCategory = itemView.findViewById(R.id.iv_category);
+            tvName = itemView.findViewById(R.id.tv_name);
         }
     }
 }

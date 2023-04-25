@@ -19,6 +19,28 @@
         android:theme="@style/Theme.EMarket"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.AddPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.WalletActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.HelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.ProductListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.activities.LayoutActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
             android:name=".views.activities.ReviewActivity"
             android:exported="false" />
         <activity
@@ -34,9 +56,9 @@
             android:name=".views.activities.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".views.activities.ProductListCategoryActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:exported="false" />
+            android:name=".views.activities.CategoryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".views.activities.ProductDetailActivity"
             android:exported="false" />
@@ -45,10 +67,6 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.CartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".views.activities.LayoutActivity"
-            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".views.activities.SplashActivity"

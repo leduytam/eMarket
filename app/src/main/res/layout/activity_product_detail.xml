@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/transparent"
-        android:elevation="0dp"
         app:elevation="0dp"
         app:menu="@menu/menu_top_product_detail"
         app:navigationIcon="@drawable/ic_arrow_back"
@@ -23,9 +22,9 @@
         app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:overScrollMode="never">
 
@@ -76,7 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingTop="10dp"
+                android:paddingHorizontal="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -280,54 +280,33 @@
                     android:layout_marginVertical="10dp"
                     app:dividerColor="@color/gray_300" />
 
-                <LinearLayout
+                <FrameLayout
+                    android:id="@+id/fragment_overview_related_products"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/margin_lg"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/activity_product_detail_tv_related_products"
-                        android:textSize="@dimen/text_size_2md"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/activity_product_detail_tv_see_all_related_products"
-                        android:textColor="@color/primary"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_related_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never" />
+                    android:layout_marginVertical="@dimen/margin_lg" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_add_to_cart"
         android:layout_width="match_parent"
-        android:layout_height="67dp"
+        android:layout_height="60dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:elevation="1dp"
+        android:backgroundTint="@color/primary"
         android:layoutDirection="rtl"
         android:text="@string/activity_product_detail_btn_add_to_cart"
-        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:cornerRadius="10dp"
-        app:elevation="1dp"
-        app:icon="@drawable/ic_cart_plus" />
+        app:elevation="0dp"
+        app:hoveredFocusedTranslationZ="0dp"
+        app:icon="@drawable/ic_cart_plus"
+        app:iconTint="@color/white"
+        app:hideMotionSpec="@null"
+        android:stateListAnimator="@null"
+        app:pressedTranslationZ="0dp" />
 </LinearLayout>

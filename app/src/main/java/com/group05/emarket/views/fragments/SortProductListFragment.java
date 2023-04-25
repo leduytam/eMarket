@@ -14,17 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.group05.emarket.databinding.FragmentSortProductBinding;
-import com.group05.emarket.enums.SortProductOption;
+import com.group05.emarket.enums.ESortProductOption;
 import com.group05.emarket.views.adapters.SortProductOptionAdapter;
 
 import java.util.List;
 
-public class SortingProductListFragment extends Fragment {
+public class SortProductListFragment extends Fragment {
     private SortProductOptionAdapter adapter;
     private Context context;
-    private final SortProductOption initialSortOption;
+    private final ESortProductOption initialSortOption;
 
-    public SortingProductListFragment(SortProductOption initialSortOption) {
+    public SortProductListFragment(ESortProductOption initialSortOption) {
         this.initialSortOption = initialSortOption;
     }
 
@@ -39,12 +39,12 @@ public class SortingProductListFragment extends Fragment {
 
         this.context = context;
         adapter = new SortProductOptionAdapter(context, List.of(
-                SortProductOption.NAME_ASCENDING,
-                SortProductOption.NAME_DESCENDING,
-                SortProductOption.PRICE_ASCENDING,
-                SortProductOption.PRICE_DESCENDING,
-                SortProductOption.HIGHEST_RATED,
-                SortProductOption.LOWEST_RATED
+                ESortProductOption.NAME_ASCENDING,
+                ESortProductOption.NAME_DESCENDING,
+                ESortProductOption.PRICE_ASCENDING,
+                ESortProductOption.PRICE_DESCENDING,
+                ESortProductOption.HIGHEST_RATED,
+                ESortProductOption.LOWEST_RATED
         ));
 
         if (initialSortOption != null) {
@@ -65,7 +65,7 @@ public class SortingProductListFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public SortProductOption getSelectedOption() {
+    public ESortProductOption getSelectedOption() {
         if (adapter == null) {
             return initialSortOption;
         }

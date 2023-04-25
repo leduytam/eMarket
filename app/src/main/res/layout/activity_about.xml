@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.fragments.AboutFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".views.activities.AboutActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -27,46 +25,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
-            android:orientation="vertical"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            >
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:shapeAppearanceOverlay="@style/ImageViewCircular"
-                app:srcCompat="@drawable/logo_hcmus"
                 android:layout_gravity="center"
-                />
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/logo_hcmus" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="HCMUS"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
-                    android:layout_gravity="center"
-                    />
+                    android:textSize="22sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Group 5"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
                     android:layout_gravity="center"
-                    android:textSize="16sp"/>
+                    android:layout_marginTop="10dp"
+                    android:text="Group 5"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -78,47 +77,48 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            >
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:shapeAppearanceOverlay="@style/ImageViewCircular"
-                app:srcCompat="@drawable/avatar_duc"
                 android:layout_marginEnd="20dp"
-                />
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_duc" />
+
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_about_duc"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20127470"
                     android:layout_marginTop="10dp"
+                    android:text="20127470"
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginEnd="10dp"
-                android:textAlignment="textEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:text="BE Dev"/>
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="10dp"
+                android:text="BE Dev"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -129,47 +129,48 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            >
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:shapeAppearanceOverlay="@style/ImageViewCircular"
-                app:srcCompat="@drawable/avatar_nam"
                 android:layout_marginEnd="20dp"
-                />
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_nam" />
+
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_about_nam"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20127566"
                     android:layout_marginTop="10dp"
+                    android:text="20127566"
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginEnd="10dp"
-                android:textAlignment="textEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:text="BE Dev"/>
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="10dp"
+                android:text="BE Dev"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -180,47 +181,48 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            >
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:shapeAppearanceOverlay="@style/ImageViewCircular"
-                app:srcCompat="@drawable/avatar_sang"
                 android:layout_marginEnd="20dp"
-                />
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_sang" />
+
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_about_sang"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20127611"
                     android:layout_marginTop="10dp"
+                    android:text="20127611"
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginEnd="10dp"
-                android:textAlignment="textEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:text="FE Dev"/>
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="10dp"
+                android:text="FE Dev"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -231,52 +233,50 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            >
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:shapeAppearanceOverlay="@style/ImageViewCircular"
-                app:srcCompat="@drawable/avatar_tam"
                 android:layout_marginEnd="20dp"
-                />
+                app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                app:srcCompat="@drawable/avatar_tam" />
+
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_about_tam"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20127619"
                     android:layout_marginTop="10dp"
+                    android:text="20127619"
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginEnd="10dp"
-                android:textAlignment="textEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:text="FE Dev"/>
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="10dp"
+                android:text="FE Dev"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-
-
 </FrameLayout>

@@ -3,10 +3,12 @@ package com.group05.emarket.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.group05.emarket.R;
 import com.group05.emarket.views.adapters.BannerPagerAdapter;
 import com.group05.emarket.models.BannerItem;
@@ -47,5 +49,23 @@ public class AuthenticationActivity extends AppCompatActivity {
             Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        var auth = FirebaseAuth.getInstance();
+        var firebaseUser = auth.getCurrentUser();
+        if (firebaseUser != null) {
+            var isVerified = firebaseUser.isEmailVerified();
+            if (!isVerified) {
+                Toast.makeText(this, "Please verify your email", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(this, LayoutActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.group05.emarket.enums;
 
-public enum SortProductOption {
+public enum ESortProductOption {
     NAME_ASCENDING,
     NAME_DESCENDING,
     PRICE_ASCENDING,
@@ -8,7 +8,7 @@ public enum SortProductOption {
     HIGHEST_RATED,
     LOWEST_RATED;
 
-    public static String toString(SortProductOption option) {
+    public static String toString(ESortProductOption option) {
         switch (option) {
             case NAME_ASCENDING:
                 return "Name (A-Z)";

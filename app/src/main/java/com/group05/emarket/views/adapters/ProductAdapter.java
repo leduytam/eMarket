@@ -3,7 +3,6 @@ package com.group05.emarket.views.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.group05.emarket.R;
 import com.group05.emarket.views.activities.ProductDetailActivity;
 import com.group05.emarket.models.Product;
@@ -47,28 +47,30 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = products.get(position);
-        holder._tvName.setText(product.getName());
-        holder._ivImage.setImageResource(product.getImage());
-        holder._tvRatingCount.setText(String.format("%s Reviews", product.getRatingCount()));
-        holder._tvRating.setText(String.valueOf(product.getAvgRating()));
+        holder.tvName.setText(product.getName());
+
+        Glide.with(context).load(product.getImage()).into(holder.ivImage);
+
+        holder.tvRatingCount.setText(String.format("%s Reviews", product.getRatingCount()));
+        holder.tvRating.setText(String.valueOf(product.getAvgRating()));
 
         if (product.getDiscount() > 0) {
-            holder._tvDiscount.setText(String.format("%s%%", product.getDiscount()));
-            holder._tvDiscount.setVisibility(View.VISIBLE);
+            holder.tvDiscount.setText(String.format("%s%%", product.getDiscount()));
+            holder.tvDiscount.setVisibility(View.VISIBLE);
 
             double discountPrice = product.getPrice() * (1 - product.getDiscount() / 100.0);
-            holder._tvPrice.setText(Formatter.formatCurrency(discountPrice));
-            holder._tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
+            holder.tvPrice.setText(Formatter.formatCurrency(discountPrice));
+            holder.tvOldPrice.setText(Formatter.formatCurrency(product.getPrice()));
         } else {
-            holder._tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
+            holder.tvPrice.setText(Formatter.formatCurrency(product.getPrice()));
         }
 
-        holder._rlDiscount.setVisibility(product.getDiscount() > 0 ? View.VISIBLE : View.GONE);
-        holder._tvOldPrice.setVisibility(product.getDiscount() > 0 ? View.VISIBLE : View.GONE);
+        holder.rlDiscount.setVisibility(product.getDiscount() > 0 ? View.VISIBLE : View.GONE);
+        holder.tvOldPrice.setVisibility(product.getDiscount() > 0 ? View.VISIBLE : View.GONE);
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
-            intent.putExtra("id", product.getId());
+            intent.putExtra("product", product);
             context.startActivity(intent);
         });
     }
@@ -79,27 +81,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView _ivImage;
-        private final TextView _tvName;
-        private final TextView _tvPrice;
-        private final TextView _tvOldPrice;
-        private final TextView _tvRatingCount;
-        private final TextView _tvRating;
-        private final TextView _tvDiscount;
-        private final RelativeLayout _rlDiscount;
+        private final ImageView ivImage;
+        private final TextView tvName;
+        private final TextView tvPrice;
+        private final TextView tvOldPrice;
+        private final TextView tvRatingCount;
+        private final TextView tvRating;
+        private final TextView tvDiscount;
+        private final RelativeLayout rlDiscount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            _ivImage = itemView.findViewById(R.id.iv_image);
-            _tvName = itemView.findViewById(R.id.tv_name);
-            _tvPrice = itemView.findViewById(R.id.tv_price);
-            _tvOldPrice = itemView.findViewById(R.id.tv_old_price);
-            _tvOldPrice.setPaintFlags(_tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            _tvRatingCount = itemView.findViewById(R.id.tv_rating_count);
-            _tvRating = itemView.findViewById(R.id.tv_rating);
-            _tvDiscount = itemView.findViewById(R.id.tv_discount);
-            _rlDiscount = itemView.findViewById(R.id.rl_discount);
+            ivImage = itemView.findViewById(R.id.iv_image);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvPrice = itemView.findViewById(R.id.tv_price);
+            tvOldPrice = itemView.findViewById(R.id.tv_old_price);
+            tvOldPrice.setPaintFlags(tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            tvRatingCount = itemView.findViewById(R.id.tv_rating_count);
+            tvRating = itemView.findViewById(R.id.tv_rating);
+            tvDiscount = itemView.findViewById(R.id.tv_discount);
+            rlDiscount = itemView.findViewById(R.id.rl_discount);
         }
     }
 }

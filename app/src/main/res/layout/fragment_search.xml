@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingHorizontal="@dimen/padding_md"
     tools:context=".views.fragments.SearchFragment">
 
@@ -16,26 +15,26 @@
         android:background="@drawable/search_bar_background"
         android:elevation="4dp"
         app:queryBackground="@android:color/transparent"
-        app:queryHint="@string/searchbar_hint"/>
+        app:queryHint="@string/searchbar_hint" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_search_all_categories"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/search_bar"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:overScrollMode="never" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_all_categories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_bar"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/margin_md"
+        android:overScrollMode="never" />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_search_results"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/search_bar"
-            android:layout_gravity="center"
-            android:overScrollMode="never" />
-
-
-
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/pb_is_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_md"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/primary"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone" />
+</RelativeLayout>

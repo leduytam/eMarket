@@ -1,18 +1,17 @@
 package com.group05.emarket.views.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.group05.emarket.R;
 import com.group05.emarket.models.Product;
 
@@ -39,8 +38,12 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = products.get(position);
         View view = holder.itemView;
-        holder._tvName.setText(product.getName());
-        holder._ivProductImage.setImageResource(product.getImage());
+        holder.tvName.setText(product.getName());
+
+        Glide.with(context)
+                .load(product.getImage())
+                .into(holder.ivProductImage);
+
         GradientDrawable gd = new GradientDrawable();
         gd.setCornerRadius(30);
 
@@ -52,13 +55,13 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView _ivProductImage;
-        private final TextView _tvName;
+        private final ImageView ivProductImage;
+        private final TextView tvName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            _ivProductImage = itemView.findViewById(R.id.iv_image);
-            _tvName = itemView.findViewById(R.id.tv_name);
+            ivProductImage = itemView.findViewById(R.id.iv_image);
+            tvName = itemView.findViewById(R.id.tv_name);
         }
     }
 

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;

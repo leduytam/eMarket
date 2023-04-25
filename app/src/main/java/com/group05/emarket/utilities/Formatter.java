@@ -6,8 +6,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Formatter {
-    private static final Locale _locale = new Locale("en", "US");
-    private static final NumberFormat _currencyFormatter = NumberFormat.getCurrencyInstance(_locale);
+    private static final Locale locale = new Locale("en", "US");
+    private static final NumberFormat _currencyFormatter = NumberFormat.getCurrencyInstance(locale);
 
     @NonNull
     public static String formatCurrency(double value) {

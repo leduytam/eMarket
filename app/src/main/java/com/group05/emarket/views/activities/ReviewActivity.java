@@ -24,7 +24,7 @@ public class ReviewActivity extends AppCompatActivity {
         ActivityReviewBinding binding = ActivityReviewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        UUID productId = (UUID) getIntent().getSerializableExtra("productId");
+        String productId = getIntent().getStringExtra("productId");
 
         reviewViewModel = new ViewModelProvider(this, new ReviewViewModel.Factory(productId)).get(ReviewViewModel.class);
 
@@ -49,9 +49,9 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         reviewViewModel.getReviews().observe(this, reviews -> {
-            var scrollPosition = layoutManager.findFirstVisibleItemPosition();
+            var state = layoutManager.onSaveInstanceState();
             binding.rvReviews.setAdapter(new ReviewAdapter(this, reviews));
-            layoutManager.scrollToPosition(scrollPosition);
+            layoutManager.onRestoreInstanceState(state);
         });
 
         reviewViewModel.isLoading().observe(this, isLoading -> {

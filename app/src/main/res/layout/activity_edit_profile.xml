@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".views.fragments.EditProfileFragment">
+    tools:context=".views.activities.EditProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -47,13 +47,13 @@
                     android:textColor="@color/BLACK" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/email_text_input_layout"
+                    android:id="@+id/full_name_text_input_layout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/full_name_edit_text"
+                        android:id="@+id/et_full_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/phone_edit_text"
+                        android:id="@+id/et_phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/address_edit_text"
+                        android:id="@+id/et_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/dob_edit_text"
+                        android:id="@+id/et_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -158,7 +158,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/editProfile_button"
+                android:id="@+id/btn_update"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"

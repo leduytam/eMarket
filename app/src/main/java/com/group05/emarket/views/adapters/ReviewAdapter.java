@@ -9,7 +9,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.R;
@@ -39,11 +38,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Review review = reviews.get(position);
-        holder._tvContent.setText(review.getContent());
-        holder._rbRating.setRating(review.getRating());
-        holder._tvCreatedAt.setText(TimeAgo.convert(review.getCreatedAt().toEpochSecond(ZoneOffset.UTC)));
-        holder._tvReviewerName.setText(review.getReviewerName());
-        holder._ivReviewerAvatar.setImageResource(review.getReviewerAvatar());
+        holder.tvContent.setText(review.getContent());
+        holder.rbRating.setRating(review.getRating());
+        holder.tvCreatedAt.setText(TimeAgo.convert(review.getCreatedAt().getTime()));
+        holder.tvReviewerName.setText(review.getReviewerName());
+        holder.ivReviewerAvatar.setImageResource(review.getReviewerAvatar());
     }
 
     @Override
@@ -52,19 +51,19 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView _tvContent;
-        private final RatingBar _rbRating;
-        private final TextView _tvCreatedAt;
-        private final TextView _tvReviewerName;
-        private final ImageView _ivReviewerAvatar;
+        private final TextView tvContent;
+        private final RatingBar rbRating;
+        private final TextView tvCreatedAt;
+        private final TextView tvReviewerName;
+        private final ImageView ivReviewerAvatar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            _tvContent = itemView.findViewById(R.id.tv_content);
-            _rbRating = itemView.findViewById(R.id.rb_rating);
-            _tvCreatedAt = itemView.findViewById(R.id.tv_created_at);
-            _tvReviewerName = itemView.findViewById(R.id.tv_name);
-            _ivReviewerAvatar = itemView.findViewById(R.id.iv_avatar);
+            tvContent = itemView.findViewById(R.id.tv_content);
+            rbRating = itemView.findViewById(R.id.rb_rating);
+            tvCreatedAt = itemView.findViewById(R.id.tv_created_at);
+            tvReviewerName = itemView.findViewById(R.id.tv_name);
+            ivReviewerAvatar = itemView.findViewById(R.id.iv_avatar);
         }
     }
 }

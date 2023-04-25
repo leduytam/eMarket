@@ -1,6 +1,7 @@
 package com.group05.emarket.views.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -13,22 +14,29 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityProductDetailBinding;
+import com.group05.emarket.enums.EProductListType;
+import com.group05.emarket.models.Product;
 import com.group05.emarket.viewmodels.CartViewModel;
+import com.group05.emarket.viewmodels.ProductDetailViewModel;
+import com.group05.emarket.viewmodels.ProductListViewModel;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.utilities.Formatter;
+import com.group05.emarket.views.fragments.OverviewProductsFragment;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.UUID;
 
 public class ProductDetailActivity extends AppCompatActivity {
     private CartViewModel cartViewModel;
-
-    private int quantity = 0;
+    private ProductDetailViewModel productDetailViewModel;
+    private OverviewProductsFragment overviewProductsFragment;
 
     @SuppressLint("UnsafeOptInUsageError")
     @Override
@@ -36,10 +44,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         com.group05.emarket.databinding.ActivityProductDetailBinding binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        quantity = 1;
 
-        UUID productId = (UUID) getIntent().getSerializableExtra("id");
-        var product = MockData.getProductById(productId);
+        var product = (Product) getIntent().getParcelableExtra("product");
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        overviewProductsFragment = OverviewProductsFragment.newInstance(EProductListType.RELATED, product);
+        transaction.replace(R.id.fragment_overview_related_products, overviewProductsFragment);
+        transaction.commit();
+
+        productDetailViewModel = new ViewModelProvider(this, new ProductDetailViewModel.Factory(product)).get(ProductDetailViewModel.class);
 
         binding.topBar.setNavigationOnClickListener(v -> finish());
         binding.topBar.setOnMenuItemClickListener(item -> {
@@ -60,15 +73,16 @@ public class ProductDetailActivity extends AppCompatActivity {
             return true;
         });
 
-        binding.rvRelatedProducts.setAdapter(new ProductAdapter(this, MockData.getProducts().subList(0, 3)));
-        binding.rvRelatedProducts.setLayoutManager(new GridLayoutManager(this, 3));
-
         binding.tvName.setText(product.getName());
 
-        binding.tvWeight.setText(String.format(Locale.US, "%s %s", product.getWeight(), product.getWeightUnit()));
+        binding.tvWeight.setText(String.format(Locale.US, "%s%s", product.getWeight(), product.getWeightUnit()));
 
         binding.tvDiscount.setText(String.format(Locale.US, "%d%%", product.getDiscount()));
-        binding.ivImage.setImageResource(product.getImage());
+
+        Glide.with(this)
+                .load(product.getImage())
+                .into(binding.ivImage);
+
         binding.tvOldPrice.setPaintFlags(binding.tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         binding.tvDescription.setText(product.getDescription());
         binding.tvRatingCount.setText(String.format("Reviews (%s)", product.getRatingCount()));
@@ -101,21 +115,33 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         binding.btnAddToCart.setOnClickListener(v -> {
-            cartViewModel.addItemToCart(product, quantity);
+            cartViewModel.addItemToCart(product, productDetailViewModel.getQuantity().getValue());
             Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
         });
 
-        binding.tvQuantity.setText(String.valueOf(quantity));
         binding.btnAddQuantity.setOnClickListener(v -> {
-            quantity++;
-            binding.tvQuantity.setText(String.valueOf(quantity));
+            int quantity = productDetailViewModel.getQuantity().getValue();
+            productDetailViewModel.setQuantity(quantity + 1);
         });
 
         binding.btnRemoveQuantity.setOnClickListener(v -> {
+            int quantity = productDetailViewModel.getQuantity().getValue();
+
             if (quantity > 1) {
-                quantity--;
-                binding.tvQuantity.setText(String.valueOf(quantity));
+                productDetailViewModel.setQuantity(quantity - 1);
             }
+        });
+
+        productDetailViewModel.getQuantity().observe(this, quantity -> {
+            binding.tvQuantity.setText(String.valueOf(quantity));
+        });
+
+        productDetailViewModel.getOverviewRelatedProducts().observe(this, products -> {
+            overviewProductsFragment.setProducts(products);
+        });
+
+        productDetailViewModel.getIsLoading().observe(this, isLoading -> {
+            overviewProductsFragment.setIsLoading(isLoading);
         });
 
         binding.tvDescription.setMaxLines(3);
