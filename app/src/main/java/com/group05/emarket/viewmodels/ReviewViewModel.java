@@ -19,14 +19,14 @@ import java.util.UUID;
 public class ReviewViewModel extends ViewModel {
     private final ReviewRepository reviewRepo = ReviewRepository.getInstance();
     private final MutableLiveData<List<Review>> reviews;
-    private final UUID productId;
+    private final String productId;
 
     private final MutableLiveData<Boolean> isLoading;
     private boolean isLastPageReached = false;
     private int currentPage = 1;
     private int totalPageCount = 0;
 
-    private ReviewViewModel(UUID productId) {
+    private ReviewViewModel(String productId) {
         this.productId = productId;
         isLoading = new MutableLiveData<>(false);
         reviews = new MutableLiveData<>(new ArrayList<>());
@@ -82,9 +82,9 @@ public class ReviewViewModel extends ViewModel {
     }
 
     public static class Factory implements ViewModelProvider.Factory {
-        private final UUID productId;
+        private final String productId;
 
-        public Factory(UUID productId) {
+        public Factory(String productId) {
             this.productId = productId;
         }
 

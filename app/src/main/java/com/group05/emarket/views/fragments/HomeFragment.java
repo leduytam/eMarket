@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
@@ -17,23 +19,30 @@ import android.view.ViewGroup;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
-import com.group05.emarket.MockData;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.FragmentHomeBinding;
+import com.group05.emarket.enums.EProductListType;
 import com.group05.emarket.models.BannerItem;
 import com.group05.emarket.viewmodels.CartViewModel;
+import com.group05.emarket.viewmodels.HomeViewModel;
 import com.group05.emarket.views.adapters.BannerPagerAdapter;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.views.activities.CartActivity;
 import com.group05.emarket.views.activities.NotificationActivity;
-import com.group05.emarket.views.adapters.CategoryAdapter;
-import com.group05.emarket.views.decorations.GridGapItemDecoration;
-import com.group05.emarket.views.dialogs.AllCategoriesDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    private HomeViewModel homeViewModel;
+    private CartViewModel cartViewModel;
+    private FragmentHomeBinding binding;
+
+    private OverviewCategoriesFragment fragmentOverviewCategories;
+    private OverviewProductsFragment fragmentOverviewPopularProducts;
+    private OverviewProductsFragment fragmentOverviewNewProducts;
+    private OverviewProductsFragment fragmentOverviewDiscountProducts;
+
     public HomeFragment() {
     }
 
@@ -41,31 +50,66 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @SuppressLint("UnsafeOptInUsageError")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        com.group05.emarket.databinding.FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         Context context = binding.getRoot().getContext();
 
-        var gridGapItemDecoration = new GridGapItemDecoration(3, 20, true);
+        fragmentOverviewCategories = OverviewCategoriesFragment.newInstance();
 
-        binding.rvCategories.setAdapter(new CategoryAdapter(context, MockData.getCategories()));
+        fragmentOverviewPopularProducts = OverviewProductsFragment.newInstance(
+                EProductListType.POPULAR,
+                null
+        );
 
-        binding.rvPopularProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
-        binding.rvPopularProducts.addItemDecoration(gridGapItemDecoration);
+        fragmentOverviewNewProducts = OverviewProductsFragment.newInstance(
+                EProductListType.NEW,
+                null
+        );
 
-        binding.rvNewestProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
-        binding.rvNewestProducts.addItemDecoration(gridGapItemDecoration);
+        fragmentOverviewDiscountProducts = OverviewProductsFragment.newInstance(
+                EProductListType.DISCOUNT,
+                null
+        );
 
-        binding.rvDiscountProducts.setAdapter(new ProductAdapter(context, MockData.getProducts().subList(0, 3)));
-        binding.rvDiscountProducts.addItemDecoration(gridGapItemDecoration);
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.add(R.id.fragment_overview_categories, fragmentOverviewCategories);
+        ft.add(R.id.fragment_overview_popular_products, fragmentOverviewPopularProducts);
+        ft.add(R.id.fragment_overview_new_products, fragmentOverviewNewProducts);
+        ft.add(R.id.fragment_overview_discount_products, fragmentOverviewDiscountProducts);
+        ft.commit();
 
-        binding.tvSeeAllCategories.setOnClickListener(v -> {
-            AllCategoriesDialog dialog = new AllCategoriesDialog();
-            dialog.show(getActivity().getSupportFragmentManager(), "all_categories_dialog");
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+        homeViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
+            fragmentOverviewCategories.setCategories(categories);
         });
 
+        homeViewModel.getPopularProducts().observe(getViewLifecycleOwner(), products -> {
+            fragmentOverviewPopularProducts.setProducts(products);
+        });
+
+        homeViewModel.getNewProducts().observe(getViewLifecycleOwner(), products -> {
+            fragmentOverviewNewProducts.setProducts(products);
+        });
+
+        homeViewModel.getDiscountProducts().observe(getViewLifecycleOwner(), products -> {
+            fragmentOverviewDiscountProducts.setProducts(products);
+        });
+
+        homeViewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            fragmentOverviewCategories.setIsLoading(isLoading);
+            fragmentOverviewPopularProducts.setIsLoading(isLoading);
+            fragmentOverviewNewProducts.setIsLoading(isLoading);
+            fragmentOverviewDiscountProducts.setIsLoading(isLoading);
+        });
 
         MaterialToolbar topBar = binding.topBar;
         topBar.setOnMenuItemClickListener(item -> {
@@ -94,7 +138,7 @@ public class HomeFragment extends Fragment {
         BadgeUtils.attachBadgeDrawable(badgeNotification, topBar, topBar.getMenu().findItem(R.id.action_notification).getItemId());
         BadgeUtils.attachBadgeDrawable(cartBadge, topBar, topBar.getMenu().findItem(R.id.action_cart).getItemId());
 
-        CartViewModel cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
+        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
         cartViewModel.getCartItems().observe(getViewLifecycleOwner(), cartItems -> {
             cartBadge.setNumber(cartItems.size());
             cartBadge.setVisible(cartItems.size() != 0);
@@ -112,5 +156,11 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(pagerAdapter);
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "543732636173",
-    "project_id": "emarket-11129",
-    "storage_bucket": "emarket-11129.appspot.com"
+    "project_number": "92261816153",
+    "project_id": "emarket-dfb97",
+    "storage_bucket": "emarket-dfb97.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:543732636173:android:69f49a36559f5b630d1344",
+        "mobilesdk_app_id": "1:92261816153:android:5e15caa227bda269a35e48",
         "android_client_info": {
           "package_name": "com.group05.emarket"
         }
       },
       "oauth_client": [
         {
-          "client_id": "543732636173-1qbq1i5h3sv438d61goegos4l77qrt9l.apps.googleusercontent.com",
+          "client_id": "92261816153-ed6s1ea0aa4i57rpaunsiq8bv7ru5p5j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCuGyPqRa4x0f5Sot2Tt2GBhMLnchslUsg"
+          "current_key": "AIzaSyA6PUR-m-0mA_VwIne2i_gtXvwXL7U6HAE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "543732636173-1qbq1i5h3sv438d61goegos4l77qrt9l.apps.googleusercontent.com",
+              "client_id": "92261816153-ed6s1ea0aa4i57rpaunsiq8bv7ru5p5j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

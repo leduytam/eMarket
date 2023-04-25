@@ -17,10 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.MockData;
 import com.group05.emarket.R;
+import com.group05.emarket.models.Category;
 import com.group05.emarket.views.adapters.CategoryAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AllCategoriesDialog extends DialogFragment {
-    public AllCategoriesDialog() {
+    private final List<Category> categories;
+
+    public AllCategoriesDialog(List<Category> categories) {
+        this.categories = categories == null ? new ArrayList<>() : categories;
     }
 
     @NonNull
@@ -35,7 +42,7 @@ public class AllCategoriesDialog extends DialogFragment {
         Button btnClose = view.findViewById(R.id.btn_close);
         btnClose.setOnClickListener(v -> dismiss());
 
-        CategoryAdapter adapter = new CategoryAdapter(getActivity(), MockData.getCategories());
+        CategoryAdapter adapter = new CategoryAdapter(getActivity(), categories);
         RecyclerView rvAllCategories = view.findViewById(R.id.rv_all_categories);
         rvAllCategories.setAdapter(adapter);
         rvAllCategories.setLayoutManager(new GridLayoutManager(getActivity(), 4));

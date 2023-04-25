@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group05.emarket.databinding.ListItemCartBinding;
 import com.group05.emarket.models.CartItem;
-import com.group05.emarket.utilities.Formatter;
 import com.group05.emarket.views.activities.ProductDetailActivity;
 
 import java.util.ArrayList;
@@ -54,15 +50,6 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         return cartItems.size();
     }
 
-    @BindingAdapter("app:price")
-    public static void formatPrice(TextView view, float price) {
-        view.setText(Formatter.formatCurrency(price));
-    }
-
-    @BindingAdapter("app:imageSrc")
-    public static void setImageResource(ImageView view, int resource) {
-        view.setImageResource(resource);
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ListItemCartBinding binding;

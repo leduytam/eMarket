@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -31,8 +32,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.group05.emarket.R;
 import com.group05.emarket.models.User;
 import com.group05.emarket.repositories.UserRepository;
+import com.group05.emarket.views.activities.AboutActivity;
 import com.group05.emarket.views.activities.AuthenticationActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.group05.emarket.views.activities.EditProfileActivity;
+import com.group05.emarket.views.activities.HelpActivity;
+import com.group05.emarket.views.activities.WalletActivity;
 
 public class ProfileFragment extends Fragment {
     private TextView tvFullName, tvShortBio;
@@ -67,9 +72,9 @@ public class ProfileFragment extends Fragment {
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document(uuid);
         documentReference.get()
                 .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if(document.exists()){
+                        if (document.exists()) {
                             String fullName = document.getString(FULL_NAME);
                             String email = document.getString(EMAIL);
                             tvFullName.setText(fullName);
@@ -112,7 +117,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void onLogout() {
-        alertDialogBuilder.setTitle("Do you want to log out account?").setPositiveButton("Log out", (dialog, which) -> {
+        alertDialogBuilder.setBackground(AppCompatResources.getDrawable(context, R.drawable.background_dialog_alert)).setTitle("Do you want to log out account?").setPositiveButton("Log out", (dialog, which) -> {
             mAuth.signOut();
             Intent intent = new Intent(context, AuthenticationActivity.class);
             startActivity(intent);
@@ -122,43 +127,22 @@ public class ProfileFragment extends Fragment {
     }
 
     private void onClickEditProfile() {
-        int fragmentId = this.getId();
-        EditProfileFragment editProfileFragment = new EditProfileFragment();
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(fragmentId, editProfileFragment)
-                .addToBackStack(null)
-                .commit();
+        Intent intent = new Intent(context, EditProfileActivity.class);
+        startActivity(intent);
     }
 
     private void onClickHelp() {
-        int fragmentId = this.getId();
-        HelpFragment helpFragment = new HelpFragment();
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(fragmentId, helpFragment)
-                .addToBackStack(null)
-                .commit();
+        Intent intent = new Intent(context, HelpActivity.class);
+        startActivity(intent);
     }
 
     private void onClickAbout() {
-        int fragmentId = this.getId();
-        AboutFragment aboutFragment = new AboutFragment();
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(fragmentId, aboutFragment)
-                .addToBackStack(null)
-                .commit();
+        Intent intent = new Intent(context, AboutActivity.class);
+        startActivity(intent);
     }
 
     private void onClickWallet() {
-        int fragmentId = this.getId();
-        WalletFragment walletFragment = new WalletFragment();
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(fragmentId, walletFragment)
-                .addToBackStack(null)
-                .commit();
+        Intent intent = new Intent(context, WalletActivity.class);
+        startActivity(intent);
     }
-
 }

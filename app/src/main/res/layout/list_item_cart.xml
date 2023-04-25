@@ -38,7 +38,7 @@
                     android:id="@+id/iv_product_thumbnail"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:imageSrc="@{cartItem.product.image}" />
+                    app:image="@{cartItem.product.image}" />
 
                 <LinearLayout
                     android:layout_width="0dp"

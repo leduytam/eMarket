@@ -37,48 +37,10 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/fragment_overview_categories"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/activity_home_tv_categories"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_see_all_categories"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/activity_home_tv_see_all"
-                        android:textColor="@color/primary"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_categories"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -95,130 +57,22 @@
                     android:layout_height="150dp" />
             </LinearLayout>
 
-
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/fragment_overview_popular_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="20dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/activity_home_tv_popular_products"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size_md" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/activity_home_tv_see_all"
-                        android:textColor="@color/primary"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_popular_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3" />
-            </LinearLayout>
-
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/fragment_overview_new_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="20dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/activity_home_tv_newest_products"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size_md"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/activity_home_tv_see_all"
-                        android:textColor="@color/primary"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_newest_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3" />
-            </LinearLayout>
-
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/fragment_overview_discount_products"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/activity_home_tv_discount_products"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size_md"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/activity_home_tv_see_all"
-                        android:textColor="@color/primary"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_discount_products"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

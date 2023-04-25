@@ -1,5 +1,7 @@
 package com.group05.emarket.utilities;
 
+import java.text.SimpleDateFormat;
+
 public class TimeAgo {
     /*
      * Copyright 2012 Google Inc.
@@ -22,6 +24,8 @@ public class TimeAgo {
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
     private static final int WEEK_MILLIS = 7 * DAY_MILLIS;
+
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public static String convert(long time) {
         if (time < 1000000000000L) {
@@ -52,7 +56,7 @@ public class TimeAgo {
         } else if (diff < 2 * WEEK_MILLIS) {
             return "a week ago";
         } else {
-            return diff / WEEK_MILLIS + " weeks ago";
+            return sdf.format(time);
         }
     }
 }

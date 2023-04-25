@@ -32,7 +32,7 @@ public class ReviewRepository {
     private ReviewRepository() {
     }
 
-    public CompletableFuture<Integer> getReviewPageCount(UUID productId, int itemsPerPage) {
+    public CompletableFuture<Integer> getReviewPageCount(String productId, int itemsPerPage) {
         CompletableFuture<Integer> future = new CompletableFuture<>();
 
 //        Query query = reviewRef
@@ -55,7 +55,7 @@ public class ReviewRepository {
         return future;
     }
 
-    public CompletableFuture<List<Review>> getReviews(UUID productId, int page, int itemsPerPage) {
+    public CompletableFuture<List<Review>> getReviews(String productId, int page, int itemsPerPage) {
         CompletableFuture<List<Review>> future = new CompletableFuture<>();
 
         new Handler().postDelayed(() -> {

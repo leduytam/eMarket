@@ -1,6 +1,5 @@
 package com.group05.emarket.repositories;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.group05.emarket.models.Category;
@@ -12,7 +11,6 @@ public class CategoryRepository {
     private static CategoryRepository instance;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final DocumentReference categoryRef = db.collection("categories").document();
 
     private CategoryRepository() {
     }
@@ -26,13 +24,13 @@ public class CategoryRepository {
     }
 
     public CompletableFuture<List<Category>> getCategories() {
-        CompletableFuture<List<Category>> future = new CompletableFuture<>();
+        var future = new CompletableFuture<List<Category>>();
 
-        Query query = categoryRef.collection("categories").orderBy("createdAt");
+        Query query = db.collection("categories").orderBy("createdAt");
 
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                List<Category> categories = task.getResult().toObjects(Category.class);
+                var categories = task.getResult().toObjects(Category.class);
                 future.complete(categories);
             } else {
                 future.completeExceptionally(task.getException());

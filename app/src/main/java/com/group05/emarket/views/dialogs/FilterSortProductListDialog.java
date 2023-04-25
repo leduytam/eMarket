@@ -16,17 +16,17 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.DialogFilterSortBinding;
-import com.group05.emarket.enums.SortProductOption;
+import com.group05.emarket.enums.ESortProductOption;
 import com.group05.emarket.views.adapters.FilterSortViewPagerAdapter;
 import com.group05.emarket.views.fragments.FilterProductListFragment;
-import com.group05.emarket.views.fragments.SortingProductListFragment;
+import com.group05.emarket.views.fragments.SortProductListFragment;
 
 public class FilterSortProductListDialog extends DialogFragment {
     private final OnAppliedListener listener;
     private final float[] priceRange;
-    private final SortProductOption sortOption;
+    private final ESortProductOption sortOption;
 
-    public FilterSortProductListDialog(float[] priceRange, SortProductOption sortOption, OnAppliedListener listener) {
+    public FilterSortProductListDialog(float[] priceRange, ESortProductOption sortOption, OnAppliedListener listener) {
         this.listener = listener;
         this.priceRange = priceRange;
         this.sortOption = sortOption;
@@ -56,8 +56,8 @@ public class FilterSortProductListDialog extends DialogFragment {
         binding.btnReset.setOnClickListener(v -> {
             Fragment currentFragment = adapter.createFragment(binding.viewPager.getCurrentItem());
 
-            if (currentFragment instanceof SortingProductListFragment) {
-                ((SortingProductListFragment) currentFragment).reset();
+            if (currentFragment instanceof SortProductListFragment) {
+                ((SortProductListFragment) currentFragment).reset();
             } else if (currentFragment instanceof FilterProductListFragment) {
                 ((FilterProductListFragment) currentFragment).reset();
             }
@@ -86,6 +86,6 @@ public class FilterSortProductListDialog extends DialogFragment {
     }
 
     public interface OnAppliedListener {
-        void onApplied(float[] priceRange, SortProductOption selectedSortOption);
+        void onApplied(float[] priceRange, ESortProductOption selectedSortOption);
     }
 }

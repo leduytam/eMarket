@@ -1,7 +1,6 @@
 package com.group05.emarket.views.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +35,12 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Order order = orders.get(position);
-        var orderImage = order.getProducts().get(0).getProduct().getImage();
+//        var orderImage = order.getProducts().get(0).getProduct().getImage();
         var orderName = "Order #" + order.getId();
-        holder._ivOrder.setImageResource(orderImage);
-        holder._tvName.setText(orderName);
-        holder._tvPrice.setText(String.format("$ %s", order.getTotalPrice()));
-        holder._tvAddress.setText(order.getAddress());
+        holder.ivOrder.setImageResource(R.drawable.logo_hcmus);
+        holder.tvName.setText(orderName);
+        holder.tvPrice.setText(String.format("$ %s", order.getTotalPrice()));
+        holder.tvAddress.setText(order.getAddress());
     }
 
     @Override
@@ -50,18 +49,18 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView _ivOrder;
-        private final TextView _tvName;
+        private final ImageView ivOrder;
+        private final TextView tvName;
 
-        private final TextView _tvPrice;
-        private final TextView _tvAddress;
+        private final TextView tvPrice;
+        private final TextView tvAddress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            _ivOrder = itemView.findViewById(R.id.iv_order_thumbnail);
-            _tvName = itemView.findViewById(R.id.tv_order_name);
-            _tvPrice = itemView.findViewById(R.id.tv_order_price);
-            _tvAddress = itemView.findViewById(R.id.tv_order_address);
+            ivOrder = itemView.findViewById(R.id.iv_order_thumbnail);
+            tvName = itemView.findViewById(R.id.tv_order_name);
+            tvPrice = itemView.findViewById(R.id.tv_order_price);
+            tvAddress = itemView.findViewById(R.id.tv_order_address);
         }
     }
 }

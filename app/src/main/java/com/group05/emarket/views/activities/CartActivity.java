@@ -8,9 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityCartBinding;
 import com.group05.emarket.models.CartItem;

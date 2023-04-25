@@ -5,11 +5,12 @@
     <string name="menu_home_action_cart">Cart</string>
     <string name="cart_action_item_iv_description">Cart</string>
     <string name="notification_action_item_iv_description">Notification</string>
-    <string name="activity_home_tv_see_all">See all</string>
-    <string name="activity_home_tv_categories">Categories</string>
-    <string name="activity_home_tv_popular_products">Popular Products</string>
-    <string name="activity_home_tv_newest_products">New Products</string>
-    <string name="activity_home_tv_discount_products">Discount Products</string>
+    <string name="see_all">See all</string>
+    <string name="fragment_overview_categories_title">Categories</string>
+    <string name="fragment_overview_products_popular">Popular Products</string>
+    <string name="fragment_overview_products_new">New Products</string>
+    <string name="fragment_overview_products_discount">Discount Products</string>
+    <string name="fragment_overview_products_related">Related Products</string>
     <string name="login">Log in</string>
     <string name="menu_bottom_action_home">Home</string>
     <string name="menu_bottom_action_search">Search</string>
@@ -23,8 +24,6 @@
     <string name="menu_top_product_detail_action_cart">Cart</string>
     <string name="activity_product_detail_btn_add_to_cart">Add to cart</string>
     <string name="activity_product_detail_btn_add_to_favorite">Add to favourite</string>
-    <string name="activity_product_detail_tv_see_all_related_products">See All</string>
-    <string name="activity_product_detail_tv_related_products">Related Products</string>
     <string name="activity_product_detail_btn_load_more_reviews">Load More Reviews</string>
     <string name="activity_product_detail_description">Product Detail</string>
     <string name="dialog_filter_sort_title"><![CDATA[Filter & Sorting]]></string>
@@ -32,7 +31,7 @@
     <string name="dialog_filter_sort_tab_item_filter">Filter</string>
     <string name="dialog_filter_sort_tab_item_sorting">Sorting</string>
     <string name="fragment_filter_min_price">$0.00</string>
-    <string name="fragment_filter_max_price">$1000.00</string>
+    <string name="fragment_filter_max_price">$100.00</string>
     <string name="dialog_filter_sort_btn_apply">Apply</string>
     <string name="dialog_filter_sort_btn_reset">Reset</string>
     <string name="fragment_filter_price_range">Price range</string>
@@ -50,7 +49,7 @@
     <string name="fragment_profile_help">FAQ</string>
     <string name="fragment_profile_wallet">Wallet</string>
     <string name="fragment_profile_about">About Us</string>
-    <string name="fragment_profile_log_out">Log-out</string>
+    <string name="fragment_profile_log_out">Log out</string>
     <string name="fragment_profile_username">tansang752</string>
     <string name="fragment_profile_full_name">Bui Tan Sang</string>
     <string name="fragment_profile_arrow_button">arrow_button</string>
@@ -80,7 +79,7 @@
     <string name="checkout_promo_code_title">Promo code</string>
     <string name="checkout_payment_title">Payment</string>
     <string name="order_success_title">Your Order has been  accepted</string>
-    <string name="order_success_description">Your items has been placcd and is on  it’s way to being processed</string>
+    <string name="order_success_description">Your items has been placed and is on  it’s way to being processed</string>
     <string name="track_order_title">Track Order</string>
     <string name="back_to_home_title">Back to home</string>
     <string name="activity_category_product_list_tv_no_products">No Results</string>

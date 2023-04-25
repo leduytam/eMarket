@@ -1,157 +1,205 @@
 package com.group05.emarket.models;
 
-import java.util.UUID;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Product {
+import androidx.annotation.NonNull;
 
-    protected UUID id;
-    protected String name;
-    protected int image;
-    protected float price;
-    protected float avgRating;
-    protected int ratingCount;
-    protected int discount;
-    protected String description;
-    protected String weightUnit;
-    protected float weight;
-    protected UUID categoryId;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentId;
 
-    public UUID getId() {
+import java.util.Date;
+import java.util.Map;
+
+public class Product implements Parcelable {
+    @DocumentId
+    private String id;
+    private String name;
+    private String image;
+    private float price;
+    private float avgRating;
+    private int ratingCount;
+    private int discount;
+    private String description;
+    private float weight;
+    private String weightUnit;
+    private Category category;
+    private Date createdAt;
+    private Date updatedAt;
+
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getImage() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
         return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public float getAvgRating() {
         return avgRating;
     }
 
+    public void setAvgRating(float avgRating) {
+        this.avgRating = avgRating;
+    }
+
     public float getPrice() {
         return price;
     }
 
-    public float getDiscountedPrice() {
-        return price * (1.0f - discount / 100f);
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public int getRatingCount() {
         return ratingCount;
     }
 
+    public void setRatingCount(int ratingCount) {
+        this.ratingCount = ratingCount;
+    }
+
     public int getDiscount() {
         return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public float getDiscountedPrice() {
+        return price - (price * discount / 100);
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getWeightUnit() {
         return weightUnit;
+    }
+
+    public void setWeightUnit(String weightUnit) {
+        this.weightUnit = weightUnit;
     }
 
     public float getWeight() {
         return weight;
     }
 
-    public UUID getCategoryId() {
-        return categoryId;
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
-    private Product() {
+    public Category getCategory() {
+        return category;
     }
 
-    public static class Builder {
-        private UUID id;
-        private String name;
-        private int image;
-        private float avgRating;
-        private float price;
-        private int ratingCount;
-        private int discount;
-        private String description;
-        private UUID categoryId;
-        private float weight;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-        private String weightUnit;
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
-        public Builder setId(UUID id) {
-            this.id = id;
-            return this;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Product() {
+    }
+
+    public Product(String id, Map<String, Object> map) {
+        this.id = id;
+        name = (String) map.get("name");
+        image = (String) map.get("image");
+        price = ((Number) map.get("price")).floatValue();
+        avgRating = ((Number) map.get("avgRating")).floatValue();
+        ratingCount = ((Number) map.get("ratingCount")).intValue();
+        discount = ((Number) map.get("discount")).intValue();
+        description = (String) map.get("description");
+        weightUnit = (String) map.get("weightUnit");
+        weight = ((Number) map.get("weight")).floatValue();
+        createdAt = ((Timestamp) map.get("createdAt")).toDate();
+        updatedAt = ((Timestamp) map.get("updatedAt")).toDate();
+    }
+
+    protected Product(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        image = in.readString();
+        price = in.readFloat();
+        avgRating = in.readFloat();
+        ratingCount = in.readInt();
+        discount = in.readInt();
+        description = in.readString();
+        weightUnit = in.readString();
+        weight = in.readFloat();
+        category = in.readParcelable(Category.class.getClassLoader());
+        createdAt = (Date) in.readSerializable();
+        updatedAt = (Date) in.readSerializable();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
         }
 
-        public Builder setName(String name) {
-            this.name = name;
-            return this;
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
         }
+    };
 
-        public Builder setImage(int image) {
-            this.image = image;
-            return this;
-        }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-        public Builder setAvgRating(float avgRating) {
-            this.avgRating = avgRating;
-            return this;
-        }
-
-        public Builder setPrice(float price) {
-            this.price = price;
-            return this;
-        }
-
-        public Builder setRatingCount(int reviewCount) {
-            ratingCount = reviewCount;
-            return this;
-        }
-
-        public Builder setDiscount(int discount) {
-            this.discount = discount;
-            return this;
-        }
-
-        public Builder setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder setWeight(float weight) {
-            this.weight = weight;
-            return this;
-        }
-
-        public Builder setWeightUnit(String weightUnit) {
-            this.weightUnit = weightUnit;
-            return this;
-        }
-
-        public Builder setCategoryId(UUID categoryId) {
-            this.categoryId = categoryId;
-            return this;
-        }
-
-        public Product build() {
-            Product product = new Product();
-
-            product.id = id;
-            product.name = name;
-            product.image = image;
-            product.avgRating = avgRating;
-            product.price = price;
-            product.ratingCount = ratingCount;
-            product.discount = discount;
-            product.description = description;
-            product.weight = weight;
-            product.weightUnit = weightUnit;
-            product.categoryId = categoryId;
-
-            return product;
-        }
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(image);
+        dest.writeFloat(price);
+        dest.writeFloat(avgRating);
+        dest.writeInt(ratingCount);
+        dest.writeInt(discount);
+        dest.writeString(description);
+        dest.writeString(weightUnit);
+        dest.writeFloat(weight);
+        dest.writeParcelable(category, flags);
+        dest.writeSerializable(createdAt);
+        dest.writeSerializable(updatedAt);
     }
 }

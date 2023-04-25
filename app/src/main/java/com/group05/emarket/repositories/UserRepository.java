@@ -5,20 +5,14 @@ import static com.group05.emarket.schemas.UsersFirestoreSchema.PHONE_NUMBER;
 import static com.group05.emarket.schemas.UsersFirestoreSchema.FULL_NAME;
 import static com.group05.emarket.schemas.UsersFirestoreSchema.ADDRESS;
 import static com.group05.emarket.schemas.UsersFirestoreSchema.EMAIL;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.CITY;
 import static com.group05.emarket.schemas.UsersFirestoreSchema.BIRTHDAY;
 
-
-import android.util.Log;
-
-import com.google.android.gms.tasks.Task;
 import com.group05.emarket.models.User;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.group05.emarket.firestore.UsersFirestoreManager;
 
 import java.util.HashMap;
 import java.util.Map;
