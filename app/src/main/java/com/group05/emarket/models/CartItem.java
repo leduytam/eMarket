@@ -1,5 +1,7 @@
 package com.group05.emarket.models;
 
+import java.util.HashMap;
+
 public class CartItem {
     private Product product;
     private int quantity;

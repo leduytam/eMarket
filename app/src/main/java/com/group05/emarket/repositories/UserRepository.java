@@ -7,6 +7,8 @@ import static com.group05.emarket.schemas.UsersFirestoreSchema.ADDRESS;
 import static com.group05.emarket.schemas.UsersFirestoreSchema.EMAIL;
 import static com.group05.emarket.schemas.UsersFirestoreSchema.BIRTHDAY;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.User;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,7 +16,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserRepository {
@@ -46,7 +50,6 @@ public class UserRepository {
         userMap.put(BIRTHDAY, user.getBirthday());
 
         userRef.set(userMap);
-
     }
 
     public static User getCurrentUserDetail() {
