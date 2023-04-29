@@ -13,7 +13,7 @@ public class Order {
         DELIVERED,
         CANCELLED
     }
-    private int id;
+    private String id;
     private float totalPrice;
     private String name;
     private String address;
@@ -28,7 +28,7 @@ public class Order {
 
     private DeliveryMan deliveryMan;
 
-    public Order(int id, String name, String address, String phone, String email, String note, OrderStatus orderStatus, String created_at, String updated_at, float totalPrice, List<OrderProduct> products, DeliveryMan deliveryMan) {
+    public Order(String id, String name, String address, String phone, String email, String note, OrderStatus orderStatus, String created_at, String updated_at, float totalPrice, List<OrderProduct> products, DeliveryMan deliveryMan) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -43,11 +43,11 @@ public class Order {
         this.deliveryMan = deliveryMan;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -63,32 +63,12 @@ public class Order {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 
     public OrderStatus getStatus() {
@@ -116,6 +96,10 @@ public class Order {
     }
 
     public float getTotalPrice() {
+        float totalPrice = 0;
+        for (OrderProduct orderProduct : orderProducts) {
+            totalPrice += orderProduct.getProduct().getPrice() * orderProduct.getQuantity();
+        }
         return totalPrice;
     }
 
@@ -140,7 +124,7 @@ public class Order {
     }
 
     public static class Builder {
-        private int id;
+        private String id;
         private String name;
         private String address;
         private String phone;
@@ -156,7 +140,7 @@ public class Order {
         public Builder() {
         }
 
-        public Builder setId(int id) {
+        public Builder setId(String id) {
             this.id = id;
             return this;
         }

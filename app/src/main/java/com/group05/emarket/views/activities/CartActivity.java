@@ -18,6 +18,7 @@ import com.group05.emarket.views.adapters.CartListAdapter;
 import com.group05.emarket.views.dialogs.CheckoutBottomSheetDialog;
 
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class CartActivity extends AppCompatActivity implements CartListAdapter.OnCartChangedListener {
     private CartViewModel cartViewModel;
@@ -48,9 +49,9 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
         var swipeToDeleteOrderItemCallback = new CartListAdapter.SwipeToDeleteOrderItemCallback(adapter);
         var itemTouchHelper = new ItemTouchHelper(swipeToDeleteOrderItemCallback);
         itemTouchHelper.attachToRecyclerView(binding.rvCartItems);
-        CheckoutBottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this);
 
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        CheckoutBottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this, cartViewModel);
         cartViewModel.getCartItems().observe(this, cartItems -> {
             adapter.setCartItems(cartItems);
             binding.tvTotalPrice.setText(Formatter.formatCurrency(cartViewModel.getTotalPrice()));
@@ -75,7 +76,7 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
         });
 
         binding.btnCheckout.setOnClickListener(v -> {
-            bottomSheetDialog.show();
+                bottomSheetDialog.show();
         });
 
         binding.btnShopNow.setOnClickListener(v -> {
