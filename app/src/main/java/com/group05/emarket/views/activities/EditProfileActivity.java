@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -105,6 +106,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
+        });
+
+        binding.btnAddressGoToMap.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MapActivity.class);
+            startActivity(intent);
         });
     }
 }
