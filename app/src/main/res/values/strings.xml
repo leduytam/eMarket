@@ -83,4 +83,8 @@
     <string name="track_order_title">Track Order</string>
     <string name="back_to_home_title">Back to home</string>
     <string name="activity_category_product_list_tv_no_products">No Results</string>
+    <string name="activity_map_top_bar_title">Your location</string>
+    <string name="bottom_sheet_location_title">Location</string>
+    <string name="location_confirm_button">Confirm</string>
+    <string name="activity_location_locate_button">Use this location</string>
 </resources>

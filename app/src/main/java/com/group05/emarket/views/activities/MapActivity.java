@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -19,33 +20,41 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.group05.emarket.databinding.ActivityMapBinding;
 
 import android.Manifest;
 import android.util.Log;
-import android.widget.SearchView;
+
+import androidx.appcompat.widget.SearchView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.group05.emarket.R;
+import com.group05.emarket.views.dialogs.LocationBottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static final int REQUEST_CODE_GPS_PERMISSION = 100;
-    private SearchView mapSearchView;
 
     private Geocoder geocoder;
+    private ActivityMapBinding binding;
+    private LocationBottomSheetDialog locationBottomSheetDialog;
+    private Address currentAddress;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        mapSearchView = findViewById(R.id.sv_mapSearch);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        geocoder = new Geocoder(MapActivity.this);
+        binding = ActivityMapBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        locationBottomSheetDialog = new LocationBottomSheetDialog(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_app);
+        geocoder = new Geocoder(MapActivity.this, Locale.getDefault());
+        binding.topBar.setNavigationOnClickListener(v -> finish());
         mapFragment.getMapAsync(this);
     }
 
@@ -70,15 +79,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if (location == null) {
                     return;
                 }
-                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(currentLocation).title("Marker in current location").snippet("This is your current location"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 1000));
                 List<Address> addressList = new ArrayList<>();
                 try {
                     addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                     if (addressList.size() > 0) {
-                        Address address = addressList.get(0);
-                        mapSearchView.setQuery(address.getAddressLine(0), false);
+                        setCurrentAddress(addressList.get(0));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -105,27 +110,33 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        mapSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        binding.svMapSearch.setIconifiedByDefault(false);
+        binding.svMapSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String location = mapSearchView.getQuery().toString();
-                List<Address> addressList = null;
+                String location = query;
+                Log.d("MapActivity", "onQueryTextSubmit: " + location);
+
                 if (location != null && !location.equals("")) {
                     try {
-                        addressList = geocoder.getFromLocationName(location, 1);
-                        if (addressList.size() > 0) {
-                            Address address = addressList.get(0);
-                            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                            mMap.clear();
-                            mMap.addMarker(new MarkerOptions().position(latLng).title(location));
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 1000));
-                            mapSearchView.setQuery("", false);
-                            mapSearchView.clearFocus();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            geocoder.getFromLocationName(location, 1, new Geocoder.GeocodeListener() {
+                                @Override
+                                public void onGeocode(@NonNull List<Address> addresses) {
+                                    if (addresses.size() > 0) {
+                                        setCurrentAddress(addresses.get(0));
+                                    }
+                                }
+                            });
                         }
-                        return true;
+                        else {
+                            List<Address> addressList = geocoder.getFromLocationName(location, 1);
+                            if (addressList.size() > 0) {
+                                setCurrentAddress(addressList.get(0));
+                            }
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
                     }
                 }
                 return false;
@@ -136,5 +147,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 return false;
             }
         });
+
+        binding.btnMapConfirm.setOnClickListener(v -> {
+            locationBottomSheetDialog.show();
+        });
     }
+
+    void setCurrentAddress(Address address) {
+        currentAddress = address;
+        LatLng latLng = new LatLng(currentAddress.getLatitude(), currentAddress.getLongitude());
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions().position(latLng).title(address.getAddressLine(0)));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 1000));
+        binding.tvCurrentMapLocation.setText(address.getAddressLine(0));
+
+    }
+
 }
