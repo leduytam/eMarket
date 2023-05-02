@@ -39,8 +39,31 @@
         android:layout_height="1dp"
         android:layout_marginVertical="@dimen/margin_2md" />
 
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_lg"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/ic_location"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text_size_md"
+        android:textStyle="bold"
+        android:text="test"
+        android:minHeight="60dp"
+        android:drawablePadding="@dimen/padding_md"
+        app:layout_constraintBottom_toTopOf="@+id/btn_mapConfirm" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cb_default_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_lg"
+        android:layout_marginBottom="10dp"
+        android:text="Make this my default address" />
+
     <Button
-        android:id="@+id/btn_confirm_checkout"
+        android:id="@+id/btn_confirm_location"
         style="@style/Widget.Material3.Button"
         android:layout_width="match_parent"
         android:layout_height="60dp"

@@ -5,10 +5,6 @@ import com.google.firebase.firestore.DocumentId;
 import java.util.Date;
 
 public class User {
-
-    static public User currentUser;
-
-
     @DocumentId
     private String documentId;
     private String email;

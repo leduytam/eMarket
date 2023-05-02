@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.group05.emarket.databinding.ActivityMapBinding;
@@ -39,6 +40,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private static final int REQUEST_CODE_GPS_PERMISSION = 100;
+    private static final int MAP_ZOOM = 1000;
 
     private Geocoder geocoder;
     private ActivityMapBinding binding;
@@ -110,34 +112,39 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+
         binding.svMapSearch.setIconifiedByDefault(false);
         binding.svMapSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String location = query;
-                Log.d("MapActivity", "onQueryTextSubmit: " + location);
-
                 if (location != null && !location.equals("")) {
-                    try {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            geocoder.getFromLocationName(location, 1, new Geocoder.GeocodeListener() {
-                                @Override
-                                public void onGeocode(@NonNull List<Address> addresses) {
-                                    if (addresses.size() > 0) {
-                                        setCurrentAddress(addresses.get(0));
+                    if (location.isEmpty()) {
+                        getCurrentLocation();
+                    } else {
+                        try {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                geocoder.getFromLocationName(location, 1, new Geocoder.GeocodeListener() {
+                                    @Override
+                                    public void onGeocode(@NonNull List<Address> addresses) {
+                                        if (addresses.size() > 0) {
+                                            setCurrentAddress(addresses.get(0));
+                                        }
                                     }
+                                });
+                            } else {
+                                List<Address> addressList = geocoder.getFromLocationName(location, 1);
+                                if (addressList.size() > 0) {
+                                    setCurrentAddress(addressList.get(0));
                                 }
-                            });
-                        }
-                        else {
-                            List<Address> addressList = geocoder.getFromLocationName(location, 1);
-                            if (addressList.size() > 0) {
-                                setCurrentAddress(addressList.get(0));
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+
+                } else {
+                    getCurrentLocation();
                 }
                 return false;
             }
@@ -157,10 +164,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         currentAddress = address;
         LatLng latLng = new LatLng(currentAddress.getLatitude(), currentAddress.getLongitude());
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(latLng).title(address.getAddressLine(0)));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 1000));
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title(address.getAddressLine(0));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+        var locationMarker= mMap.addMarker(markerOptions);
+        locationMarker.showInfoWindow();
+        locationMarker.setDraggable(true);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM));
         binding.tvCurrentMapLocation.setText(address.getAddressLine(0));
-
+        locationBottomSheetDialog.setAddress(address);
+        binding.svMapSearch.clearFocus();
     }
 
 }

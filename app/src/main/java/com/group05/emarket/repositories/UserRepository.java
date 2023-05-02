@@ -1,14 +1,11 @@
 package com.group05.emarket.repositories;
 
-import static com.group05.emarket.schemas.UsersFirestoreSchema.COLLECTION_NAME;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.PHONE_NUMBER;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.FULL_NAME;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.ADDRESS;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.EMAIL;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.BIRTHDAY;
+import static com.group05.emarket.schemas.UsersSchema.*;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.group05.emarket.models.CartItem;
+import android.location.Address;
+import android.util.Log;
+
+import com.google.firebase.firestore.Query;
 import com.group05.emarket.models.User;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,10 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class UserRepository {
 
@@ -48,29 +44,66 @@ public class UserRepository {
         userMap.put(FULL_NAME, user.getFullName());
         userMap.put(ADDRESS, user.getAddress());
         userMap.put(BIRTHDAY, user.getBirthday());
-
         userRef.set(userMap);
     }
 
-    public static User getCurrentUserDetail() {
+    public static CompletableFuture<User> getUser(String uuid) {
+        CompletableFuture<User> future = new CompletableFuture<>();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection(COLLECTION_NAME).document(uuid);
+        userRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d("UserRepository", "getUser: " + task.getResult().toObject(User.class));
+                User user = task.getResult().toObject(User.class);
+                future.complete(user);
+            } else {
+                Log.e("UserRepository", "getUser: ", task.getException());
+                future.completeExceptionally(task.getException());
+            }
+        });
+        return future;
+    }
+
+    public static CompletableFuture<Void> setUserAddress(Address address, boolean isDefault) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userUid = firebaseUser.getUid();
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document(userUid);
         if (documentReference != null) {
-            User currentUser = new User();
-            currentUser.setDocumentId(userUid);
-            currentUser.setEmail(firebaseUser.getEmail());
-            documentReference.get().addOnCompleteListener(task -> {
+            Map<String, Object> addressMap = new HashMap<>();
+            addressMap.put(ADDRESS, address.getAddressLine(0));
+            addressMap.put(CITY, address.getLocality());
+            addressMap.put(DISTRICT, address.getSubAdminArea());
+            addressMap.put(PROVINCE,address.getAdminArea());
+            addressMap.put(WARD, address.getSubLocality());
+            addressMap.put(COUNTRY, address.getCountryName());
+            addressMap.put(POSTAL_CODE, address.getPostalCode());
+            addressMap.put(LATITUDE, address.getLatitude());
+            addressMap.put(LONGITUDE, address.getLongitude());
+            addressMap.put(IS_DEFAULT, isDefault);
+            documentReference.collection(ADDRESSES).add(addressMap).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    currentUser.setFullName(task.getResult().getString(FULL_NAME));
-                    currentUser.setPhoneNumber(task.getResult().getString(PHONE_NUMBER));
-                    currentUser.setAddress(task.getResult().getString(ADDRESS));
-                    currentUser.setBirthday(task.getResult().getString(BIRTHDAY));
+                    // update user address with new address id
+                    String addressId = task.getResult().getId();
+                    Map<String, Object> userMap = new HashMap<>();
+                    userMap.put(ADDRESS, addressId);
+                    documentReference.update(userMap).addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            future.complete(null);
+                        } else {
+                            future.completeExceptionally(task1.getException());
+                        }
+                    });
                 }
             });
-            return currentUser;
-
         }
-        return null;
+        return future;
+    }
+
+//    public static CompletableFuture<com.group05.emarket.models.Address>
+
+
+    public static UserRepository getInstance() {
+        return new UserRepository();
     }
 }
