@@ -11,14 +11,19 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group05.emarket.R;
+import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.activities.LayoutActivity;
 import com.group05.emarket.views.activities.OrderSuccessActivity;
+
+import java.util.concurrent.ExecutionException;
 
 public class CheckoutBottomSheetDialog extends BottomSheetDialog {
     private float totalCost = 0;
     private TextView tvTotalCost;
-    public CheckoutBottomSheetDialog(Context context) {
+    private CartViewModel cartViewModel;
+    public CheckoutBottomSheetDialog(Context context, CartViewModel cartViewModel) {
         super(context);
+        this.cartViewModel = cartViewModel;
     }
 
     public void setTotalCost(float totalCost) {
@@ -63,9 +68,16 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog {
 
         Button btnConfirm = view.findViewById(R.id.btn_confirm_checkout);
         btnConfirm.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), OrderSuccessActivity.class);
-            getContext().startActivity(intent);
-            dismiss();
+            try {
+                cartViewModel.placeOrder();
+                Intent intent = new Intent(getContext(), OrderSuccessActivity.class);
+                getContext().startActivity(intent);
+                dismiss();
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         });
 
 

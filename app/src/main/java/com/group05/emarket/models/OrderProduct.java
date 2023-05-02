@@ -1,23 +1,23 @@
 package com.group05.emarket.models;
 
 public class OrderProduct extends CartItem {
-    private int orderId;
+    private String orderId;
 
-    public OrderProduct(Product product, int quantity, int orderId) {
+    public OrderProduct(Product product, int quantity, String orderId) {
         super(product, quantity);
         this.orderId = orderId;
     }
 
-    public OrderProduct(CartItem cartItem, int orderId) {
+    public OrderProduct(CartItem cartItem, String orderId) {
         super(cartItem.getProduct(), cartItem.getQuantity());
         this.orderId = orderId;
     }
 
-    public int getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 }

@@ -10,12 +10,15 @@ import com.group05.emarket.MockData;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.repositories.CartRepository;
+import com.group05.emarket.repositories.OrderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class CartViewModel extends ViewModel {
     private final CartRepository cartRepo = CartRepository.getInstance();
+    private final OrderRepository orderRepo = OrderRepository.getInstance();
     private final MutableLiveData<List<CartItem>> cartItems;
     private final MutableLiveData<Boolean> isLoading;
 
@@ -76,6 +79,12 @@ public class CartViewModel extends ViewModel {
     }
 
     public void clearCart() {
+        cartItems.setValue(new ArrayList<>());
+        updateCart();
+    }
+
+    public void placeOrder() throws ExecutionException, InterruptedException {
+        orderRepo.placeOrder(cartItems.getValue());
         cartItems.setValue(new ArrayList<>());
         updateCart();
     }
