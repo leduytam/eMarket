@@ -56,7 +56,7 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemAdapter.
         }
 
         holder._tvTitle.setText(orderName);
-        holder._tvDate.setText(orderDate);
+//        holder._tvDate.setText(orderDate);
         holder._tvAmount.setText(String.format("$ %s", orderAmount));
     }
 

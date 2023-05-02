@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.group05.emarket.viewmodels.OrderViewModel;
 import com.group05.emarket.views.fragments.order.OrderCancelledFragment;
 import com.group05.emarket.views.fragments.order.OrderDeliveredFragment;
 import com.group05.emarket.views.fragments.order.OrderPendingFragment;
@@ -12,6 +13,7 @@ import com.group05.emarket.views.fragments.order.OrderShippingFragment;
 
 public class OrderStatesAdapter extends FragmentStateAdapter {
     // 4 states: Pending, Shipping, Delivered, Cancelled
+
 
     public OrderStatesAdapter(@NonNull FragmentActivity fa) {
         super(fa);

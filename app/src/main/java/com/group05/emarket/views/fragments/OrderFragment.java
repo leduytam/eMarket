@@ -3,6 +3,7 @@ package com.group05.emarket.views.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.group05.emarket.R;
+import com.group05.emarket.models.Order;
+import com.group05.emarket.viewmodels.OrderViewModel;
 import com.group05.emarket.views.adapters.OrderStatesAdapter;
 
 public class OrderFragment extends Fragment {
@@ -25,6 +28,10 @@ public class OrderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
