@@ -54,11 +54,9 @@ public class UserRepository {
         DocumentReference userRef = db.collection(COLLECTION_NAME).document(uuid);
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Log.d("UserRepository", "getUser: " + task.getResult().toObject(User.class));
                 User user = task.getResult().toObject(User.class);
                 future.complete(user);
             } else {
-                Log.e("UserRepository", "getUser: ", task.getException());
                 future.completeExceptionally(task.getException());
             }
         });

@@ -88,4 +88,5 @@
     <string name="location_confirm_button">Confirm</string>
     <string name="activity_location_locate_button">Use this location</string>
     <string name="google_maps_key">AIzaSyBpbbzd_gEfynO4AatkbOuk4DjqGxIa4Vg</string>
+    <string name="label_user_location">There\'s is no location yet</string>
 </resources>
