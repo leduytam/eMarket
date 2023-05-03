@@ -2,6 +2,7 @@ package com.group05.emarket.views.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -25,13 +26,16 @@ import com.group05.emarket.databinding.ActivityMapBinding;
 
 import android.Manifest;
 import android.util.Log;
+import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.group05.emarket.R;
+import com.group05.emarket.repositories.AddressRepository;
+import com.group05.emarket.views.adapters.GoogleMapPredictionAdapter;
 import com.group05.emarket.views.dialogs.LocationBottomSheetDialog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -45,8 +49,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Geocoder geocoder;
     private ActivityMapBinding binding;
     private LocationBottomSheetDialog locationBottomSheetDialog;
-    private Address currentAddress;
 
+    private boolean isHavingDefaultAddress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         geocoder = new Geocoder(MapActivity.this, Locale.getDefault());
         binding.topBar.setNavigationOnClickListener(v -> finish());
         mapFragment.getMapAsync(this);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            isHavingDefaultAddress = extras.getBoolean("isHavingDefaultAddress");
+        }
+
+        if (!isHavingDefaultAddress) {
+            locationBottomSheetDialog.setDisable(true);
+        }
+
     }
 
     @Override
@@ -70,28 +83,48 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    private void getFromLocationLongLat(double latitude, double longitude) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                geocoder.getFromLocation(latitude, longitude, 1, addresses -> {
+                    setCurrentAddress(addresses.get(0));
+                });
+            } else {
+                List<Address> addressList = new ArrayList<>();
+                addressList = geocoder.getFromLocation(latitude, longitude, 1);
+                setCurrentAddress(addressList.get(0));
+            }
+        } catch (IOException e) {
+            Log.e("getFromLocationLongLat", e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
     private void getCurrentLocation() {
-        FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location == null) {
-                    return;
-                }
-                List<Address> addressList = new ArrayList<>();
-                try {
-                    addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    if (addressList.size() > 0) {
-                        setCurrentAddress(addressList.get(0));
+
+        AddressRepository addressRepository = AddressRepository.getInstance();
+        addressRepository.getUserAddress().thenAccept(addressModel -> {
+            if (addressModel != null) {
+                double latitude = addressModel.getLatitude();
+                double longitude = addressModel.getLongitude();
+                getFromLocationLongLat(latitude, longitude);
+            } else {
+                FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                mFusedLocationClient.getCurrentLocation(100, null).addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            getFromLocationLongLat(location.getLatitude(), location.getLongitude());
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                });
             }
         });
+
     }
 
     @Override
@@ -101,13 +134,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case REQUEST_CODE_GPS_PERMISSION:
                 for (int grantResult : grantResults) {
                     if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
                 break;
         }
     }
-
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -117,32 +150,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         binding.svMapSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String location = query;
-                if (location != null && !location.equals("")) {
-                    if (location.isEmpty()) {
-                        getCurrentLocation();
-                    } else {
-                        try {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                geocoder.getFromLocationName(location, 1, new Geocoder.GeocodeListener() {
-                                    @Override
-                                    public void onGeocode(@NonNull List<Address> addresses) {
-                                        if (addresses.size() > 0) {
-                                            setCurrentAddress(addresses.get(0));
-                                        }
-                                    }
-                                });
-                            } else {
-                                List<Address> addressList = geocoder.getFromLocationName(location, 1);
-                                if (addressList.size() > 0) {
-                                    setCurrentAddress(addressList.get(0));
+                if (query != null) {
+                    try {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            Log.d("onQueryTextSubmit", "onQueryTextSubmit:  " + query);
+                            geocoder.getFromLocationName(query, 1, addresses -> {
+                                if (addresses.size() > 0) {
+                                    setCurrentAddress(addresses.get(0));
                                 }
+                            });
+                        } else {
+                            Log.d("onQueryTextSubmit", "onQueryTextSubmit: - < 33 " + query);
+                            List<Address> addressList = geocoder.getFromLocationName(query, 1);
+                            if (addressList.size() > 0) {
+                                setCurrentAddress(addressList.get(0));
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
                 } else {
                     getCurrentLocation();
                 }
@@ -161,16 +187,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     void setCurrentAddress(Address address) {
-        currentAddress = address;
-        LatLng latLng = new LatLng(currentAddress.getLatitude(), currentAddress.getLongitude());
-        mMap.clear();
+        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title(address.getAddressLine(0));
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-        var locationMarker= mMap.addMarker(markerOptions);
-        locationMarker.showInfoWindow();
-        locationMarker.setDraggable(true);
+        mMap.clear();
+        var locationMarker = mMap.addMarker(markerOptions);
+        if (locationMarker != null) {
+            locationMarker.showInfoWindow();
+            locationMarker.setDraggable(true);
+        }
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM));
         binding.tvCurrentMapLocation.setText(address.getAddressLine(0));
         locationBottomSheetDialog.setAddress(address);

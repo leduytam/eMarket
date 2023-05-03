@@ -87,4 +87,5 @@
     <string name="bottom_sheet_location_title">Location</string>
     <string name="location_confirm_button">Confirm</string>
     <string name="activity_location_locate_button">Use this location</string>
+    <string name="google_maps_key">AIzaSyBpbbzd_gEfynO4AatkbOuk4DjqGxIa4Vg</string>
 </resources>

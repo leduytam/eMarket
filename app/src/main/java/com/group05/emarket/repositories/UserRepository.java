@@ -5,6 +5,7 @@ import static com.group05.emarket.schemas.UsersSchema.*;
 import android.location.Address;
 import android.util.Log;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.group05.emarket.models.User;
 
@@ -67,6 +68,7 @@ public class UserRepository {
     public static CompletableFuture<Void> setUserAddress(Address address, boolean isDefault) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
         String userUid = firebaseUser.getUid();
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document(userUid);
         if (documentReference != null) {
@@ -81,9 +83,17 @@ public class UserRepository {
             addressMap.put(LATITUDE, address.getLatitude());
             addressMap.put(LONGITUDE, address.getLongitude());
             addressMap.put(IS_DEFAULT, isDefault);
+            if (isDefault) {
+                documentReference.collection(ADDRESSES).whereEqualTo(IS_DEFAULT, true).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                            document.getReference().update(IS_DEFAULT, false);
+                        }
+                    }
+                });
+            }
             documentReference.collection(ADDRESSES).add(addressMap).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    // update user address with new address id
                     String addressId = task.getResult().getId();
                     Map<String, Object> userMap = new HashMap<>();
                     userMap.put(ADDRESS, addressId);
@@ -99,8 +109,6 @@ public class UserRepository {
         }
         return future;
     }
-
-//    public static CompletableFuture<com.group05.emarket.models.Address>
 
 
     public static UserRepository getInstance() {

@@ -32,6 +32,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private ActivityEditProfileBinding binding;
     private static AddressRepository addressRepository;
 
+    private boolean isHavingDefaultAddress = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +56,14 @@ public class EditProfileActivity extends AppCompatActivity {
                             String dob = document.getString(BIRTHDAY);
                             binding.etFullName.setText(fullName);
                             binding.etPhoneNumber.setText(phoneNumber);
-                            addressRepository.getAddress().thenAccept(address -> {
+                            addressRepository.getUserAddress().thenAccept(address -> {
                                 if (address != null) {
                                     binding.etAddress.setText(address.getAddress());
-                                }
-                                else {
+                                    isHavingDefaultAddress = address.getIsDefault();
+                                } else {
                                     binding.etAddress.setText("You have not set your address yet");
                                     binding.etAddress.setTextColor(getResources().getColor(R.color.gray_300));
+                                    isHavingDefaultAddress = false;
                                 }
                             });
                             binding.etDob.setText(dob);
@@ -112,6 +115,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         binding.btnAddressGoToMap.setOnClickListener(view -> {
             Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("isHavingDefaultAddress", isHavingDefaultAddress);
             startActivity(intent);
         });
     }

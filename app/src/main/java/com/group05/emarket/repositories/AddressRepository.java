@@ -1,14 +1,11 @@
 package com.group05.emarket.repositories;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.group05.emarket.models.Address;
 import com.group05.emarket.schemas.UsersSchema;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class AddressRepository {
@@ -26,7 +23,7 @@ public class AddressRepository {
     private AddressRepository() {
     }
 
-    public CompletableFuture<Address> getAddress() {
+    public CompletableFuture<Address> getUserAddress() {
         CompletableFuture<Address> future = new CompletableFuture<>();
 
         var user = auth.getCurrentUser();
@@ -46,8 +43,15 @@ public class AddressRepository {
                     future.complete(null);
                     return;
                 }
-
+                // get the default address
+                var defaultAddress = addressDocs.stream().filter(addressDoc -> {
+                    var address = addressDoc.toObject(Address.class);
+                    return address.getIsDefault();
+                }).findFirst();
                 var addressDoc = addressDocs.get(0);
+                if (defaultAddress.isPresent()) {
+                    addressDoc = defaultAddress.get();
+                }
                 var address = addressDoc.toObject(Address.class);
                 future.complete(address);
             } else {
