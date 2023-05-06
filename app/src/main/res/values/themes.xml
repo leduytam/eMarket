@@ -41,4 +41,13 @@
         <item name="background">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
     </style>
+
+    <style name="Theme.EMarket.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.EMarket.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.EMarket.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

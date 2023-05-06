@@ -1,6 +1,6 @@
 package com.group05.emarket.firestore;
 
-import static com.group05.emarket.schemas.UsersFirestoreSchema.COLLECTION_NAME;
+import static com.group05.emarket.schemas.UsersSchema.COLLECTION_NAME;
 
 import android.util.Log;
 

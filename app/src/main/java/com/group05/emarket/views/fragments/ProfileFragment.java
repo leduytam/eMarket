@@ -1,20 +1,13 @@
 package com.group05.emarket.views.fragments;
 
-import static com.group05.emarket.schemas.UsersFirestoreSchema.COLLECTION_NAME;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.EMAIL;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.FULL_NAME;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +15,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.group05.emarket.R;
-import com.group05.emarket.models.User;
 import com.group05.emarket.repositories.UserRepository;
 import com.group05.emarket.views.activities.AboutActivity;
 import com.group05.emarket.views.activities.AuthenticationActivity;
@@ -49,6 +37,8 @@ public class ProfileFragment extends Fragment {
     private LinearLayout aboutLayout;
 
     private LinearLayout walletLayout;
+
+    private ShimmerFrameLayout shimmer;
     private static FirebaseAuth mAuth;
     private MaterialAlertDialogBuilder alertDialogBuilder;
 
@@ -69,19 +59,16 @@ public class ProfileFragment extends Fragment {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uuid = user.getUid();
-        DocumentReference documentReference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document(uuid);
-        documentReference.get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            String fullName = document.getString(FULL_NAME);
-                            String email = document.getString(EMAIL);
-                            tvFullName.setText(fullName);
-                            tvShortBio.setText(email);
-                        }
-                    }
-                });
+        UserRepository.getUser(uuid).thenAccept(u -> {
+            shimmer.stopShimmer();
+            shimmer.setVisibility(View.GONE);
+            tvFullName.setText(u.getFullName());
+            tvShortBio.setText(u.getEmail());
+        }).exceptionally(e -> {
+            shimmer.stopShimmer();
+            shimmer.setVisibility(View.GONE);
+            return null;
+        });
     }
 
     @Override
@@ -96,7 +83,8 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         context = getContext();
-
+        shimmer = view.findViewById(R.id.user_profile_simmer);
+        shimmer.startShimmer();
         btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> onLogout());
 

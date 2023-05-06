@@ -13,6 +13,7 @@ import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityCartBinding;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.utilities.Formatter;
+import com.group05.emarket.viewmodels.AddressViewModel;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.adapters.CartListAdapter;
 import com.group05.emarket.views.dialogs.CheckoutBottomSheetDialog;
@@ -22,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CartActivity extends AppCompatActivity implements CartListAdapter.OnCartChangedListener {
     private CartViewModel cartViewModel;
+    private AddressViewModel addressViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,8 @@ public class CartActivity extends AppCompatActivity implements CartListAdapter.O
         itemTouchHelper.attachToRecyclerView(binding.rvCartItems);
 
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
-        CheckoutBottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this, cartViewModel);
+        addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
+        CheckoutBottomSheetDialog bottomSheetDialog = new CheckoutBottomSheetDialog(this, cartViewModel, addressViewModel);
         cartViewModel.getCartItems().observe(this, cartItems -> {
             adapter.setCartItems(cartItems);
             binding.tvTotalPrice.setText(Formatter.formatCurrency(cartViewModel.getTotalPrice()));

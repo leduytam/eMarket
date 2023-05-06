@@ -24,8 +24,10 @@ import com.group05.emarket.R;
 import com.group05.emarket.databinding.FragmentHomeBinding;
 import com.group05.emarket.enums.EProductListType;
 import com.group05.emarket.models.BannerItem;
+import com.group05.emarket.viewmodels.AddressViewModel;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.viewmodels.HomeViewModel;
+import com.group05.emarket.views.activities.MapActivity;
 import com.group05.emarket.views.adapters.BannerPagerAdapter;
 import com.group05.emarket.views.adapters.ProductAdapter;
 import com.group05.emarket.views.activities.CartActivity;
@@ -37,6 +39,8 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private CartViewModel cartViewModel;
+
+    private AddressViewModel addressViewModel;
     private FragmentHomeBinding binding;
 
     private OverviewCategoriesFragment fragmentOverviewCategories;
@@ -60,8 +64,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         cartViewModel.fetch();
+        addressViewModel.fetch();
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -72,7 +76,6 @@ public class HomeFragment extends Fragment {
         Context context = binding.getRoot().getContext();
 
         fragmentOverviewCategories = OverviewCategoriesFragment.newInstance();
-
         fragmentOverviewPopularProducts = OverviewProductsFragment.newInstance(
                 EProductListType.POPULAR,
                 null
@@ -151,6 +154,20 @@ public class HomeFragment extends Fragment {
         cartViewModel.getCartItems().observe(getViewLifecycleOwner(), cartItems -> {
             cartBadge.setNumber(cartItems.size());
             cartBadge.setVisible(cartItems.size() != 0);
+        });
+
+        addressViewModel = new ViewModelProvider(requireActivity()).get(AddressViewModel.class);
+        addressViewModel.getUserAddress().observe(getViewLifecycleOwner(), userAddress -> {
+            if (userAddress != null) {
+                binding.btnUserLocation.setText(userAddress.getAddress());
+            } else {
+                binding.btnUserLocation.setText("There is no address yet");
+            }
+        });
+        binding.btnUserLocation.setOnClickListener(v -> {
+            Intent intent = new Intent(context, MapActivity.class);
+            intent.putExtra("isHavingDefaultAddress", addressViewModel.getUserAddress().getValue() != null);
+            startActivity(intent);
         });
 
         List<BannerItem> bannerItems = new ArrayList<>();

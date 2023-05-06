@@ -108,22 +108,38 @@
                     android:text="@string/fragment_edit_profile_address"
                     android:textColor="@color/BLACK" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
                     android:id="@+id/address_text_input_layout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
+                    android:orientation="horizontal"
                     android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/et_address"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLines="1"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/text_size_md"
                         android:textColor="@android:color/black"
                         android:textColorHint="@color/gray" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <Button
+                        style="@style/Widget.Material3.Button.IconButton.Outlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        app:icon="@drawable/ic_location"
+                        android:id="@+id/btn_address_go_to_map"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:iconSize="24dp"
+                        app:iconTint="@color/black"
+                        app:strokeWidth="0dp" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

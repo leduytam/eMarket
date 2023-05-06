@@ -37,6 +37,32 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/padding_md">
+
+                <Button
+                    android:id="@+id/btn_user_location"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="0dp"
+                    android:maxLines="1"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/label_user_location"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_2md"
+                    app:cornerRadius="0dp"
+                    app:icon="@drawable/ic_location"
+                    app:iconPadding="10dp"
+                    app:iconTint="@color/black" />
+            </LinearLayout>
+
             <FrameLayout
                 android:id="@+id/fragment_overview_categories"
                 android:layout_width="match_parent"

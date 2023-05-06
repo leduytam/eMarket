@@ -1,34 +1,28 @@
 package com.group05.emarket.views.activities;
 
-import static android.content.ContentValues.TAG;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.ADDRESS;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.BIRTHDAY;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.COLLECTION_NAME;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.FULL_NAME;
-import static com.group05.emarket.schemas.UsersFirestoreSchema.PHONE_NUMBER;
+import static com.group05.emarket.schemas.UsersSchema.ADDRESS;
+import static com.group05.emarket.schemas.UsersSchema.BIRTHDAY;
+import static com.group05.emarket.schemas.UsersSchema.COLLECTION_NAME;
+import static com.group05.emarket.schemas.UsersSchema.FULL_NAME;
+import static com.group05.emarket.schemas.UsersSchema.PHONE_NUMBER;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityEditProfileBinding;
+import com.group05.emarket.repositories.AddressRepository;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -36,12 +30,16 @@ import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
     private ActivityEditProfileBinding binding;
+    private static AddressRepository addressRepository;
+
+    private boolean isHavingDefaultAddress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        addressRepository = AddressRepository.getInstance();
 
         binding.topBar.setNavigationOnClickListener(v -> finish());
 
@@ -55,11 +53,19 @@ public class EditProfileActivity extends AppCompatActivity {
                         if (document.exists()) {
                             String fullName = document.getString(FULL_NAME);
                             String phoneNumber = document.getString(PHONE_NUMBER);
-                            String address = document.getString(ADDRESS);
                             String dob = document.getString(BIRTHDAY);
                             binding.etFullName.setText(fullName);
                             binding.etPhoneNumber.setText(phoneNumber);
-                            binding.etAddress.setText(address);
+                            addressRepository.getUserAddress().thenAccept(address -> {
+                                if (address != null) {
+                                    binding.etAddress.setText(address.getAddress());
+                                    isHavingDefaultAddress = address.getIsDefault();
+                                } else {
+                                    binding.etAddress.setText("You have not set your address yet");
+                                    binding.etAddress.setTextColor(getResources().getColor(R.color.gray_300));
+                                    isHavingDefaultAddress = false;
+                                }
+                            });
                             binding.etDob.setText(dob);
                         }
                     }
@@ -105,6 +111,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
+        });
+
+        binding.btnAddressGoToMap.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("isHavingDefaultAddress", isHavingDefaultAddress);
+            startActivity(intent);
         });
     }
 }
