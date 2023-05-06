@@ -1,5 +1,16 @@
 package com.group05.emarket.views.dialogs;
 
+import static com.group05.emarket.schemas.UsersSchema.ADDRESS;
+import static com.group05.emarket.schemas.UsersSchema.CITY;
+import static com.group05.emarket.schemas.UsersSchema.COUNTRY;
+import static com.group05.emarket.schemas.UsersSchema.DISTRICT;
+import static com.group05.emarket.schemas.UsersSchema.IS_DEFAULT;
+import static com.group05.emarket.schemas.UsersSchema.LATITUDE;
+import static com.group05.emarket.schemas.UsersSchema.LONGITUDE;
+import static com.group05.emarket.schemas.UsersSchema.POSTAL_CODE;
+import static com.group05.emarket.schemas.UsersSchema.PROVINCE;
+import static com.group05.emarket.schemas.UsersSchema.WARD;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -11,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.BottomSheetLocationBinding;
+import com.group05.emarket.repositories.AddressRepository;
 import com.group05.emarket.repositories.UserRepository;
 import com.group05.emarket.views.activities.LayoutActivity;
 
@@ -18,6 +30,7 @@ import com.group05.emarket.views.activities.LayoutActivity;
 public class LocationBottomSheetDialog extends BottomSheetDialog {
 
     private Address address;
+    private AddressRepository addressRepository = AddressRepository.getInstance();
     private BottomSheetLocationBinding binding;
 
     private boolean isDisable = false;
@@ -69,14 +82,13 @@ public class LocationBottomSheetDialog extends BottomSheetDialog {
 
         binding.btnConfirmLocation.setOnClickListener(v -> {
             boolean isDefault = binding.cbDefaultAddress.isChecked();
-            UserRepository.setUserAddress(address, isDefault).thenAccept(aVoid -> {
+            addressRepository.addAddress(new com.group05.emarket.models.Address(address, isDefault)).thenAccept(aVoid -> {
                 dismiss();
-                // get current intent
                 Intent intent = new Intent(getContext(), LayoutActivity.class);
-// set the new task and clear flags
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 getContext().startActivity(intent);
             });
+            ;
         });
 
         if (isDisable) {

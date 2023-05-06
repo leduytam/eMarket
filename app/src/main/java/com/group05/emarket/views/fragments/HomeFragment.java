@@ -160,24 +160,14 @@ public class HomeFragment extends Fragment {
         addressViewModel.getUserAddress().observe(getViewLifecycleOwner(), userAddress -> {
             if (userAddress != null) {
                 binding.btnUserLocation.setText(userAddress.getAddress());
-            }
-            else {
+            } else {
                 binding.btnUserLocation.setText("There is no address yet");
             }
         });
         binding.btnUserLocation.setOnClickListener(v -> {
-            addressViewModel.getUserAddress().observe(getViewLifecycleOwner(), userAddress -> {
-                var isHavingDefaultAddress = userAddress != null;
-                if (userAddress != null) {
-                    isHavingDefaultAddress = true;
-                }
-                else {
-                    isHavingDefaultAddress = false;
-                }
-                Intent intent = new Intent(context, MapActivity.class);
-                intent.putExtra("isHavingDefaultAddress", isHavingDefaultAddress);
-                startActivity(intent);
-            });
+            Intent intent = new Intent(context, MapActivity.class);
+            intent.putExtra("isHavingDefaultAddress", addressViewModel.getUserAddress().getValue() != null);
+            startActivity(intent);
         });
 
         List<BannerItem> bannerItems = new ArrayList<>();
