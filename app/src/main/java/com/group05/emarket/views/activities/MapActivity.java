@@ -50,8 +50,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ActivityMapBinding binding;
     private LocationBottomSheetDialog locationBottomSheetDialog;
 
-    private boolean isHavingDefaultAddress = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,16 +59,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_app);
         geocoder = new Geocoder(MapActivity.this, Locale.getDefault());
         binding.topBar.setNavigationOnClickListener(v -> finish());
+        binding.topBar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_map_refresh) {
+                getCurrentLocation();
+            }
+            return true;
+        });
         mapFragment.getMapAsync(this);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            isHavingDefaultAddress = extras.getBoolean("isHavingDefaultAddress");
-        }
-
-        if (!isHavingDefaultAddress) {
-            locationBottomSheetDialog.setDisable(true);
-        }
-
     }
 
     @Override
@@ -98,7 +93,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Log.e("getFromLocationLongLat", e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     private void getCurrentLocation() {
@@ -112,6 +106,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 double latitude = addressModel.getLatitude();
                 double longitude = addressModel.getLongitude();
                 getFromLocationLongLat(latitude, longitude);
+                if (addressModel.getIsDefault()) {
+                    locationBottomSheetDialog.setDisable(addressModel.getIsDefault());
+                }
             } else {
                 FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
                 mFusedLocationClient.getCurrentLocation(100, null).addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -198,8 +195,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             locationMarker.showInfoWindow();
             locationMarker.setDraggable(true);
         }
+        // on click marker
+        mMap.setOnMarkerClickListener(marker -> {
+            marker.showInfoWindow();
+            return true;
+        });
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM));
         binding.tvCurrentMapLocation.setText(address.getAddressLine(0));
+        locationBottomSheetDialog.setDisable(false);
         locationBottomSheetDialog.setAddress(address);
         binding.svMapSearch.clearFocus();
     }

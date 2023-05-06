@@ -30,7 +30,7 @@ import com.group05.emarket.views.activities.LayoutActivity;
 public class LocationBottomSheetDialog extends BottomSheetDialog {
 
     private Address address;
-    private AddressRepository addressRepository = AddressRepository.getInstance();
+    private final AddressRepository addressRepository = AddressRepository.getInstance();
     private BottomSheetLocationBinding binding;
 
     private boolean isDisable = false;
@@ -50,13 +50,14 @@ public class LocationBottomSheetDialog extends BottomSheetDialog {
         if (binding != null) {
             binding.tvAddress.setText(address.getAddressLine(0));
             binding.cbDefaultAddress.setChecked(false);
+            binding.cbDefaultAddress.setEnabled(true);
         }
     }
 
     public void setDisable(boolean isDisable) {
         this.isDisable = isDisable;
         if (binding != null) {
-            binding.cbDefaultAddress.setChecked(true);
+            binding.cbDefaultAddress.setChecked(false);
             binding.cbDefaultAddress.setEnabled(!isDisable);
         }
     }
@@ -95,6 +96,5 @@ public class LocationBottomSheetDialog extends BottomSheetDialog {
             binding.cbDefaultAddress.setChecked(true);
             binding.cbDefaultAddress.setEnabled(false);
         }
-
     }
 }

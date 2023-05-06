@@ -77,8 +77,6 @@ public class AddressRepository {
         var addressMap = address.toMap();
         addressMap.put(IS_DEFAULT, address.getIsDefault());
 
-        // Add address to user, but if it's default, set all other addresses to not default, then add
-        // the new address
         var batch = db.batch();
         var userRef = db.collection(UsersSchema.COLLECTION_NAME).document(user.getUid());
         var addressRef = userRef.collection(ADDRESSES).document();

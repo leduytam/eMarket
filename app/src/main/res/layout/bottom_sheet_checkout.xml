@@ -145,6 +145,40 @@
         android:layout_height="1dp"
         android:layout_marginVertical="@dimen/margin_2md" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:paddingHorizontal="@dimen/margin_xl">
+
+        <TextView
+            android:id="@+id/tv_user_address"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_location"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_size_md"
+            android:textStyle="bold"
+            android:minHeight="60dp"
+            android:drawablePadding="@dimen/padding_md"/>
+
+        <Button
+            style="@style/Widget.Material3.Button.IconButton"
+            android:id="@+id/btn_change_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_arrow_right"
+            app:iconTint="@color/black" />
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="@dimen/margin_2md" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

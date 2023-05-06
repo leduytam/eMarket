@@ -28,5 +28,4 @@ public class AddressViewModel extends ViewModel {
     public MutableLiveData<Address> getUserAddress() {
         return userAddress;
     }
-
 }
