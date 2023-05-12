@@ -9,6 +9,10 @@
         android:title="@string/menu_bottom_action_search"
         android:icon="@drawable/ic_menu_search"/>
     <item
+        android:id="@+id/action_favorite"
+        android:title="@string/menu_bottom_action_favorite"
+        android:icon="@drawable/ic_menu_favorite"/>
+    <item
         android:id="@+id/action_order"
         android:title="@string/menu_bottom_action_order"
         android:icon="@drawable/ic_menu_order"/>

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ActivityLayoutBinding;
+import com.group05.emarket.views.fragments.FavoriteFragment;
 import com.group05.emarket.views.fragments.HomeFragment;
 import com.group05.emarket.views.fragments.OrderFragment;
 import com.group05.emarket.views.fragments.ProfileFragment;
@@ -23,6 +24,7 @@ public class LayoutActivity extends AppCompatActivity {
     private SearchFragment searchFragment;
     private OrderFragment orderFragment;
     private ProfileFragment profileFragment;
+    private FavoriteFragment favoriteFragment;
     private static FirebaseAuth auth;
 
     @Override
@@ -37,6 +39,7 @@ public class LayoutActivity extends AppCompatActivity {
         searchFragment = SearchFragment.newInstance();
         orderFragment = OrderFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
+        favoriteFragment = FavoriteFragment.newInstance();
 
         binding.viewPager.setUserInputEnabled(false);
         binding.viewPager.setOffscreenPageLimit(4);
@@ -50,8 +53,10 @@ public class LayoutActivity extends AppCompatActivity {
                     case 1:
                         return searchFragment;
                     case 2:
-                        return orderFragment;
+                        return favoriteFragment;
                     case 3:
+                        return orderFragment;
+                    case 4:
                         return profileFragment;
                     default:
                         throw new IllegalArgumentException("Invalid position: " + position);
@@ -60,7 +65,7 @@ public class LayoutActivity extends AppCompatActivity {
 
             @Override
             public int getItemCount() {
-                return 4;
+                return 5;
             }
         });
 
@@ -71,10 +76,12 @@ public class LayoutActivity extends AppCompatActivity {
                 binding.viewPager.setCurrentItem(0, false);
             } else if (id == R.id.action_search) {
                 binding.viewPager.setCurrentItem(1, false);
-            } else if (id == R.id.action_order) {
+            } else if (id == R.id.action_favorite) {
                 binding.viewPager.setCurrentItem(2, false);
-            } else if (id == R.id.action_profile) {
+            } else if (id == R.id.action_order) {
                 binding.viewPager.setCurrentItem(3, false);
+            } else if (id == R.id.action_profile) {
+                binding.viewPager.setCurrentItem(4, false);
             }
 
             return true;
@@ -95,6 +102,9 @@ public class LayoutActivity extends AppCompatActivity {
                     break;
                 case "search":
                     binding.bottomNav.setSelectedItemId(R.id.action_search);
+                    break;
+                case "favorite":
+                    binding.bottomNav.setSelectedItemId(R.id.action_favorite);
                     break;
                 case "order":
                     binding.bottomNav.setSelectedItemId(R.id.action_order);
