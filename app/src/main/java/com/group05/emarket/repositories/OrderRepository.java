@@ -132,25 +132,36 @@ public class OrderRepository {
             return future;
         }
         var userRef = db.collection("users").document(auth.getCurrentUser().getUid());
-        Map<String, Object> orderData = new HashMap<>();
-        orderData.put("userRef", userRef);
-        orderData.put("createdAt", new Date());
-        orderData.put("updatedAt", new Date());
-        orderData.put("status", Order.OrderStatus.PENDING);
-        //calculate total price
-        double totalPrice = 0;
-        for (var item : cart) {
-            totalPrice += item.getProduct().getPrice() * item.getQuantity();
-        }
-        orderData.put("totalPrice", totalPrice);
-        FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                addProducts(cart, task.getResult().getId());
-                future.complete(null);
-            } else {
-                throw new IllegalStateException(task.getException());
-            }
-        });
+        db.collection("deliverymen").get().addOnCompleteListener(
+                task -> {
+                    if (task.isSuccessful()) {
+                        var deliverymenDocs = task.getResult().getDocuments();
+                        int randomIndex = (int) (Math.random() * deliverymenDocs.size());
+                        DocumentReference deliverymanRef = deliverymenDocs.get(randomIndex).getReference();
+                        //create order
+                        Map<String, Object> orderData = new HashMap<>();
+                        orderData.put("userRef", userRef);
+                        orderData.put("deliverymanRef", deliverymanRef);
+                        orderData.put("createdAt", new Date());
+                        orderData.put("updatedAt", new Date());
+                        orderData.put("status", Order.OrderStatus.PENDING);
+                        //calculate total price
+                        double totalPrice = 0;
+                        for (var item : cart) {
+                            totalPrice += item.getProduct().getDiscountedPrice() * item.getQuantity();
+                        }
+                        orderData.put("totalPrice", totalPrice);
+                        FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                addProducts(cart, task1.getResult().getId());
+                                future.complete(null);
+                            } else {
+                                throw new IllegalStateException(task1.getException());
+                            }
+                        });
+                    }
+                }
+        );
         return future;
     }
 
