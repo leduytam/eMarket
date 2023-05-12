@@ -1,6 +1,7 @@
 package com.group05.emarket.views.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ListItemOrderBinding;
 import com.group05.emarket.models.Order;
+import com.group05.emarket.views.activities.OrderDetailActivity;
 
 import java.util.List;
 
@@ -39,6 +41,19 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         Order order = orders.get(position);
         holder.binding.setOrder(order);
         holder.binding.executePendingBindings();
+
+        holder.binding.btnOrderDetail.setOnClickListener(v -> {
+            Intent intent = new Intent(context, OrderDetailActivity.class);
+
+            intent.putExtra("orderId", order.getId());
+            intent.putExtra("orderStatus", order.getStatus().toString());
+            intent.putExtra("userName", order.getName());
+            intent.putExtra("userPhone", order.getPhone());
+            intent.putExtra("userAddress", order.getAddress());
+            intent.putExtra("totalPrice", order.getTotalPrice());
+
+            context.startActivity(intent);
+        });
     }
 
     @Override

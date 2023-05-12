@@ -22,6 +22,9 @@
             android:name=".views.activities.MapActivity"
             android:exported="false" />
         <activity
+            android:name=".views.activities.OrderDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.activities.AddPaymentActivity"
             android:exported="false" />
         <activity
