@@ -26,6 +26,7 @@ public class OrderRepository {
     private static OrderRepository instance;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final AddressRepository addressRepository = AddressRepository.getInstance();
 
     public static OrderRepository getInstance() {
         if (instance == null) {
@@ -46,65 +47,78 @@ public class OrderRepository {
             future.complete(new ArrayList<>());
             return future;
         }
-        db.collection("users").document(user.getUid()).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                var userDoc = task.getResult();
-                String name = userDoc.getString("fullName");
-                String phone = userDoc.getString("phoneNumber");
-                String address = userDoc.getString("address");
-                String email = userDoc.getString("email");
-                //get all orders have this user reference
-                var userRef = db.collection("users").document(user.getUid());
-                Query query = db.collection("orders").whereEqualTo("userRef", userRef).whereEqualTo("status", status.toString());
-
-                query.get().addOnCompleteListener(task1 -> {
-                    if (task1.isSuccessful()) {
-                        var orderDocs = task1.getResult().getDocuments();
-
-                        if (orderDocs.size() == 0) {
-                            future.complete(new ArrayList<>());
-                            return;
-                        }
-
-                        List<Order> orders = new ArrayList<>();
-                        for (var doc : orderDocs) {
-                            String id = doc.getId();
-                            Date updatedAt = doc.getDate("updatedAt");
-                            Date createdAt = doc.getDate("createdAt");
-                            double totalPrice = doc.getDouble("totalPrice");
-                            Order order = new Order(id, name, address, phone, email, status, updatedAt, createdAt, totalPrice);
-                            //get all cart items of this order
-                            Query query1 = db.collection("orders").document(id).collection("products");
-                            query1.get().addOnCompleteListener(task2 -> {
-                                if (task2.isSuccessful()) {
-                                    var orderItemDocs = task2.getResult().getDocuments();
-
-                                    if (orderItemDocs.size() == 0) {
-                                        future.complete(new ArrayList<>());
-                                        return;
-                                    }
-
-                                    for (var doc1 : orderItemDocs) {
-                                        DocumentReference productRef = doc1.getDocumentReference("productRef");
-                                        int quantity = doc1.getLong("quantity").intValue();
-
-                                        productRef.get().addOnCompleteListener(productTask -> {
-                                            if (productTask.isSuccessful()) {
-                                                Product product = productTask.getResult().toObject(Product.class);
-                                                order.addOrderProduct(new OrderProduct(product, quantity, id));
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                            orders.add(order);
-                        }
-                        future.complete(orders);
-                    }
-                });
+        // get user address
+        addressRepository.getUserAddress().thenAccept(address -> {
+            Log.d("Address", address.getAddress());
+            if (address == null) {
+                future.complete(new ArrayList<>());
+                return;
             }
-        });
+//            get user info
+            db.collection("users").document(user.getUid()).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    var userDoc = task.getResult();
+                    String name = userDoc.getString("fullName");
+                    String phone = userDoc.getString("phoneNumber");
+                    String email = userDoc.getString("email");
+                    //get all orders have this user reference
+                    var userRef = db.collection("users").document(user.getUid());
+                    Query query = db.collection("orders").whereEqualTo("userRef", userRef).whereEqualTo("status", status.toString());
 
+                    query.get().addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            var orderDocs = task1.getResult().getDocuments();
+                            Log.d("Order", String.valueOf(orderDocs.size()));
+
+                            if (orderDocs.size() == 0) {
+                                future.complete(new ArrayList<>());
+                                return;
+                            }
+
+                            List<Order> orders = new ArrayList<>();
+                            for (var doc : orderDocs) {
+                                String id = doc.getId();
+                                Date updatedAt = doc.getDate("updatedAt");
+                                Date createdAt = doc.getDate("createdAt");
+                                double totalPrice = doc.getDouble("totalPrice");
+                                Order order = new Order(id, name, address.getAddress(), phone, email, status, updatedAt, createdAt, totalPrice);
+                                //get all cart items of this order
+                                Query query1 = db.collection("orders").document(id).collection("products");
+                                query1.get().addOnCompleteListener(task2 -> {
+                                    if (task2.isSuccessful()) {
+                                        var orderItemDocs = task2.getResult().getDocuments();
+
+                                        if (orderItemDocs.size() == 0) {
+                                            future.complete(new ArrayList<>());
+                                            return;
+                                        }
+
+                                        for (var doc1 : orderItemDocs) {
+                                            DocumentReference productRef = doc1.getDocumentReference("productRef");
+                                            int quantity = doc1.getLong("quantity").intValue();
+
+                                            productRef.get().addOnCompleteListener(productTask -> {
+                                                if (productTask.isSuccessful()) {
+                                                    Product product = productTask.getResult().toObject(Product.class);
+                                                    order.addOrderProduct(new OrderProduct(product, quantity, id));
+                                                    if (order.getOrderProducts().size() == orderItemDocs.size()) {
+                                                        orders.add(order);
+                                                        Log.d("Order2", String.valueOf(orders.size()));
+                                                        if (orders.size() == orderDocs.size()) {
+                                                            future.complete(orders);
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
         return future;
     }
 
