@@ -22,8 +22,9 @@ public class OrderDetailViewModel extends ViewModel {
     private final MutableLiveData<List<OrderProduct>> products;
     private final MutableLiveData<Boolean> isLoading;
     private final MutableLiveData<DeliveryMan> deliveryMan;
-
     private final MutableLiveData<Address> orderAddress;
+    private final MutableLiveData<Address> deliveryAddress;
+
 
     private final String orderId;
 
@@ -32,6 +33,7 @@ public class OrderDetailViewModel extends ViewModel {
         isLoading = new MutableLiveData<>(false);
         deliveryMan = new MutableLiveData<>(new DeliveryMan());
         orderAddress = new MutableLiveData<>(new Address());
+        deliveryAddress = new MutableLiveData<>(new Address());
         this.orderId = orderId;
         fetchProducts();
     }
@@ -69,6 +71,14 @@ public class OrderDetailViewModel extends ViewModel {
             isLoading.setValue(false);
             return null;
         });
+
+        orderRepository.getDeliverymanAddress(orderId).thenAccept(address -> {
+            this.deliveryAddress.setValue(address);
+            isLoading.setValue(false);
+        }).exceptionally(throwable -> {
+            isLoading.setValue(false);
+            return null;
+        });
     }
 
     public static class Factory implements ViewModelProvider.Factory {
@@ -98,5 +108,9 @@ public class OrderDetailViewModel extends ViewModel {
 
     public LiveData<Address> getOrderAddress() {
         return orderAddress;
+    }
+
+    public LiveData<Address> getDeliveryAddress() {
+        return deliveryAddress;
     }
 }

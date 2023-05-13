@@ -118,7 +118,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
             binding.btnFunction.setText("Track Order Location");
             binding.btnFunction.setOnClickListener(v -> {
                 Intent intent = new Intent(this, OrderMapActivity.class);
-                intent.putExtra("orderId", orderId);
+                intent.putExtra("orderLat", viewModel.getOrderAddress().getValue().getLatitude());
+                intent.putExtra("orderLng", viewModel.getOrderAddress().getValue().getLongitude());
+                intent.putExtra("deliveryLat", viewModel.getDeliveryAddress().getValue().getLatitude());
+                intent.putExtra("deliveryLng", viewModel.getDeliveryAddress().getValue().getLongitude());
                 startActivity(intent);
             });
 

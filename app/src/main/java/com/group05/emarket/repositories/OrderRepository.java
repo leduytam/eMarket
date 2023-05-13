@@ -389,4 +389,36 @@ public class OrderRepository {
         return future;
     }
 
+    public CompletableFuture<Address> getDeliverymanAddress(String orderId) {
+        CompletableFuture<Address> future = new CompletableFuture<Address>();
+        db.collection("orders").document(orderId).collection("deliverymanAddress").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                var addressList = task.getResult().getDocuments();
+                if (addressList.size() == 0) {
+                    future.complete(null);
+                    return;
+                }
+                var addressDoc = addressList.get(0);
+                var address = new Address();
+                address.setStreet(addressDoc.getString("address"));
+                address.setCity(addressDoc.getString("city"));
+                address.setDistrict(addressDoc.getString("district"));
+                address.setWard(addressDoc.getString("ward"));
+                address.setProvince(addressDoc.getString("province"));
+                address.setPostalCode(addressDoc.getString("postalCode"));
+                var lat = addressDoc.getDouble("latitude");
+                var lon = addressDoc.getDouble("longitude");
+                Log.d("lat", lat.toString());
+                Log.d("lon", lon.toString());
+                address.setLatitude(addressDoc.getDouble("latitude").floatValue());
+                address.setLongitude(addressDoc.getDouble("longitude").floatValue());
+                address.setCountry(addressDoc.getString("country"));
+                future.complete(address);
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
+        return future;
+    }
+
 }
