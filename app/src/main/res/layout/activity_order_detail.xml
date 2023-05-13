@@ -8,11 +8,7 @@
     android:orientation="vertical"
     tools:context=".views.activities.OrderDetailActivity">
 
-    <!--    <com.google.android.material.appbar.AppBarLayout-->
-    <!--        android:id="@+id/app_bar"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="@color/white">-->
+
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/top_bar"
@@ -24,9 +20,6 @@
         app:title="Order Detail"
         app:titleCentered="true"
         app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
-
-    <!--    </com.google.android.material.appbar.AppBarLayout>-->
-
 
     <LinearLayout
         android:id="@+id/order_info_container"
@@ -73,6 +66,93 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/order_deliverymen_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_lg"
+        android:orientation="vertical">
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/margin_lg"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_2md"
+                android:text="@string/order_deliverymen_information_title"
+                android:textSize="@dimen/text_size_2md"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:shapeAppearanceOverlay="@style/ImageViewCircular"
+                    app:srcCompat="@drawable/ic_default_avatar" />
+
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_deliverymen_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="@dimen/margin_md"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/text_size_2sm" />
+
+                    <TextView
+                        android:id="@+id/tv_deliverymen_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/text_size_2sm" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/iconButtonCall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white"
+                    app:icon="@drawable/ic_call"
+                    app:iconSize="24dp"
+                    app:iconTint="@color/black" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/iconButtonMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white"
+                    app:icon="@drawable/ic_message_notif"
+                    app:iconSize="24dp"
+                    app:iconTint="@color/black" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
@@ -131,14 +211,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="5dp"
                 android:src="@drawable/ic_location" />
 
             <TextView
                 android:id="@+id/user_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="User Address"
+                android:layout_gravity="center_vertical"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/text_size_2sm" />
 
@@ -151,10 +231,6 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="@dimen/margin_lg" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="@dimen/margin_lg" />
 
     <LinearLayout
         android:id="@+id/BottomButtons"

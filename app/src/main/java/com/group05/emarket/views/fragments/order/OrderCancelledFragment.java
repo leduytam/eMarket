@@ -42,6 +42,9 @@ public class OrderCancelledFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentOrdersListBinding.inflate(inflater, container, false);
         orderViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) new OrderViewModel.Factory(Order.OrderStatus.CANCELLED)).get(OrderViewModel.class);
+        orderViewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            binding.pbFetchingOrders.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        });
         RecyclerView recyclerOrdersView = binding.llOrdersContainer.findViewById(R.id.rv_pending_orders);
         recyclerOrdersView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerOrdersView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

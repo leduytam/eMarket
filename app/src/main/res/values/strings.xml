@@ -98,4 +98,5 @@
     <string name="order_user_information_title">User Information</string>
     <string name="order_products_information_title">Products</string>
     <string name="order_detail_information_title">Details</string>
+    <string name="order_deliverymen_information_title">Deliveryman</string>
 </resources>

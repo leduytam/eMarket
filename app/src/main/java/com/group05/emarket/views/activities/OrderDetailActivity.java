@@ -65,7 +65,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
             }
         });
         binding.userPhone.setText("Phone: " + userPhone);
-        binding.userAddress.setText(userAddress);
+
         binding.totalPrice.setText(String.format("Total Price: $%.2f", totalPrice));
         binding.orderId.setText("Order ID: " + orderId);
         binding.orderStatus.setText("Status: " + status);
@@ -78,7 +78,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
                         .setMessage("Are you sure you want to cancel this order?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             viewModel.cancelOrder();
-                            Toast.makeText(this, "Cancel order successfullt", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Cancel order successfully", Toast.LENGTH_SHORT).show();
                             finish();
                         })
                         .setNegativeButton("No", null)
@@ -98,6 +98,26 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
         } else {
             binding.btnFunction.setVisibility(binding.btnFunction.GONE);
         }
+
+        viewModel.getDeliveryMan().observe(this, deliveryMan -> {
+            if (deliveryMan != null && deliveryMan.getId() != null) {
+                binding.orderDeliverymenInfoContainer.setVisibility(View.VISIBLE);
+                binding.tvDeliverymenName.setText(deliveryMan.getName());
+                binding.tvDeliverymenPhone.setText(deliveryMan.getPhone());
+            }
+            else {
+                binding.orderDeliverymenInfoContainer.setVisibility(View.GONE);
+            }
+        });
+
+        viewModel.getOrderAddress().observe(this, address -> {
+            if (address != null) {
+                binding.userAddress.setText(address.getAddress());
+            }
+            else {
+                binding.userAddress.setText("This order has no address");
+            }
+        });
     }
 
 

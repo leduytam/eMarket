@@ -1,13 +1,13 @@
 package com.group05.emarket.models;
 
 public class DeliveryMan {
-    private int id;
+    private String id;
     private String name;
     private String phone;
     private String email;
     private String address;
 
-    public DeliveryMan(int id, String name, String phone, String email, String address) {
+    public DeliveryMan(String id, String name, String phone, String email, String address) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -16,18 +16,18 @@ public class DeliveryMan {
     }
 
     public DeliveryMan() {
-        this.id = 0;
+        this.id = null;
         this.name = "";
         this.phone = "";
         this.email = "";
         this.address = "";
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,7 +64,7 @@ public class DeliveryMan {
     }
 
     public static class Builder {
-        private int id;
+        private String id;
         private String name;
         private String phone;
         private String email;
@@ -73,7 +73,7 @@ public class DeliveryMan {
         public Builder() {
         }
 
-        public Builder id(int id) {
+        public Builder id(String id) {
             this.id = id;
             return this;
         }

@@ -11,18 +11,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.group05.emarket.models.Address;
 import com.group05.emarket.models.CartItem;
+import com.group05.emarket.models.DeliveryMan;
 import com.group05.emarket.models.Order;
 import com.group05.emarket.models.OrderProduct;
 import com.group05.emarket.models.Product;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class OrderRepository {
     private static OrderRepository instance;
@@ -109,7 +108,6 @@ public class OrderRepository {
                                                     order.addOrderProduct(new OrderProduct(product, quantity, id));
                                                     if (order.getOrderProducts().size() == orderItemDocs.size()) {
                                                         orders.add(order);
-                                                        Log.d("Order2", String.valueOf(orders.size()));
                                                         if (orders.size() == orderDocs.size()) {
                                                             future.complete(orders);
                                                         }
@@ -138,33 +136,35 @@ public class OrderRepository {
             return future;
         }
         var userRef = db.collection("users").document(auth.getCurrentUser().getUid());
-        db.collection("deliverymen").get().addOnCompleteListener(
-                task -> {
-                    if (task.isSuccessful()) {
-                        var deliverymenDocs = task.getResult().getDocuments();
-                        int randomIndex = (int) (Math.random() * deliverymenDocs.size());
-                        DocumentReference deliverymanRef = deliverymenDocs.get(randomIndex).getReference();
-                        //create order
-                        Map<String, Object> orderData = new HashMap<>();
-                        orderData.put("userRef", userRef);
-                        orderData.put("deliverymanRef", deliverymanRef);
-                        orderData.put("createdAt", new Date());
-                        orderData.put("updatedAt", new Date());
-                        orderData.put("status", Order.OrderStatus.PENDING);
-                        orderData.put("isReviewed", false);
-                        orderData.put("totalPrice", totalCost);
-                        orderData.put("discount", discount);
-                        FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                addProducts(cart, task1.getResult().getId());
-                                future.complete(null);
-                            } else {
-                                throw new IllegalStateException(task1.getException());
-                            }
-                        });
-                    }
+        db.collection("deliverymen").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                var deliverymenDocs = task.getResult().getDocuments();
+                int randomIndex = (int) (Math.random() * deliverymenDocs.size());
+                DocumentReference deliverymanRef = deliverymenDocs.get(randomIndex).getReference();
+                //create order
+                Map<String, Object> orderData = new HashMap<>();
+                orderData.put("userRef", userRef);
+                orderData.put("deliverymanRef", deliverymanRef);
+                orderData.put("createdAt", new Date());
+                orderData.put("updatedAt", new Date());
+                orderData.put("status", Order.OrderStatus.PENDING);
+                orderData.put("isReviewed", false);
+                //calculate total price
+                double totalPrice = 0;
+                for (var item : cart) {
+                    totalPrice += item.getProduct().getDiscountedPrice() * item.getQuantity();
                 }
-        );
+                orderData.put("totalPrice", totalPrice);
+                FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        addProducts(cart, task1.getResult().getId());
+                        future.complete(null);
+                    } else {
+                        throw new IllegalStateException(task1.getException());
+                    }
+                });
+            }
+        });
         return future;
     }
 
@@ -227,7 +227,7 @@ public class OrderRepository {
         batch.commit();
     }
 
-    public CompletableFuture<List<OrderProduct>> getOrderDetail(String orderId) {
+    public CompletableFuture<List<OrderProduct>> getOrderProductDetail(String orderId) {
         Query query = db.collection("orders").document(orderId).collection("products");
         CompletableFuture<List<OrderProduct>> future = new CompletableFuture<>();
         query.get().addOnCompleteListener(task -> {
@@ -324,13 +324,64 @@ public class OrderRepository {
         });
         return future;
     }
-    public CompletableFuture<Order> getOrderById(String orderId) {
-        CompletableFuture<Order> future = new CompletableFuture<>();
+
+    public CompletableFuture<DeliveryMan> getDeliveryman(String orderId) {
+        CompletableFuture<DeliveryMan> future = new CompletableFuture<DeliveryMan>();
         db.collection("orders").document(orderId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 var order = new Order();
                 order.setId(task.getResult().getId());
-                future.complete(order);
+                Order.OrderStatus status = Order.OrderStatus.valueOf(task.getResult().getString("status"));
+                order.setStatus(status);
+                order.setTotalPrice(task.getResult().getDouble("totalPrice"));
+                // get deliverymen
+                var docDeliverymen = task.getResult().getDocumentReference("deliverymanRef");
+                if (docDeliverymen == null) {
+                    future.complete(null);
+                    return;
+                }
+                docDeliverymen.get().addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        var deliveryman = new DeliveryMan();
+                        deliveryman.setId(task1.getResult().getId());
+                        deliveryman.setName(task1.getResult().getString("fullName"));
+                        deliveryman.setPhone(task1.getResult().getString("phoneNumber"));
+                        deliveryman.setEmail(task1.getResult().getString("email"));
+                        order.setDeliveryman(deliveryman);
+                        future.complete(deliveryman);
+                    } else {
+                        future.completeExceptionally(task1.getException());
+                    }
+                });
+
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Address> getOrderAddress(String orderId) {
+        CompletableFuture<Address> future = new CompletableFuture<Address>();
+        db.collection("orders").document(orderId).collection("address").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                var addressList = task.getResult().getDocuments();
+                if (addressList == null || addressList.size() == 0) {
+                    future.complete(null);
+                    return;
+                }
+                var addressDoc = addressList.get(0);
+                var address = new Address();
+                address.setStreet(addressDoc.getString("address"));
+                address.setCity(addressDoc.getString("city"));
+                address.setDistrict(addressDoc.getString("district"));
+                address.setWard(addressDoc.getString("ward"));
+                address.setProvince(addressDoc.getString("province"));
+                address.setPostalCode(addressDoc.getString("postalCode"));
+                address.setLatitude(addressDoc.getDouble("latitude").floatValue());
+                address.setLongitude(addressDoc.getDouble("longitude").floatValue());
+                address.setCountry(addressDoc.getString("country"));
+                future.complete(address);
             } else {
                 future.completeExceptionally(task.getException());
             }

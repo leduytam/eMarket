@@ -21,21 +21,23 @@ public class OrderViewModel extends ViewModel {
         this.status = status;
         orders = new MutableLiveData<>();
         isLoading = new MutableLiveData<>(true);
-
         fetch();
     }
 
     public void fetch() {
         isLoading.setValue(true);
-
         orderRepo.getOrders(status).thenAccept(orders -> {
-            Log.d("OrderPendingFragment", "fetch: " + orders);
             this.orders.setValue(orders);
             isLoading.setValue(false);
         }).exceptionally(e -> {
+            isLoading.setValue(false);
             e.printStackTrace();
             return null;
         });
+    }
+
+    public MutableLiveData<Boolean> isLoading() {
+        return isLoading;
     }
 
     public MutableLiveData<List<Order>> getOrders() {

@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 public class Order {
 
+    public void setDeliveryman(DeliveryMan deliveryman) {
+        this.deliveryMan = deliveryman;
+    }
+
     public enum OrderStatus {
         PENDING,
         DELIVERING,

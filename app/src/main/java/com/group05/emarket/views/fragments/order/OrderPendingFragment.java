@@ -26,6 +26,7 @@ import java.util.List;
 public class OrderPendingFragment extends Fragment {
     private OrderViewModel orderViewModel;
     private FragmentOrdersListBinding binding;
+
     public OrderPendingFragment() {
     }
 
@@ -43,13 +44,16 @@ public class OrderPendingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentOrdersListBinding.inflate(inflater, container, false);
         orderViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) new OrderViewModel.Factory(Order.OrderStatus.PENDING)).get(OrderViewModel.class);
+        orderViewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            binding.pbFetchingOrders.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        });
         RecyclerView recyclerOrdersView = binding.llOrdersContainer.findViewById(R.id.rv_pending_orders);
         recyclerOrdersView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerOrdersView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         orderViewModel.getOrders().observe(getViewLifecycleOwner(), orders -> {
             recyclerOrdersView.setAdapter(new OrderItemAdapter(getContext(), orders));
             binding.llEmptyOrdersContainer.setVisibility(orders.isEmpty() ? View.VISIBLE : View.GONE);
-            binding.llOrdersContainer.setVisibility(orders.isEmpty() ? View.GONE : View.VISIBLE );
+            binding.llOrdersContainer.setVisibility(orders.isEmpty() ? View.GONE : View.VISIBLE);
         });
         return binding.getRoot();
     }

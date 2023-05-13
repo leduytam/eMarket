@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Address {
+
+    private String id;
     private String address;
     private String ward;
     private String district;
@@ -18,6 +20,7 @@ public class Address {
     private boolean isDefault;
 
     public Address() {
+        this.id = null;
         this.address = "";
         this.ward = "";
         this.district = "";
@@ -30,7 +33,12 @@ public class Address {
         this.isDefault = false;
     }
 
-    public Address(String address, String ward, String district, String city, String province, String country, String postalCode, float latitude, float longitude, boolean isDefault) {
+    public Address(String id, String address, String ward, String district, String city, String province, String country, String postalCode, float latitude, float longitude, boolean isDefault) {
+        if (id != null) {
+            this.id = id;
+        } else {
+            this.id = null;
+        }
         if (address != null) {
             this.address = address;
         } else {
@@ -156,7 +164,6 @@ public class Address {
         return longitude;
     }
 
-
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
@@ -240,6 +247,14 @@ public class Address {
             this.setLongitude(0.0f);
         }
         this.setIsDefault(isDefault);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
 
