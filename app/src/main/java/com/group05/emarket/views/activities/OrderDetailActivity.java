@@ -24,7 +24,7 @@ import com.group05.emarket.views.adapters.OrderDetailAdapter;
 import com.group05.emarket.views.dialogs.ReviewDialog;
 
 
-public class OrderDetailActivity extends AppCompatActivity implements ReviewDialog.ReviewDialogListener{
+public class OrderDetailActivity extends AppCompatActivity implements ReviewDialog.ReviewDialogListener {
 
     private OrderDetailViewModel viewModel;
     private ActivityOrderDetailBinding binding;
@@ -70,7 +70,25 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
         binding.orderId.setText("Order ID: " + orderId);
         binding.orderStatus.setText("Status: " + status);
 
-        if(Order.OrderStatus.valueOf(status) == Order.OrderStatus.PENDING) {
+        viewModel.getDeliveryMan().observe(this, deliveryMan -> {
+            if (deliveryMan != null && deliveryMan.getId() != null) {
+                binding.orderDeliverymenInfoContainer.setVisibility(View.VISIBLE);
+                binding.tvDeliverymenName.setText(deliveryMan.getName());
+                binding.tvDeliverymenPhone.setText(deliveryMan.getPhone());
+            } else {
+                binding.orderDeliverymenInfoContainer.setVisibility(View.GONE);
+            }
+        });
+
+        viewModel.getOrderAddress().observe(this, address -> {
+            if (address != null) {
+                binding.userAddress.setText(address.getAddress());
+            } else {
+                binding.userAddress.setText("This order has no address");
+            }
+        });
+
+        if (Order.OrderStatus.valueOf(status) == Order.OrderStatus.PENDING) {
             binding.btnFunction.setText("Cancel Order");
             binding.btnFunction.setOnClickListener(v -> {
                 new AlertDialog.Builder(this)
@@ -95,29 +113,12 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
                     dialog.show(getSupportFragmentManager(), "ReviewDialog");
                 });
             }
+        } else if (Order.OrderStatus.valueOf(status) == Order.OrderStatus.DELIVERING) {
+            binding.btnFunction.setText("Track Order Location");
+
         } else {
             binding.btnFunction.setVisibility(binding.btnFunction.GONE);
         }
-
-        viewModel.getDeliveryMan().observe(this, deliveryMan -> {
-            if (deliveryMan != null && deliveryMan.getId() != null) {
-                binding.orderDeliverymenInfoContainer.setVisibility(View.VISIBLE);
-                binding.tvDeliverymenName.setText(deliveryMan.getName());
-                binding.tvDeliverymenPhone.setText(deliveryMan.getPhone());
-            }
-            else {
-                binding.orderDeliverymenInfoContainer.setVisibility(View.GONE);
-            }
-        });
-
-        viewModel.getOrderAddress().observe(this, address -> {
-            if (address != null) {
-                binding.userAddress.setText(address.getAddress());
-            }
-            else {
-                binding.userAddress.setText("This order has no address");
-            }
-        });
     }
 
 

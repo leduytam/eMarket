@@ -9,7 +9,6 @@
     tools:context=".views.activities.OrderDetailActivity">
 
 
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
@@ -253,7 +252,8 @@
         <Button
             android:id="@+id/btn_function"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp"
+            app:cornerRadius="8dp" />
     </LinearLayout>
 
 
