@@ -41,6 +41,15 @@ public class ProductDetailActivity extends AppCompatActivity {
     private FavoriteViewModel favoriteViewModel;
     private OverviewProductsFragment overviewProductsFragment;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (cartViewModel != null) {
+            cartViewModel.fetch();
+        }
+    }
+
     @SuppressLint("UnsafeOptInUsageError")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
