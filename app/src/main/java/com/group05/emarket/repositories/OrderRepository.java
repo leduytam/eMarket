@@ -1,7 +1,6 @@
 package com.group05.emarket.repositories;
 
 
-
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.group05.emarket.models.Address;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Order;
 import com.group05.emarket.models.OrderProduct;
@@ -168,6 +168,41 @@ public class OrderRepository {
         return future;
     }
 
+    public CompletableFuture<String> placeOrder(List<CartItem> cart, Address address) {
+        CompletableFuture<String> future = new CompletableFuture<>();
+
+        var user = auth.getCurrentUser();
+
+        if (user == null) {
+            future.complete(null);
+            return future;
+        }
+        var userRef = db.collection("users").document(auth.getCurrentUser().getUid());
+
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("userRef", userRef);
+        orderData.put("deliverymanRef", null);
+        orderData.put("createdAt", new Date());
+        orderData.put("updatedAt", new Date());
+        orderData.put("status", Order.OrderStatus.PENDING);
+        orderData.put("isReviewed", false);
+        double totalPrice = 0;
+        for (var item : cart) {
+            totalPrice += item.getProduct().getDiscountedPrice() * item.getQuantity();
+        }
+        orderData.put("totalPrice", totalPrice);
+        FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                addProducts(cart, task1.getResult().getId());
+                addAddress(address, task1.getResult().getId());
+                future.complete(task1.getResult().getId());
+            } else {
+                throw new IllegalStateException(task1.getException());
+            }
+        });
+        return future;
+    }
+
     private void addProducts(List<CartItem> cart, String orderId) {
         var batch = db.batch();
         var orderRef = db.collection("orders").document(orderId).collection("products");
@@ -180,6 +215,15 @@ public class OrderRepository {
 
             batch.set(orderRef.document(), data);
         }
+        batch.commit();
+    }
+
+    private void addAddress(Address address, String orderId) {
+        var batch = db.batch();
+        var orderRef = db.collection("orders").document(orderId);
+        Map<String, Object> data = new HashMap<>();
+        data = address.toMap();
+        batch.set(orderRef.collection("address").document(), data);
         batch.commit();
     }
 
@@ -274,6 +318,19 @@ public class OrderRepository {
                         future.completeExceptionally(task1.getException());
                     }
                 });
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
+        return future;
+    }
+    public CompletableFuture<Order> getOrderById(String orderId) {
+        CompletableFuture<Order> future = new CompletableFuture<>();
+        db.collection("orders").document(orderId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                var order = new Order();
+                order.setId(task.getResult().getId());
+                future.complete(order);
             } else {
                 future.completeExceptionally(task.getException());
             }

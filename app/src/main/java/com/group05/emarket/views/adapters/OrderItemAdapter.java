@@ -47,15 +47,12 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
         holder.binding.btnOrderDetail.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderDetailActivity.class);
-
             intent.putExtra("orderId", order.getId());
             intent.putExtra("orderStatus", order.getStatus().toString());
-            intent.putExtra("userName", order.getName());
             intent.putExtra("userPhone", order.getPhone());
             intent.putExtra("userAddress", order.getAddress());
             intent.putExtra("totalPrice", order.getTotalPrice());
             intent.putExtra("isReviewed", order.getIsReviewed());
-
             context.startActivity(intent);
         });
 

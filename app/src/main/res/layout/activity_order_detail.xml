@@ -1,131 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".views.activities.OrderDetailActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <!--    <com.google.android.material.appbar.AppBarLayout-->
+    <!--        android:id="@+id/app_bar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@color/white">-->
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="Order Detail"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/white"
-            android:elevation="4dp"
-            app:title="Order Detail"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:titleCentered="true"
-            app:titleTextAppearance="@style/Toolbar.SmallTitleText" />
+    <!--    </com.google.android.material.appbar.AppBarLayout>-->
 
-    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/user_info"
+        android:id="@+id/order_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_lg"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_2md"
+            android:text="@string/order_products_information_title"
+            android:textSize="@dimen/text_size_2md"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/order_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_order_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pb_fetching_orders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/primary"
+                android:indeterminateTintMode="src_atop" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/margin_lg" />
+
+    <LinearLayout
+        android:id="@+id/order_detail_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/app_bar"
-        android:layout_marginStart="@dimen/margin_md"
-        android:layout_marginEnd="@dimen/margin_md"
-        android:layout_marginTop="@dimen/margin_md"
-        android:background="@drawable/border"
+        android:layout_margin="@dimen/margin_lg"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Information"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:layout_marginBottom="@dimen/margin_2md"
+            android:text="@string/order_detail_information_title"
+            android:textSize="@dimen/text_size_2md"
+            android:textStyle="bold" />
+
         <TextView
-            android:id="@+id/user_name"
-            android:layout_marginTop="4dp"
+            android:id="@+id/order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Name"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="@dimen/margin_md"
             android:textColor="@color/gray"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/text_size_2sm" />
+
+        <TextView
+            android:id="@+id/order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="@dimen/margin_md"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_2sm" />
+
         <TextView
             android:id="@+id/user_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Phone"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="@dimen/margin_md"
             android:textColor="@color/gray"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/text_size_2sm" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_md"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_location"/>
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/ic_location" />
+
             <TextView
                 android:id="@+id/user_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Address"
                 android:textColor="@color/gray"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_size_2sm" />
+
+
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/order_info"
+    <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_lg"
-        android:orientation="vertical"
-        android:layout_below="@+id/user_info"
-        >
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/margin_lg" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_order_items"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/margin_lg" />
 
     <LinearLayout
         android:id="@+id/BottomButtons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="16dp"
-        android:orientation="vertical" >
-        <ProgressBar
-            android:id="@+id/pb_fetching_orders"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:indeterminate="true"
-
-            android:indeterminateTint="@color/primary"
-            android:indeterminateTintMode="src_atop" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/total_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="right"
             android:text="Total Price"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:gravity="right"/>
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/btn_function"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
     private OrderDetailViewModel viewModel;
     private ActivityOrderDetailBinding binding;
 
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +42,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
         var extras = getIntent().getExtras();
         var orderId = extras.getString("orderId");
         var status = extras.getString("orderStatus");
-        var userName = extras.getString("userName");
         var userPhone = extras.getString("userPhone");
         var userAddress = extras.getString("userAddress");
         var totalPrice = extras.getDouble("totalPrice");
         var isReviewed = extras.getBoolean("isReviewed");
-
-
 
         viewModel = new ViewModelProvider(this, new OrderDetailViewModel.Factory(orderId)).get(OrderDetailViewModel.class);
         viewModel.fetchProducts();
@@ -65,10 +64,11 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
                 binding.pbFetchingOrders.setVisibility(View.GONE);
             }
         });
-        binding.userName.setText(userName);
-        binding.userPhone.setText("+" + userPhone);
+        binding.userPhone.setText("Phone: " + userPhone);
         binding.userAddress.setText(userAddress);
         binding.totalPrice.setText(String.format("Total Price: $%.2f", totalPrice));
+        binding.orderId.setText("Order ID: " + orderId);
+        binding.orderStatus.setText("Status: " + status);
 
         if(Order.OrderStatus.valueOf(status) == Order.OrderStatus.PENDING) {
             binding.btnFunction.setText("Cancel Order");

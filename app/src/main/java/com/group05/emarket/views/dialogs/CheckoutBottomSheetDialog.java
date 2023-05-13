@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group05.emarket.R;
 import com.group05.emarket.models.Voucher;
+import com.group05.emarket.models.Address;
 import com.group05.emarket.repositories.AddressRepository;
 import com.group05.emarket.repositories.VoucherRepository;
 import com.group05.emarket.viewmodels.AddressViewModel;
@@ -33,6 +34,7 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
     private final CartViewModel cartViewModel;
 
     private final AddressViewModel addressViewModel;
+    private Address selectedAddress;
     private int discount = 0;
     private VoucherRepository voucherRepository = VoucherRepository.getInstance();
 
@@ -111,10 +113,12 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
         Button btnConfirm = view.findViewById(R.id.btn_confirm_checkout);
         btnConfirm.setOnClickListener(v -> {
             try {
-                cartViewModel.placeOrder(totalCost, discount);
-                Intent intent = new Intent(getContext(), OrderSuccessActivity.class);
-                getContext().startActivity(intent);
-                dismiss();
+                cartViewModel.placeOrder(selectedAddress).thenAccept(orderId -> {
+                    Intent intent = new Intent(getContext(), OrderSuccessActivity.class);
+                    intent.putExtra("orderId", orderId);
+                    getContext().startActivity(intent);
+                    dismiss();
+                });
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -123,6 +127,7 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
         addressViewModel.getUserAddress().observe(this, address -> {
             if (address != null) {
                 tvUserAddress.setText(address.getAddress());
+                selectedAddress = address;
             }
         });
 

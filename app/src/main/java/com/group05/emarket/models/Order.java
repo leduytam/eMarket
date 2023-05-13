@@ -14,6 +14,7 @@ public class Order {
         DELIVERED,
         CANCELLED
     }
+
     private String id;
     private String name;
     private String address;
@@ -28,6 +29,7 @@ public class Order {
     private List<OrderProduct> orderProducts;
 
     private DeliveryMan deliveryMan;
+
     public Order(String id, String name, String address, String phone, String email, OrderStatus orderStatus, Date created_at, Date updated_at, double totalPrice, Boolean isReviewed) {
         orderProducts = new ArrayList<>();
         this.id = id;
@@ -40,6 +42,21 @@ public class Order {
         this.updated_at = updated_at;
         this.totalPrice = totalPrice;
         this.isReviewed = isReviewed;
+    }
+
+    public Order() {
+        orderProducts = new ArrayList<>();
+        deliveryMan = new DeliveryMan();
+        this.id = "";
+        this.name = "";
+        this.address = "";
+        this.phone = "";
+        this.email = "";
+        this.orderStatus = OrderStatus.PENDING;
+        this.created_at = new Date();
+        this.updated_at = new Date();
+        this.totalPrice = 0;
+        this.isReviewed = false;
     }
 
     public Order(String id, String name, String address, String phone, String email, OrderStatus orderStatus, Date created_at, Date updated_at, List<OrderProduct> products, DeliveryMan deliveryMan) {
@@ -82,11 +99,15 @@ public class Order {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getPhone() { return phone; }
+
+    public String getPhone() {
+        return phone;
+    }
 
     public OrderStatus getStatus() {
         return orderStatus;
     }
+
     public Boolean getIsReviewed() {
         return isReviewed;
     }
@@ -110,15 +131,19 @@ public class Order {
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
+
     public void addOrderProduct(OrderProduct orderProduct) {
         this.orderProducts.add(orderProduct);
     }
+
     public List<OrderProduct> getOrderProducts() {
         return this.orderProducts;
     }
+
     public double getTotalPrice() {
         return totalPrice;
     }
+
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }

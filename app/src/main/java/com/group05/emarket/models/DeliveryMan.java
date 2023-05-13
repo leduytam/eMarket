@@ -15,6 +15,14 @@ public class DeliveryMan {
         this.address = address;
     }
 
+    public DeliveryMan() {
+        this.id = 0;
+        this.name = "";
+        this.phone = "";
+        this.email = "";
+        this.address = "";
+    }
+
     public int getId() {
         return id;
     }
