@@ -195,7 +195,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             locationMarker.showInfoWindow();
             locationMarker.setDraggable(true);
         }
-        // on click marker
         mMap.setOnMarkerClickListener(marker -> {
             marker.showInfoWindow();
             return true;

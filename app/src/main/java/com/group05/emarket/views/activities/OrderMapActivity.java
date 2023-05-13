@@ -67,8 +67,6 @@ public class OrderMapActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-//        // Call the method to get directions using DirectionHelper
-//        // get the extra
         Intent intent = getIntent();
         // get the order: lat, lng
         double orderLat = intent.getDoubleExtra("orderLat", 0);
@@ -77,21 +75,14 @@ public class OrderMapActivity extends AppCompatActivity implements OnMapReadyCal
         // get the delivery: lat, lng
         double deliveryLat = intent.getDoubleExtra("deliveryLat", 0);
         double deliveryLng = intent.getDoubleExtra("deliveryLng", 0);
-//        double orderLat = 37.7749;
-//        double orderLng = -122.4194;
-//        double deliveryLat = 34.0522;
-//        double deliveryLng = -118.2437;
         DirectionHelper.getDirection(this, orderLat, orderLng, deliveryLat, deliveryLng, mapView);
     }
 
     @Override
     public void onDirectionReceived(DirectionsResult directionsResult) {
-        // Process the directions result here
-        // You can access the directions steps, duration, distance, etc.
     }
 
     @Override
     public void onDirectionError() {
-        // Handle error while retrieving directions
     }
 }

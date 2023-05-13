@@ -141,7 +141,6 @@ public class OrderRepository {
                 var deliverymenDocs = task.getResult().getDocuments();
                 int randomIndex = (int) (Math.random() * deliverymenDocs.size());
                 DocumentReference deliverymanRef = deliverymenDocs.get(randomIndex).getReference();
-                //create order
                 Map<String, Object> orderData = new HashMap<>();
                 orderData.put("userRef", userRef);
                 orderData.put("deliverymanRef", deliverymanRef);
@@ -149,7 +148,6 @@ public class OrderRepository {
                 orderData.put("updatedAt", new Date());
                 orderData.put("status", Order.OrderStatus.PENDING);
                 orderData.put("isReviewed", false);
-                //calculate total price
                 double totalPrice = 0;
                 for (var item : cart) {
                     totalPrice += item.getProduct().getDiscountedPrice() * item.getQuantity();
