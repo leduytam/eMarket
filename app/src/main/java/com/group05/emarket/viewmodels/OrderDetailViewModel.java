@@ -65,4 +65,8 @@ public class OrderDetailViewModel extends ViewModel {
     public CompletableFuture<Void> cancelOrder() {
         return orderRepository.setOrderStatus(orderId, Order.OrderStatus.CANCELLED);
     }
+
+    public CompletableFuture<Void> submitReview(String orderId, String review, float rating) {
+        return orderRepository.submitReview(orderId, products, review, rating);
+    }
 }
