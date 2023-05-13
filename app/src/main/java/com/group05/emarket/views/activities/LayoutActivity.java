@@ -115,4 +115,9 @@ public class LayoutActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    public void switchTab(int tab) {
+        binding.bottomNav.setSelectedItemId(tab);
+    }
 }

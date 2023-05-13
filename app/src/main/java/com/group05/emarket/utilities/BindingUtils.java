@@ -11,6 +11,7 @@ public class BindingUtils {
     public static float getDiscountedPrice(float price, int discount) {
         return price * (1.0f - discount / 100f);
     }
+
     @BindingAdapter("app:price")
     public static void formatPrice(TextView view, float price) {
         view.setText(Formatter.formatCurrency(price));

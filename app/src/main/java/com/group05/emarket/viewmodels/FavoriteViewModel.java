@@ -35,9 +35,7 @@ public class FavoriteViewModel extends ViewModel {
     }
 
     public void fetchFavoriteProducts() {
-
         isLoading.postValue(true);
-
         var favoriteProductsFuture = favoriteRepo.getUserFavoriteProducts();
 
         favoriteProductsFuture.thenAccept(products -> {
@@ -54,12 +52,10 @@ public class FavoriteViewModel extends ViewModel {
         isLoading.postValue(true);
 
         var addFavoriteProductFuture = favoriteRepo.addProductToFavorite(product.getId());
-
         addFavoriteProductFuture.thenAccept(isSuccess -> {
             if (isSuccess) {
                 fetchFavoriteProducts();
             }
-
             isLoading.postValue(false);
         });
     }
@@ -68,37 +64,14 @@ public class FavoriteViewModel extends ViewModel {
         if (isLoading.getValue() == null || isLoading.getValue()) {
             return;
         }
-
         isLoading.postValue(true);
-
         var removeFavoriteProductFuture = favoriteRepo.removeProductFromFavorite(product.getId());
-
         removeFavoriteProductFuture.thenAccept(isSuccess -> {
             if (isSuccess) {
                 fetchFavoriteProducts();
             }
-
             isLoading.postValue(false);
         });
-    }
-
-    // check if product is in favorite list
-    public boolean isFavorite(Product product) {
-        var favoriteProducts = this.favoriteProducts.getValue();
-
-        Log.d("FavoriteViewModel", "isFavorite: " + favoriteProducts);
-
-        if (favoriteProducts == null) {
-            return false;
-        }
-
-        for (var favoriteProduct : favoriteProducts) {
-            if (favoriteProduct.getId() == product.getId()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public static class Factory implements ViewModelProvider.Factory {
