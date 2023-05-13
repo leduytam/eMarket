@@ -64,7 +64,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
                 CartItem item = binding.getCartItem();
 
                 Intent intent = new Intent(v.getContext(), ProductDetailActivity.class);
-                intent.putExtra("id", item.getProduct().getId());
+                intent.putExtra("product", item.getProduct());
                 v.getContext().startActivity(intent);
             });
 

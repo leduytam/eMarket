@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.group05.emarket.MockData;
 import com.group05.emarket.models.CartItem;
+import com.group05.emarket.models.Category;
 import com.group05.emarket.models.Product;
 
 import java.util.ArrayList;
@@ -62,16 +63,31 @@ public class CartRepository {
 
                 for (var doc : cartItemDocs) {
                     DocumentReference productRef = doc.getDocumentReference("productRef");
-                    int quantity = doc.getLong("quantity").intValue();
+                    Long quantityField = doc.getLong("quantity");
+                    int quantity = quantityField == null ? 0 : quantityField.intValue();
 
                     productRef.get().addOnCompleteListener(productTask -> {
                         if (productTask.isSuccessful()) {
-                            Product product = productTask.getResult().toObject(Product.class);
-                            cart.add(new CartItem(product, quantity));
+                            DocumentSnapshot productDoc = productTask.getResult();
+                            Product product = productDoc.toObject(Product.class);
 
-                            if (cart.size() == cartItemDocs.size()) {
-                                future.complete(cart);
-                            }
+                            DocumentReference categoryRef = productDoc.getDocumentReference("categoryRef");
+                            categoryRef.get().addOnCompleteListener(categoryTask -> {
+                                if (categoryTask.isSuccessful()) {
+                                    DocumentSnapshot categoryDoc = categoryTask.getResult();
+                                    Category category = categoryDoc.toObject(Category.class);
+
+                                    product.setCategory(category);
+
+                                    cart.add(new CartItem(product, quantity));
+
+                                    if (cart.size() == cartItemDocs.size()) {
+                                        future.complete(cart);
+                                    }
+                                } else {
+                                    future.completeExceptionally(categoryTask.getException());
+                                }
+                            });
                         } else {
                             future.completeExceptionally(productTask.getException());
                         }
