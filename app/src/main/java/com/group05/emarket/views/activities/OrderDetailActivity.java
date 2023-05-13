@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -115,6 +116,11 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
             }
         } else if (Order.OrderStatus.valueOf(status) == Order.OrderStatus.DELIVERING) {
             binding.btnFunction.setText("Track Order Location");
+            binding.btnFunction.setOnClickListener(v -> {
+                Intent intent = new Intent(this, OrderMapActivity.class);
+                intent.putExtra("orderId", orderId);
+                startActivity(intent);
+            });
 
         } else {
             binding.btnFunction.setVisibility(binding.btnFunction.GONE);
