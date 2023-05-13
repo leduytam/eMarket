@@ -41,8 +41,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.tvContent.setText(review.getContent());
         holder.rbRating.setRating(review.getRating());
         holder.tvCreatedAt.setText(TimeAgo.convert(review.getCreatedAt().getTime()));
-        holder.tvReviewerName.setText(review.getReviewerName());
-        holder.ivReviewerAvatar.setImageResource(review.getReviewerAvatar());
+        holder.tvReviewerName.setText(review.getReviewer().getName());
+        holder.ivReviewerAvatar.setImageResource(review.getReviewer().getAvatar());
     }
 
     @Override

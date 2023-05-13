@@ -271,81 +271,81 @@ public class MockData {
 //                .setCategoryId(UUID.fromString("cbea9f9c-04c3-418f-8b3f-0e2167d96f1e"))
 //                .build());
 
-        Random rnd = new Random();
-        var contents = new String[]{
-                "Món ăn này thật ngon miệng, tôi thích cách nó được chế biến và gia vị hài hòa.",
-                "Thức uống này có hương vị độc đáo, tôi rất thích thưởng thức.",
-                "Món ăn này có vẻ không được chế biến kỹ lưỡng, tuy nhiên giá cả của nó rất hợp lý.",
-                "Tôi đã thử món ăn này và cảm thấy rất hài lòng với hương vị và chất lượng của nó.",
-                "Thức uống này có hương vị đặc biệt, nó thực sự là một trải nghiệm tuyệt vời.",
-                "Món ăn này thật sự không đáng để tiêu tốn tiền bạc của bạn, chất lượng của nó không được tốt lắm.",
-                "Tôi đã ăn thử món ăn này và cảm thấy nó thật sự ngon miệng và độc đáo.",
-                "Thức uống này rất thơm ngon và giá cả của nó hợp lý.",
-                "Món ăn này có chất lượng tốt và giá cả của nó rất hợp lý.",
-                "Thức uống này có hương vị độc đáo, nó thực sự đáng để thử.",
-                "Tôi không thực sự hài lòng về món ăn này, nó chế biến không kỹ lưỡng và còn hơi nguội.",
-                "Thức uống này rất mát lạnh và phù hợp với thời tiết nóng.",
-                "Món ăn này rất ngon và được chế biến rất kỹ lưỡng, tôi sẽ quay lại để thưởng thức nó lần nữa.",
-                "Thức uống này có hương vị đặc biệt và giá cả của nó rất hợp lý.",
-                "Món ăn này thật sự đáng tiền và chất lượng của nó rất tốt.",
-                "Thức uống này có hương vị độc đáo, tôi rất thích thưởng thức nó.",
-                "Món ăn này có hương vị đặc biệt và được chế biến rất kỹ lưỡng, tôi sẽ giới thiệu cho bạn bè của mình.",
-                "Thức uống này rất thơm ngon và có hương vị độc đáo, tôi rất thích thưởng thức nó.",
-                "Món ăn này có chất lượng tốt và giá cả của nó rất hợp lý, tôi sẽ quay lại để thưởng thức nó lần nữa."
-        };
-        var names = new String[]{
-                "Nguyễn Thị Hằng",
-                "Lê Minh Tuấn",
-                "Trần Thanh Hải",
-                "Phạm Thị Thuỳ Dung",
-                "Vũ Văn Hưng",
-                "Lâm Thị Hồng Nhung",
-                "Đinh Văn Hùng",
-                "Nguyễn Thị Hồng Nga",
-                "Hoàng Văn Tùng",
-                "Nguyễn Văn Hùng",
-                "Lê Thị Mai",
-                "Trần Văn Hải",
-                "Phạm Thị Hồng Loan",
-                "Vũ Thị Ngọc Ánh",
-                "Đỗ Minh Quân",
-                "Nguyễn Thị Ái Nhi",
-                "Hoàng Văn Đức",
-                "Nguyễn Thị Thu Thảo",
-                "Lâm Văn Thành",
-                "Trần Thị Thanh Mai"
-        };
-        var avatars = new Integer[]{
-                R.drawable.image_avatar_1,
-                R.drawable.image_avatar_2,
-                R.drawable.image_avatar_3,
-                R.drawable.image_avatar_4,
-                R.drawable.image_avatar_5,
-                R.drawable.image_avatar_6,
-        };
-        LocalDate startDate = LocalDate.of(2020, 1, 1);
-        LocalDate endDate = LocalDate.of(2023, 4, 24);
-        for (int i = 0; i < 100; i++) {
-            LocalDate randomDate = startDate.plusDays(new Random().nextInt((int) (endDate.toEpochDay() - startDate.toEpochDay())));
-
-            int hour = rnd.nextInt(24);
-            int minute = rnd.nextInt(60);
-            int second = rnd.nextInt(60);
-
-            LocalDateTime randomDateTime = randomDate.atTime(hour, minute, second);
-
-            reviews.add(new Review() {
-                {
-                    setId(UUID.randomUUID().toString());
-                    setContent(contents[rnd.nextInt(contents.length)]);
-                    setRating(rnd.nextInt(5) + 1);
-                    setReviewerName(names[rnd.nextInt(names.length)]);
-                    setReviewerAvatar(avatars[rnd.nextInt(avatars.length)]);
-                    setCreatedAt(Date.from(randomDateTime.atZone(ZoneId.systemDefault()).toInstant()));
-                    setUpdatedAt(Date.from(randomDateTime.atZone(ZoneId.systemDefault()).toInstant()));
-                }
-            });
-        }
+//        Random rnd = new Random();
+//        var contents = new String[]{
+//                "Món ăn này thật ngon miệng, tôi thích cách nó được chế biến và gia vị hài hòa.",
+//                "Thức uống này có hương vị độc đáo, tôi rất thích thưởng thức.",
+//                "Món ăn này có vẻ không được chế biến kỹ lưỡng, tuy nhiên giá cả của nó rất hợp lý.",
+//                "Tôi đã thử món ăn này và cảm thấy rất hài lòng với hương vị và chất lượng của nó.",
+//                "Thức uống này có hương vị đặc biệt, nó thực sự là một trải nghiệm tuyệt vời.",
+//                "Món ăn này thật sự không đáng để tiêu tốn tiền bạc của bạn, chất lượng của nó không được tốt lắm.",
+//                "Tôi đã ăn thử món ăn này và cảm thấy nó thật sự ngon miệng và độc đáo.",
+//                "Thức uống này rất thơm ngon và giá cả của nó hợp lý.",
+//                "Món ăn này có chất lượng tốt và giá cả của nó rất hợp lý.",
+//                "Thức uống này có hương vị độc đáo, nó thực sự đáng để thử.",
+//                "Tôi không thực sự hài lòng về món ăn này, nó chế biến không kỹ lưỡng và còn hơi nguội.",
+//                "Thức uống này rất mát lạnh và phù hợp với thời tiết nóng.",
+//                "Món ăn này rất ngon và được chế biến rất kỹ lưỡng, tôi sẽ quay lại để thưởng thức nó lần nữa.",
+//                "Thức uống này có hương vị đặc biệt và giá cả của nó rất hợp lý.",
+//                "Món ăn này thật sự đáng tiền và chất lượng của nó rất tốt.",
+//                "Thức uống này có hương vị độc đáo, tôi rất thích thưởng thức nó.",
+//                "Món ăn này có hương vị đặc biệt và được chế biến rất kỹ lưỡng, tôi sẽ giới thiệu cho bạn bè của mình.",
+//                "Thức uống này rất thơm ngon và có hương vị độc đáo, tôi rất thích thưởng thức nó.",
+//                "Món ăn này có chất lượng tốt và giá cả của nó rất hợp lý, tôi sẽ quay lại để thưởng thức nó lần nữa."
+//        };
+//        var names = new String[]{
+//                "Nguyễn Thị Hằng",
+//                "Lê Minh Tuấn",
+//                "Trần Thanh Hải",
+//                "Phạm Thị Thuỳ Dung",
+//                "Vũ Văn Hưng",
+//                "Lâm Thị Hồng Nhung",
+//                "Đinh Văn Hùng",
+//                "Nguyễn Thị Hồng Nga",
+//                "Hoàng Văn Tùng",
+//                "Nguyễn Văn Hùng",
+//                "Lê Thị Mai",
+//                "Trần Văn Hải",
+//                "Phạm Thị Hồng Loan",
+//                "Vũ Thị Ngọc Ánh",
+//                "Đỗ Minh Quân",
+//                "Nguyễn Thị Ái Nhi",
+//                "Hoàng Văn Đức",
+//                "Nguyễn Thị Thu Thảo",
+//                "Lâm Văn Thành",
+//                "Trần Thị Thanh Mai"
+//        };
+//        var avatars = new Integer[]{
+//                R.drawable.image_avatar_1,
+//                R.drawable.image_avatar_2,
+//                R.drawable.image_avatar_3,
+//                R.drawable.image_avatar_4,
+//                R.drawable.image_avatar_5,
+//                R.drawable.image_avatar_6,
+//        };
+//        LocalDate startDate = LocalDate.of(2020, 1, 1);
+//        LocalDate endDate = LocalDate.of(2023, 4, 24);
+//        for (int i = 0; i < 100; i++) {
+//            LocalDate randomDate = startDate.plusDays(new Random().nextInt((int) (endDate.toEpochDay() - startDate.toEpochDay())));
+//
+//            int hour = rnd.nextInt(24);
+//            int minute = rnd.nextInt(60);
+//            int second = rnd.nextInt(60);
+//
+//            LocalDateTime randomDateTime = randomDate.atTime(hour, minute, second);
+//
+//            reviews.add(new Review() {
+//                {
+//                    setId(UUID.randomUUID().toString());
+//                    setContent(contents[rnd.nextInt(contents.length)]);
+//                    setRating(rnd.nextInt(5) + 1);
+//                    setReviewerName(names[rnd.nextInt(names.length)]);
+//                    setReviewerAvatar(avatars[rnd.nextInt(avatars.length)]);
+//                    setCreatedAt(Date.from(randomDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+//                    setUpdatedAt(Date.from(randomDateTime.atZone(ZoneId.systemDefault()).toInstant()));
+//                }
+//            });
+//        }
 //
 //        cartItems.add(new CartItem(products.get(0), 1));
 //        cartItems.add(new CartItem(products.get(1), 2));
