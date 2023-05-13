@@ -1,7 +1,5 @@
 package com.group05.emarket.viewmodels;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,63 +12,49 @@ import com.group05.emarket.repositories.ReviewRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public class ReviewViewModel extends ViewModel {
     private final ReviewRepository reviewRepo = ReviewRepository.getInstance();
     private final MutableLiveData<List<Review>> reviews;
+    private final MutableLiveData<Boolean> isLoading;
     private final String productId;
 
-    private final MutableLiveData<Boolean> isLoading;
     private boolean isLastPageReached = false;
     private int currentPage = 1;
-    private int totalPageCount = 0;
 
     private ReviewViewModel(String productId) {
         this.productId = productId;
         isLoading = new MutableLiveData<>(false);
         reviews = new MutableLiveData<>(new ArrayList<>());
 
-        reviewRepo.getReviewPageCount(productId, Constants.REVIEW_ITEMS_PER_PAGE)
-                .thenAccept(pageCount -> {
-                    totalPageCount = pageCount;
-                    fetchReviews();
-                })
-                .exceptionally(throwable -> {
-                    Log.e("ReviewViewModel", "Failed to get review page count", throwable);
-                    return null;
-                });
+        fetch();
     }
 
-    public void fetchReviews() {
+    public void fetch() {
         if (isLoading.getValue() == null || isLoading.getValue() || isLastPageReached) {
             return;
         }
 
         isLoading.setValue(true);
 
-        reviewRepo.getReviews(productId, currentPage, Constants.REVIEW_ITEMS_PER_PAGE)
-                .thenAccept(reviews -> {
-                    List<Review> currentReviews = this.reviews.getValue();
+        final int limit = currentPage * Constants.REVIEW_ITEMS_PER_PAGE;
 
-                    if (currentReviews != null) {
-                        currentReviews.addAll(reviews);
-                        Log.d("ReviewViewModel", "Loaded " + reviews.size() + " reviews");
-                        this.reviews.postValue(currentReviews);
-                    }
+        CompletableFuture<List<Review>> future = reviewRepo.getReviews(productId, limit);
 
-                    if (currentPage == totalPageCount) {
-                        isLastPageReached = true;
-                    }
+        future.thenAccept(reviews -> {
+            if (reviews.size() < limit) {
+                isLastPageReached = true;
+            }
 
-                    currentPage++;
-                    isLoading.postValue(false);
-                })
-                .exceptionally(throwable -> {
-                    Log.e("ReviewViewModel", "Failed to load more reviews", throwable);
-                    isLoading.postValue(false);
-                    return null;
-                });
+            this.reviews.postValue(reviews);
+
+            currentPage++;
+            isLoading.postValue(false);
+        }).exceptionally(e -> {
+            isLoading.postValue(false);
+            return null;
+        });
     }
 
     public LiveData<Boolean> isLoading() {

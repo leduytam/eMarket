@@ -43,7 +43,7 @@ public class ReviewActivity extends AppCompatActivity {
 
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0) {
-                    reviewViewModel.fetchReviews();
+                    reviewViewModel.fetch();
                 }
             }
         });

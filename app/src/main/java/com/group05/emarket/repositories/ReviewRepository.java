@@ -2,24 +2,25 @@ package com.group05.emarket.repositories;
 
 import android.os.Handler;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.group05.emarket.MockData;
+import com.group05.emarket.models.Category;
+import com.group05.emarket.models.Product;
 import com.group05.emarket.models.Review;
+import com.group05.emarket.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-
-import kotlinx.coroutines.scheduling.Task;
 
 public class ReviewRepository {
     private static ReviewRepository instance;
-//    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//    private final DocumentReference reviewRef = db.collection("reviews").document();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public static ReviewRepository getInstance() {
         if (instance == null) {
@@ -32,57 +33,54 @@ public class ReviewRepository {
     private ReviewRepository() {
     }
 
-    public CompletableFuture<Integer> getReviewPageCount(String productId, int itemsPerPage) {
-        CompletableFuture<Integer> future = new CompletableFuture<>();
-
-//        Query query = reviewRef
-//                .collection("reviews")
-//                .whereEqualTo("productId", productId);
-//
-//        query.get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                int count = task.getResult().size();
-//                future.complete((int) Math.ceil((double) count / itemsPerPage));
-//            } else {
-//                future.completeExceptionally(task.getException());
-//            }
-//        });
-
-        new Handler().postDelayed(() -> {
-            future.complete((int) Math.ceil((double) MockData.getReviews().size() / itemsPerPage));
-        }, 0);
-
-        return future;
-    }
-
-    public CompletableFuture<List<Review>> getReviews(String productId, int page, int itemsPerPage) {
+    public CompletableFuture<List<Review>> getReviews(String productId, int limit) {
         CompletableFuture<List<Review>> future = new CompletableFuture<>();
 
-        new Handler().postDelayed(() -> {
-            var start = (page - 1) * itemsPerPage;
-            var end = Math.min(page * itemsPerPage, MockData.getReviews().size());
-            future.complete(MockData.getReviews().subList(start, end));
-        }, 1000);
+        var productRef = db.collection("products").document(productId);
 
-//        Query query = reviewRef
-//                .collection("reviews")
-//                .whereEqualTo("productId", productId)
-//                .orderBy("createdAt", Query.Direction.DESCENDING)
-//                .startAfter((page - 1) * itemsPerPage)
-//                .limit(itemsPerPage);
-//
-//        query.get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                for (DocumentSnapshot document : task.getResult()) {
-//                    Review review = document.toObject(Review.class);
-//                    future.complete(new ArrayList<>() {{
-//                        add(review);
-//                    }});
-//                }
-//            } else {
-//                future.completeExceptionally(task.getException());
-//            }
-//        });
+        Query query = db.collection("reviews")
+                .whereEqualTo("productRef", productRef)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .limit(limit);
+
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+                List<Review> reviews = new ArrayList<>();
+
+                for (DocumentSnapshot reviewDoc : task.getResult()) {
+                    reviews.add(new Review(reviewDoc.getId(), reviewDoc.getData()));
+
+                    var reviewerRef = reviewDoc.getDocumentReference("userRef");
+
+                    if (reviewerRef != null) {
+                        Task<DocumentSnapshot> reviewerTask = reviewerRef.get();
+                        tasks.add(reviewerTask);
+                    }
+                }
+
+                if (tasks.isEmpty()) {
+                    future.complete(reviews);
+                    return;
+                }
+
+                Tasks.whenAllSuccess(tasks).addOnSuccessListener(userDocs -> {
+                    int index = 0;
+
+                    for (Object reviewerDoc : userDocs) {
+                        var doc = (DocumentSnapshot) reviewerDoc;
+                        Review.Reviewer reviewer = new Review.Reviewer(doc.getId(), doc.getData());
+                        reviews.get(index).setReviewer(reviewer);
+                        index++;
+                    }
+
+                    future.complete(reviews);
+                }).addOnFailureListener(future::completeExceptionally);
+
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
 
         return future;
     }

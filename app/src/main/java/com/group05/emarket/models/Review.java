@@ -3,9 +3,11 @@ package com.group05.emarket.models;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentId;
+import com.group05.emarket.R;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 public class Review {
@@ -15,10 +17,18 @@ public class Review {
     private float rating;
     private Date createdAt;
     private Date updatedAt;
+    private Reviewer reviewer;
 
-    // temporary
-    private String reviewerName;
-    private int reviewerAvatar;
+    public Review() {
+    }
+
+    public Review(String id, Map<String, Object> map) {
+        this.id = id;
+        content = (String) map.get("review");
+        rating = ((Number) map.get("rating")).floatValue();
+        createdAt = ((Timestamp) map.get("createdAt")).toDate();
+        updatedAt = ((Timestamp) map.get("updatedAt")).toDate();
+    }
 
     public String getId() {
         return id;
@@ -60,22 +70,37 @@ public class Review {
         this.updatedAt = updatedAt;
     }
 
-    public String getReviewerName() {
-        return reviewerName;
+    public Reviewer getReviewer() {
+        return reviewer;
     }
 
-    public void setReviewerName(String reviewerName) {
-        this.reviewerName = reviewerName;
+    public void setReviewer(Reviewer reviewer) {
+        this.reviewer = reviewer;
     }
 
-    public int getReviewerAvatar() {
-        return reviewerAvatar;
-    }
+    public static class Reviewer {
+        private String id;
+        private String name;
+        private int avatar;
+        public Reviewer() {
+        }
 
-    public void setReviewerAvatar(int reviewerAvatar) {
-        this.reviewerAvatar = reviewerAvatar;
-    }
+        public Reviewer(String id, Map<String, Object> map) {
+            this.id = id;
+            name = (String) map.get("fullName");
+            avatar = R.drawable.ic_default_avatar;
+        }
 
-    public Review() {
+        public String getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getAvatar() {
+            return avatar;
+        }
     }
 }
