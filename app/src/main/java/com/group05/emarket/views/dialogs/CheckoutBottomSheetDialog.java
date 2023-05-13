@@ -1,17 +1,22 @@
 package com.group05.emarket.views.dialogs;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group05.emarket.R;
+import com.group05.emarket.models.Voucher;
 import com.group05.emarket.repositories.AddressRepository;
+import com.group05.emarket.repositories.VoucherRepository;
 import com.group05.emarket.viewmodels.AddressViewModel;
 import com.group05.emarket.viewmodels.CartViewModel;
 import com.group05.emarket.views.activities.LayoutActivity;
@@ -20,7 +25,7 @@ import com.group05.emarket.views.activities.OrderSuccessActivity;
 
 import java.util.concurrent.ExecutionException;
 
-public class CheckoutBottomSheetDialog extends BottomSheetDialog {
+public class CheckoutBottomSheetDialog extends BottomSheetDialog implements InputVoucherDialog.OnAppliedListener {
     private float totalCost = 0;
     private TextView tvTotalCost;
     private TextView tvUserAddress;
@@ -28,6 +33,8 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog {
     private final CartViewModel cartViewModel;
 
     private final AddressViewModel addressViewModel;
+    private VoucherRepository voucherRepository = VoucherRepository.getInstance();
+
 
     public CheckoutBottomSheetDialog(Context context, CartViewModel cartViewModel, AddressViewModel addressViewModel) {
         super(context);
@@ -45,7 +52,7 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog {
             tvTotalCost.setText(String.format("$%.2f", totalCost));
         }
     }
-
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +81,27 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog {
             getContext().startActivity(intent);
             dismiss();
         });
+
+        Button btnApplyVoucher = view.findViewById(R.id.btn_apply_promo_code);
+        btnApplyVoucher.setOnClickListener(v -> {
+            EditText etVoucherCode = view.findViewById(R.id.et_promo_code);
+            String voucherCode = etVoucherCode.getText().toString();
+            if (voucherCode.isEmpty()) {
+                etVoucherCode.setError("Please enter voucher code");
+                return;
+            }
+            voucherRepository.getVoucherDiscount(voucherCode).thenAccept(voucher -> {
+                if (voucher == null) {
+                    etVoucherCode.setError("Invalid voucher code");
+                } else {
+                    Toast.makeText(getContext(), "Applied voucher " + voucherCode, Toast.LENGTH_SHORT).show();
+                    totalCost = cartViewModel.getTotalPrice() * (100 - voucher.getDiscount()) / 100f;
+                    updateTotalCost();
+                    etVoucherCode.setText("");
+                }
+            });
+        });
+
 
 
         btnClose.setOnClickListener(v -> dismiss());
@@ -104,4 +132,12 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog {
         });
 
     }
+
+
+    @Override
+    public void onApplied(Voucher voucher) {
+        totalCost *= (100 - voucher.getDiscount()) / 100f;
+        updateTotalCost();
+    }
+
 }

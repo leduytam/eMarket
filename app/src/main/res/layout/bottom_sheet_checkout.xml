@@ -82,12 +82,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingHorizontal="@dimen/margin_xl">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/checkout_promo_code_title"
@@ -95,13 +95,27 @@
             android:textColor="@color/gray_700"
             android:textFontWeight="600"
             android:textSize="@dimen/text_size_md" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+            android:id="@+id/et_promo_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
         <Button
-            style="@style/Widget.Material3.Button.IconButton"
+            android:id="@+id/btn_apply_promo_code"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_arrow_right"
-            app:iconTint="@color/black" />
+            android:layout_marginLeft="3dp"
+            android:layout_height="match_parent"
+            android:text="Apply"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/PRIMARY"
+            />
+        </LinearLayout>
+
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
