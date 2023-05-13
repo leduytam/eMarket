@@ -23,11 +23,12 @@ public class Order {
     private Date created_at;
     private Date updated_at;
     private double totalPrice;
+    private Boolean isReviewed;
 
     private List<OrderProduct> orderProducts;
 
     private DeliveryMan deliveryMan;
-    public Order(String id, String name, String address, String phone, String email, OrderStatus orderStatus, Date created_at, Date updated_at, double totalPrice) {
+    public Order(String id, String name, String address, String phone, String email, OrderStatus orderStatus, Date created_at, Date updated_at, double totalPrice, Boolean isReviewed) {
         orderProducts = new ArrayList<>();
         this.id = id;
         this.name = name;
@@ -38,6 +39,7 @@ public class Order {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.totalPrice = totalPrice;
+        this.isReviewed = isReviewed;
     }
 
     public Order(String id, String name, String address, String phone, String email, OrderStatus orderStatus, Date created_at, Date updated_at, List<OrderProduct> products, DeliveryMan deliveryMan) {
@@ -84,6 +86,9 @@ public class Order {
 
     public OrderStatus getStatus() {
         return orderStatus;
+    }
+    public Boolean getIsReviewed() {
+        return isReviewed;
     }
 
     public void setStatus(OrderStatus orderStatus) {

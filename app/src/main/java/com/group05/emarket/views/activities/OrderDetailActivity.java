@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group05.emarket.R;
@@ -18,16 +20,18 @@ import com.group05.emarket.databinding.ActivityOrderDetailBinding;
 import com.group05.emarket.models.Order;
 import com.group05.emarket.viewmodels.OrderDetailViewModel;
 import com.group05.emarket.views.adapters.OrderDetailAdapter;
+import com.group05.emarket.views.dialogs.ReviewDialog;
 
 
-public class OrderDetailActivity extends AppCompatActivity {
+public class OrderDetailActivity extends AppCompatActivity implements ReviewDialog.ReviewDialogListener{
 
     private OrderDetailViewModel viewModel;
+    private ActivityOrderDetailBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityOrderDetailBinding binding = ActivityOrderDetailBinding.inflate(getLayoutInflater());
+        binding = ActivityOrderDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         MaterialToolbar topBar = binding.topBar;
@@ -40,6 +44,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         var userPhone = extras.getString("userPhone");
         var userAddress = extras.getString("userAddress");
         var totalPrice = extras.getDouble("totalPrice");
+        var isReviewed = extras.getBoolean("isReviewed");
 
 
 
@@ -73,16 +78,32 @@ public class OrderDetailActivity extends AppCompatActivity {
                         .setMessage("Are you sure you want to cancel this order?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             viewModel.cancelOrder();
+                            Toast.makeText(this, "Cancel order successfullt", Toast.LENGTH_SHORT).show();
                             finish();
                         })
                         .setNegativeButton("No", null)
                         .show();
             });
         } else if (Order.OrderStatus.valueOf(status) == Order.OrderStatus.DELIVERED) {
-            binding.btnFunction.setText("Review");
+            if (isReviewed) {
+                binding.btnFunction.setText("Reviewed");
+                binding.btnFunction.setEnabled(false);
+            } else {
+                binding.btnFunction.setText("Review");
+                binding.btnFunction.setOnClickListener(v -> {
+                    ReviewDialog dialog = new ReviewDialog(viewModel, orderId);
+                    dialog.show(getSupportFragmentManager(), "ReviewDialog");
+                });
+            }
         } else {
             binding.btnFunction.setVisibility(binding.btnFunction.GONE);
         }
     }
 
+
+    @Override
+    public void onReviewSubmit() {
+        binding.btnFunction.setText("Reviewed");
+        binding.btnFunction.setEnabled(false);
+    }
 }

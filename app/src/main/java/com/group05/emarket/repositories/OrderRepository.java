@@ -4,6 +4,8 @@ package com.group05.emarket.repositories;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -81,7 +83,11 @@ public class OrderRepository {
                                 Date updatedAt = doc.getDate("updatedAt");
                                 Date createdAt = doc.getDate("createdAt");
                                 double totalPrice = doc.getDouble("totalPrice");
-                                Order order = new Order(id, name, address.getAddress(), phone, email, status, updatedAt, createdAt, totalPrice);
+                                Boolean isReviewed = doc.getBoolean("isReviewed");
+                                if (isReviewed == null) {
+                                    isReviewed = false;
+                                }
+                                Order order = new Order(id, name, address.getAddress(), phone, email, status, updatedAt, createdAt, totalPrice, isReviewed);
                                 //get all cart items of this order
                                 Query query1 = db.collection("orders").document(id).collection("products");
                                 query1.get().addOnCompleteListener(task2 -> {
@@ -122,7 +128,7 @@ public class OrderRepository {
         return future;
     }
 
-    public CompletableFuture<Void> placeOrder(List<CartItem> cart) throws ExecutionException, InterruptedException {
+    public CompletableFuture<Void> placeOrder(List<CartItem> cart)  {
         CompletableFuture<Void> future = new CompletableFuture<>();
 
         var user = auth.getCurrentUser();
@@ -145,6 +151,7 @@ public class OrderRepository {
                         orderData.put("createdAt", new Date());
                         orderData.put("updatedAt", new Date());
                         orderData.put("status", Order.OrderStatus.PENDING);
+                        orderData.put("isReviewed", false);
                         //calculate total price
                         double totalPrice = 0;
                         for (var item : cart) {
@@ -216,6 +223,33 @@ public class OrderRepository {
     public CompletableFuture<Void> setOrderStatus(String orderId, Order.OrderStatus status) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         db.collection("orders").document(orderId).update("status", status).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                future.complete(null);
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> submitReview(String orderId, MutableLiveData<List<OrderProduct>> products, String review, float rating) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        var userRef = db.collection("users").document(auth.getCurrentUser().getUid());
+        var batch = db.batch();
+        for (var product : products.getValue()) {
+            var productRef = db.collection("products").document(product.getProduct().getId());
+            var reviewRef = db.collection("reviews").document();
+            Map<String, Object> data = new HashMap<>();
+            data.put("productRef", productRef);
+            data.put("review", review);
+            data.put("rating", rating);
+            data.put("createdAt", new Date());
+            data.put("updatedAt", new Date());
+            data.put("userRef", userRef);
+            batch.set(reviewRef, data);
+        }
+        db.collection("orders").document(orderId).update("isReviewed", true);
+        batch.commit().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 future.complete(null);
             } else {
