@@ -112,11 +112,19 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <CheckBox
-                        android:id="@+id/btn_favorite_btn"
+
+                    <Button
+                        android:id="@+id/btn_favorite_remove"
+                        style="@style/Widget.Material3.Button.IconButton.Outlined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:button="@drawable/sl_favourite" />
+                        android:layout_gravity="center_vertical"
+                        app:icon="@drawable/ic_close"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:iconSize="24dp"
+                        app:iconTint="@color/black"
+                        app:strokeWidth="0dp" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

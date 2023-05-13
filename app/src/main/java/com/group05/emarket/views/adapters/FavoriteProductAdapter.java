@@ -71,8 +71,7 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
                 intent.putExtra("product", product);
                 v.getContext().startActivity(intent);
             });
-            binding.btnFavoriteBtn.setChecked(true);
-            binding.btnFavoriteBtn.setOnClickListener(v -> {
+            binding.btnFavoriteRemove.setOnClickListener(v -> {
                 Product product = binding.getFavoriteProduct();
                 viewModel.removeFavoriteProduct(product);
             });
