@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.group05.emarket.R;
 import com.group05.emarket.databinding.ListItemOrderBinding;
 import com.group05.emarket.models.Order;
@@ -22,6 +23,7 @@ import java.util.List;
 public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.ViewHolder> {
     private final Context context;
     private final List<Order> orders;
+    private static Order currentOrder;
 
     public OrderItemAdapter(Context context, List<Order> orders) {
         this.context = context;
@@ -39,6 +41,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Order order = orders.get(position);
+        currentOrder = order;
         holder.binding.setOrder(order);
         holder.binding.executePendingBindings();
 
@@ -55,6 +58,16 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
             context.startActivity(intent);
         });
+
+        if (order != null) {
+            var orderProducts = currentOrder.getOrderProducts();
+            if (orderProducts.size() > 0) {
+                var product = orderProducts.get(0).getProduct();
+                Glide.with(holder.binding.getRoot())
+                        .load(product.getImage())
+                        .into(holder.binding.ivOrderThumbnail);
+            }
+        }
     }
 
     @Override
