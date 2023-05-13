@@ -90,4 +90,9 @@
     <string name="google_maps_key">AIzaSyBpbbzd_gEfynO4AatkbOuk4DjqGxIa4Vg</string>
     <string name="label_user_location">There\'s is no location yet</string>
     <string name="menu_map_refresh">Refresh</string>
+    <string name="menu_home_action_favorite">Favorite</string>
+    <string name="menu_bottom_action_favorite">Favorite</string>
+    <string name="fragment_favorite_title">Favorites</string>
+    <string name="fragment_favorite_empty">You\'ve not like any product</string>
+    <string name="fragment_favorite_empty_btn">Let\'s go shopping !</string>
 </resources>

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.group05.emarket.databinding.ActivityProductDetailBinding;
 import com.group05.emarket.enums.EProductListType;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.viewmodels.CartViewModel;
+import com.group05.emarket.viewmodels.FavoriteViewModel;
 import com.group05.emarket.viewmodels.ProductDetailViewModel;
 import com.group05.emarket.viewmodels.ProductListViewModel;
 import com.group05.emarket.views.adapters.ProductAdapter;
@@ -36,6 +38,7 @@ import java.util.UUID;
 public class ProductDetailActivity extends AppCompatActivity {
     private CartViewModel cartViewModel;
     private ProductDetailViewModel productDetailViewModel;
+    private FavoriteViewModel favoriteViewModel;
     private OverviewProductsFragment overviewProductsFragment;
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -53,6 +56,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         transaction.commit();
 
         productDetailViewModel = new ViewModelProvider(this, new ProductDetailViewModel.Factory(product)).get(ProductDetailViewModel.class);
+        favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
+        favoriteViewModel.getFavoriteProducts().observe(this, favoriteProducts -> {
+            boolean isFavorite = favoriteProducts.stream().anyMatch(p -> p.getId().equals(product.getId()));
+            binding.btnAddToFavorite.setChecked(isFavorite);
+        });
+
+        binding.btnAddToFavorite.setOnClickListener(v -> {
+            if (binding.btnAddToFavorite.isChecked()) {
+                favoriteViewModel.addFavoriteProduct(product);
+            } else {
+                favoriteViewModel.removeFavoriteProduct(product);
+            }
+        });
 
         binding.topBar.setNavigationOnClickListener(v -> finish());
         binding.topBar.setOnMenuItemClickListener(item -> {
@@ -153,5 +169,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 binding.tvDescription.setMaxLines(3);
             }
         });
+
+
     }
 }
