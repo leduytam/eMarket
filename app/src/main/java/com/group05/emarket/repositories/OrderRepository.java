@@ -237,6 +237,7 @@ public class OrderRepository {
         var userRef = db.collection("users").document(auth.getCurrentUser().getUid());
         var batch = db.batch();
         for (var product : products.getValue()) {
+            updateProductRating(product.getProduct().getId());
             var productRef = db.collection("products").document(product.getProduct().getId());
             var reviewRef = db.collection("reviews").document();
             Map<String, Object> data = new HashMap<>();
@@ -259,5 +260,29 @@ public class OrderRepository {
         return future;
     }
 
+    private CompletableFuture<Void> updateProductRating(String productId) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        db.collection("reviews").whereEqualTo("productRef", db.collection("products").document(productId)).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                var reviews = task.getResult().getDocuments();
+                double totalRating = 0;
+                for (var review : reviews) {
+                    totalRating += review.getDouble("rating");
+                }
+                double rating = totalRating / reviews.size();
+                db.collection("products").document(productId).update("avgRating", rating);
+                db.collection("products").document(productId).update("ratingCount", reviews.size()).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        future.complete(null);
+                    } else {
+                        future.completeExceptionally(task1.getException());
+                    }
+                });
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        });
+        return future;
+    }
 
 }
