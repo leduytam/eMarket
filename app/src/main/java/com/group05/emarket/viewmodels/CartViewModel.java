@@ -83,8 +83,8 @@ public class CartViewModel extends ViewModel {
         updateCart();
     }
 
-    public void placeOrder() throws ExecutionException, InterruptedException {
-        orderRepo.placeOrder(cartItems.getValue());
+    public void placeOrder(float totalCost, int discount) throws ExecutionException, InterruptedException {
+        orderRepo.placeOrder(cartItems.getValue(), totalCost, discount);
         cartItems.setValue(new ArrayList<>());
         updateCart();
     }

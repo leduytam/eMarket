@@ -33,6 +33,7 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
     private final CartViewModel cartViewModel;
 
     private final AddressViewModel addressViewModel;
+    private int discount = 0;
     private VoucherRepository voucherRepository = VoucherRepository.getInstance();
 
 
@@ -95,6 +96,7 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
                     etVoucherCode.setError("Invalid voucher code");
                 } else {
                     Toast.makeText(getContext(), "Applied voucher " + voucherCode, Toast.LENGTH_SHORT).show();
+                    discount = voucher.getDiscount();
                     totalCost = cartViewModel.getTotalPrice() * (100 - voucher.getDiscount()) / 100f;
                     updateTotalCost();
                     etVoucherCode.setText("");
@@ -109,7 +111,7 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
         Button btnConfirm = view.findViewById(R.id.btn_confirm_checkout);
         btnConfirm.setOnClickListener(v -> {
             try {
-                cartViewModel.placeOrder();
+                cartViewModel.placeOrder(totalCost, discount);
                 Intent intent = new Intent(getContext(), OrderSuccessActivity.class);
                 getContext().startActivity(intent);
                 dismiss();
