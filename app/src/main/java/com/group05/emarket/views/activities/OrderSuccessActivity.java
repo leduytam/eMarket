@@ -36,6 +36,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
             intent1.putExtra("userAddress", order.getAddress());
             intent1.putExtra("totalPrice", order.getTotalPrice());
             intent1.putExtra("isReviewed", order.getIsReviewed());
+            intent1.putExtra("discount", order.getDiscount());
             startActivity(intent1);
         });
 
