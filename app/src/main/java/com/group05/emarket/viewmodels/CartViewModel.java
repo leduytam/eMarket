@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.group05.emarket.MockData;
+import com.group05.emarket.models.Address;
 import com.group05.emarket.models.CartItem;
 import com.group05.emarket.models.Product;
 import com.group05.emarket.repositories.CartRepository;
@@ -14,6 +15,7 @@ import com.group05.emarket.repositories.OrderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class CartViewModel extends ViewModel {
@@ -25,13 +27,11 @@ public class CartViewModel extends ViewModel {
     public CartViewModel() {
         cartItems = new MutableLiveData<>(new ArrayList<>());
         isLoading = new MutableLiveData<>(true);
-
         fetch();
     }
 
     public void fetch() {
         isLoading.setValue(true);
-
         cartRepo.getCart().thenAccept(cartItems -> {
             this.cartItems.setValue(cartItems);
             isLoading.setValue(false);
@@ -87,6 +87,23 @@ public class CartViewModel extends ViewModel {
         orderRepo.placeOrder(cartItems.getValue(), totalCost, discount);
         cartItems.setValue(new ArrayList<>());
         updateCart();
+    }
+
+    public CompletableFuture<String> placeOrder(Address orderAddress, float totalCost, int discount) throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future = new CompletableFuture<>();
+        orderRepo.placeOrder(cartItems.getValue(), orderAddress, totalCost, discount).thenAccept(
+                orderId -> {
+                    cartItems.setValue(new ArrayList<>());
+                    updateCart();
+                    future.complete(orderId);
+                }
+        ).exceptionally(e -> {
+                    future.completeExceptionally(e);
+                    return null;
+                }
+        );
+
+        return future;
     }
 
     public float getTotalPrice() {

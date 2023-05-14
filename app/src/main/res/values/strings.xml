@@ -95,4 +95,9 @@
     <string name="fragment_favorite_title">Favorites</string>
     <string name="fragment_favorite_empty">You\'ve not like any product</string>
     <string name="fragment_favorite_empty_btn">Let\'s go shopping !</string>
+    <string name="order_user_information_title">User Information</string>
+    <string name="order_products_information_title">Products</string>
+    <string name="order_detail_information_title">Details</string>
+    <string name="order_deliverymen_information_title">Deliveryman</string>
+    <string name="activity_order_map_top_bar_title">Your Package on The Way</string>
 </resources>

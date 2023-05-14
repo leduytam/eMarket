@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,11 +25,11 @@ import com.group05.emarket.views.adapters.OrderDetailAdapter;
 import com.group05.emarket.views.dialogs.ReviewDialog;
 
 
-public class OrderDetailActivity extends AppCompatActivity implements ReviewDialog.ReviewDialogListener{
-
+public class OrderDetailActivity extends AppCompatActivity implements ReviewDialog.ReviewDialogListener {
     private OrderDetailViewModel viewModel;
     private ActivityOrderDetailBinding binding;
 
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +42,10 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
         var extras = getIntent().getExtras();
         var orderId = extras.getString("orderId");
         var status = extras.getString("orderStatus");
-        var userName = extras.getString("userName");
         var userPhone = extras.getString("userPhone");
-        var userAddress = extras.getString("userAddress");
         var totalPrice = extras.getDouble("totalPrice");
         var isReviewed = extras.getBoolean("isReviewed");
-
-
+        var discount = extras.getInt("discount", 0);
 
         viewModel = new ViewModelProvider(this, new OrderDetailViewModel.Factory(orderId)).get(OrderDetailViewModel.class);
         viewModel.fetchProducts();
@@ -65,12 +64,32 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
                 binding.pbFetchingOrders.setVisibility(View.GONE);
             }
         });
-        binding.userName.setText(userName);
-        binding.userPhone.setText("+" + userPhone);
-        binding.userAddress.setText(userAddress);
+        binding.userPhone.setText("Phone: " + userPhone);
+        binding.orderDiscount.setText(String.format("Discount: %d%%", discount));
         binding.totalPrice.setText(String.format("Total Price: $%.2f", totalPrice));
+        binding.orderId.setText("Order ID: " + orderId);
+        binding.orderStatus.setText("Status: " + status);
 
-        if(Order.OrderStatus.valueOf(status) == Order.OrderStatus.PENDING) {
+
+        viewModel.getDeliveryMan().observe(this, deliveryMan -> {
+            if (deliveryMan != null && deliveryMan.getId() != null) {
+                binding.orderDeliverymenInfoContainer.setVisibility(View.VISIBLE);
+                binding.tvDeliverymenName.setText(deliveryMan.getName());
+                binding.tvDeliverymenPhone.setText(deliveryMan.getPhone());
+            } else {
+                binding.orderDeliverymenInfoContainer.setVisibility(View.GONE);
+            }
+        });
+
+        viewModel.getOrderAddress().observe(this, address -> {
+            if (address != null) {
+                binding.userAddress.setText(address.getAddress());
+            } else {
+                binding.userAddress.setText("This order has no address");
+            }
+        });
+
+        if (Order.OrderStatus.valueOf(status) == Order.OrderStatus.PENDING) {
             binding.btnFunction.setText("Cancel Order");
             binding.btnFunction.setOnClickListener(v -> {
                 new AlertDialog.Builder(this)
@@ -78,7 +97,7 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
                         .setMessage("Are you sure you want to cancel this order?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             viewModel.cancelOrder();
-                            Toast.makeText(this, "Cancel order successfullt", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Cancel order successfully", Toast.LENGTH_SHORT).show();
                             finish();
                         })
                         .setNegativeButton("No", null)
@@ -95,6 +114,17 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
                     dialog.show(getSupportFragmentManager(), "ReviewDialog");
                 });
             }
+        } else if (Order.OrderStatus.valueOf(status) == Order.OrderStatus.DELIVERING) {
+            binding.btnFunction.setText("Track Order Location");
+            binding.btnFunction.setOnClickListener(v -> {
+                Intent intent = new Intent(this, OrderMapActivity.class);
+                intent.putExtra("orderLat", viewModel.getOrderAddress().getValue().getLatitude());
+                intent.putExtra("orderLng", viewModel.getOrderAddress().getValue().getLongitude());
+                intent.putExtra("deliveryLat", viewModel.getDeliveryAddress().getValue().getLatitude());
+                intent.putExtra("deliveryLng", viewModel.getDeliveryAddress().getValue().getLongitude());
+                startActivity(intent);
+            });
+
         } else {
             binding.btnFunction.setVisibility(binding.btnFunction.GONE);
         }
