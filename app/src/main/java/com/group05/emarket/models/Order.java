@@ -12,6 +12,14 @@ public class Order {
         this.deliveryMan = deliveryman;
     }
 
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
     public enum OrderStatus {
         PENDING,
         DELIVERING,
@@ -29,6 +37,8 @@ public class Order {
     private Date updated_at;
     private double totalPrice;
     private Boolean isReviewed;
+
+    private int discount;
 
     private List<OrderProduct> orderProducts;
 

@@ -43,19 +43,16 @@ public class OrderRepository {
         CompletableFuture<List<Order>> future = new CompletableFuture<>();
 
         var user = auth.getCurrentUser();
-
         if (user == null) {
             future.complete(new ArrayList<>());
             return future;
         }
-        // get user address
         addressRepository.getUserAddress().thenAccept(address -> {
             Log.d("Address", address.getAddress());
             if (address == null) {
                 future.complete(new ArrayList<>());
                 return;
             }
-//            get user info
             db.collection("users").document(user.getUid()).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     var userDoc = task.getResult();
@@ -69,25 +66,26 @@ public class OrderRepository {
                     query.get().addOnCompleteListener(task1 -> {
                         if (task1.isSuccessful()) {
                             var orderDocs = task1.getResult().getDocuments();
-                            Log.d("Order", String.valueOf(orderDocs.size()));
-
                             if (orderDocs.size() == 0) {
                                 future.complete(new ArrayList<>());
                                 return;
                             }
-
                             List<Order> orders = new ArrayList<>();
                             for (var doc : orderDocs) {
                                 String id = doc.getId();
                                 Date updatedAt = doc.getDate("updatedAt");
                                 Date createdAt = doc.getDate("createdAt");
                                 double totalPrice = doc.getDouble("totalPrice");
+                                int discount = 0;
+                                if (doc.getLong("discount") != null) {
+                                    discount = doc.getLong("discount").intValue();
+                                }
                                 Boolean isReviewed = doc.getBoolean("isReviewed");
                                 if (isReviewed == null) {
                                     isReviewed = false;
                                 }
                                 Order order = new Order(id, name, address.getAddress(), phone, email, status, updatedAt, createdAt, totalPrice, isReviewed);
-                                //get all cart items of this order
+                                order.setDiscount(discount);
                                 Query query1 = db.collection("orders").document(id).collection("products");
                                 query1.get().addOnCompleteListener(task2 -> {
                                     if (task2.isSuccessful()) {
@@ -97,11 +95,9 @@ public class OrderRepository {
                                             future.complete(new ArrayList<>());
                                             return;
                                         }
-
                                         for (var doc1 : orderItemDocs) {
                                             DocumentReference productRef = doc1.getDocumentReference("productRef");
                                             int quantity = doc1.getLong("quantity").intValue();
-
                                             productRef.get().addOnCompleteListener(productTask -> {
                                                 if (productTask.isSuccessful()) {
                                                     Product product = productTask.getResult().toObject(Product.class);
@@ -148,11 +144,8 @@ public class OrderRepository {
                 orderData.put("updatedAt", new Date());
                 orderData.put("status", Order.OrderStatus.PENDING);
                 orderData.put("isReviewed", false);
-                double totalPrice = 0;
-                for (var item : cart) {
-                    totalPrice += item.getProduct().getDiscountedPrice() * item.getQuantity();
-                }
-                orderData.put("totalPrice", totalPrice);
+                orderData.put("totalPrice", totalCost);
+                orderData.put("discount", discount);
                 FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
                         addProducts(cart, task1.getResult().getId());
@@ -166,7 +159,7 @@ public class OrderRepository {
         return future;
     }
 
-    public CompletableFuture<String> placeOrder(List<CartItem> cart, Address address) {
+    public CompletableFuture<String> placeOrder(List<CartItem> cart, Address address, float totalCost, int discount) {
         CompletableFuture<String> future = new CompletableFuture<>();
 
         var user = auth.getCurrentUser();
@@ -184,11 +177,9 @@ public class OrderRepository {
         orderData.put("updatedAt", new Date());
         orderData.put("status", Order.OrderStatus.PENDING);
         orderData.put("isReviewed", false);
-        double totalPrice = 0;
-        for (var item : cart) {
-            totalPrice += item.getProduct().getDiscountedPrice() * item.getQuantity();
-        }
-        orderData.put("totalPrice", totalPrice);
+        orderData.put("totalPrice", totalCost);
+        orderData.put("discount", discount);
+
         FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
                 addProducts(cart, task1.getResult().getId());

@@ -89,9 +89,9 @@ public class CartViewModel extends ViewModel {
         updateCart();
     }
 
-    public CompletableFuture<String> placeOrder(Address orderAddress) throws ExecutionException, InterruptedException {
+    public CompletableFuture<String> placeOrder(Address orderAddress, float totalCost, int discount) throws ExecutionException, InterruptedException {
         CompletableFuture<String> future = new CompletableFuture<>();
-        orderRepo.placeOrder(cartItems.getValue(), orderAddress).thenAccept(
+        orderRepo.placeOrder(cartItems.getValue(), orderAddress, totalCost, discount).thenAccept(
                 orderId -> {
                     cartItems.setValue(new ArrayList<>());
                     updateCart();

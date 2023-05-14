@@ -53,6 +53,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
             intent.putExtra("userAddress", order.getAddress());
             intent.putExtra("totalPrice", order.getTotalPrice());
             intent.putExtra("isReviewed", order.getIsReviewed());
+            intent.putExtra("discount", order.getDiscount());
             context.startActivity(intent);
         });
 

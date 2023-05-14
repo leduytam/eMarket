@@ -26,7 +26,6 @@ import com.group05.emarket.views.dialogs.ReviewDialog;
 
 
 public class OrderDetailActivity extends AppCompatActivity implements ReviewDialog.ReviewDialogListener {
-
     private OrderDetailViewModel viewModel;
     private ActivityOrderDetailBinding binding;
 
@@ -44,9 +43,9 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
         var orderId = extras.getString("orderId");
         var status = extras.getString("orderStatus");
         var userPhone = extras.getString("userPhone");
-        var userAddress = extras.getString("userAddress");
         var totalPrice = extras.getDouble("totalPrice");
         var isReviewed = extras.getBoolean("isReviewed");
+        var discount = extras.getInt("discount", 0);
 
         viewModel = new ViewModelProvider(this, new OrderDetailViewModel.Factory(orderId)).get(OrderDetailViewModel.class);
         viewModel.fetchProducts();
@@ -66,10 +65,11 @@ public class OrderDetailActivity extends AppCompatActivity implements ReviewDial
             }
         });
         binding.userPhone.setText("Phone: " + userPhone);
-
+        binding.orderDiscount.setText(String.format("Discount: %d%%", discount));
         binding.totalPrice.setText(String.format("Total Price: $%.2f", totalPrice));
         binding.orderId.setText("Order ID: " + orderId);
         binding.orderStatus.setText("Status: " + status);
+
 
         viewModel.getDeliveryMan().observe(this, deliveryMan -> {
             if (deliveryMan != null && deliveryMan.getId() != null) {

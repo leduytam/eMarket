@@ -101,7 +101,6 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
                     discount = voucher.getDiscount();
                     totalCost = cartViewModel.getTotalPrice() * (100 - voucher.getDiscount()) / 100f;
                     updateTotalCost();
-                    etVoucherCode.setText("");
                 }
             });
         });
@@ -113,7 +112,7 @@ public class CheckoutBottomSheetDialog extends BottomSheetDialog implements Inpu
         Button btnConfirm = view.findViewById(R.id.btn_confirm_checkout);
         btnConfirm.setOnClickListener(v -> {
             try {
-                cartViewModel.placeOrder(selectedAddress).thenAccept(orderId -> {
+                cartViewModel.placeOrder(selectedAddress, totalCost, discount).thenAccept(orderId -> {
                     Intent intent = new Intent(getContext(), OrderSuccessActivity.class);
                     intent.putExtra("orderId", orderId);
                     getContext().startActivity(intent);
