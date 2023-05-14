@@ -128,7 +128,7 @@ public class OrderRepository {
         return future;
     }
 
-    public CompletableFuture<Void> placeOrder(List<CartItem> cart)  {
+    public CompletableFuture<Void> placeOrder(List<CartItem> cart, float totalCost, int discount)  {
         CompletableFuture<Void> future = new CompletableFuture<>();
 
         var user = auth.getCurrentUser();
@@ -152,12 +152,8 @@ public class OrderRepository {
                         orderData.put("updatedAt", new Date());
                         orderData.put("status", Order.OrderStatus.PENDING);
                         orderData.put("isReviewed", false);
-                        //calculate total price
-                        double totalPrice = 0;
-                        for (var item : cart) {
-                            totalPrice += item.getProduct().getDiscountedPrice() * item.getQuantity();
-                        }
-                        orderData.put("totalPrice", totalPrice);
+                        orderData.put("totalPrice", totalCost);
+                        orderData.put("discount", discount);
                         FirebaseFirestore.getInstance().collection("orders").add(orderData).addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
                                 addProducts(cart, task1.getResult().getId());
