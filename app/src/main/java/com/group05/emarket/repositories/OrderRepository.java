@@ -397,6 +397,10 @@ public class OrderRepository {
                     return;
                 }
                 var addressDoc = addressList.get(0);
+                if (addressDoc == null) {
+                    future.complete(null);
+                    return;
+                }
                 var address = new Address();
                 address.setStreet(addressDoc.getString("address"));
                 address.setCity(addressDoc.getString("city"));
@@ -404,10 +408,6 @@ public class OrderRepository {
                 address.setWard(addressDoc.getString("ward"));
                 address.setProvince(addressDoc.getString("province"));
                 address.setPostalCode(addressDoc.getString("postalCode"));
-                var lat = addressDoc.getDouble("latitude");
-                var lon = addressDoc.getDouble("longitude");
-                Log.d("lat", lat.toString());
-                Log.d("lon", lon.toString());
                 address.setLatitude(addressDoc.getDouble("latitude").floatValue());
                 address.setLongitude(addressDoc.getDouble("longitude").floatValue());
                 address.setCountry(addressDoc.getString("country"));
